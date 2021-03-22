@@ -1,0 +1,406 @@
+.left_tab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 20vh;
+  height: 100vh;
+  margin-top: 0px;
+}
+
+.left_tab button {
+  background-color: inherit;
+  color: black;
+  padding: 10px 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.left_tab button:hover {
+  background-color: #ddd;
+}
+
+.left_tab button.active {
+  background-color: #ccc;
+}
+
+.sidepanel {
+  height: 90%; /* Specify a height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 11vh;
+  left: 20vh;
+  background-color: rgb(245, 245, 245); /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 10px; /* Place content 60px from the top */
+  transition: 0.2s; /* 0.5 second transition effect to slide in the sidepanel */
+}
+
+/* The sidepanel links */
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+#shape-library-modal input[type="search"] {
+  width: 250px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+.input-lg,
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-addon,
+.input-group-lg > .input-group-btn > .btn {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33333;
+  border-radius: 6px;
+}
+
+.save_btn {
+  height: 32px;
+  margin-left: 260px;
+  width: 100px;
+}
+
+.save_btn :hover {
+  color: blue;
+}
+
+#shape-library-modal ul.search-results {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+  min-height: 330px;
+  height: 450px;
+  overflow-y: scroll;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#shape-library-modal ul.search-results li {
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  background: #fff;
+  min-width: calc(33% - 10px);
+  max-width: calc(33% - 10px);
+  min-height: 450px;
+}
+#shape-library-modal ul.search-results li .image {
+  text-align: center;
+  margin-bottom: 5px;
+}
+#shape-library-modal ul.search-results li p.desc {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 5px;
+  margin-bottom: 21px;
+  cursor: pointer;
+}
+#shape-library-modal ul.search-results li p.desc.mfrid {
+  margin-top: 2px;
+  margin-bottom: 5px;
+  font-size: 11px;
+  cursor: default;
+}
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+#shape-library-modal ul.search-results li p.dimensions {
+  font-size: 11px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: inline-block;
+}
+#shape-library-modal ul.search-results li img.shapeorientation {
+  max-height: 80px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-top: 5px;
+  max-width: 100%;
+}
+#shape-library-modal ul.search-results li .container-buttons .btn-fake {
+  width: 100%;
+}
+#shape-library-modal ul.search-results li .container-buttons .btn {
+  margin: 1rem 0 0 0;
+  min-width: 95px;
+}
+#shape-library-modal ul.search-results li img.shape-thumb {
+  max-height: 140px;
+  max-width: 100%;
+}
+#shape-library-modal ul.search-results li fieldset[disabled] img.shape-thumb {
+  opacity: 0.5;
+}
+#shape-library-modal ul.search-results li .image img {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+fieldset[disabled] .btn {
+  /* cursor: not-allowed; */
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+img {
+  vertical-align: middle;
+}
+#shape-library-modal ul.search-results li fieldset[disabled] {
+  cursor: not-allowed;
+}
+p {
+  margin: 0 0 10px;
+}
+.form-select {
+  width: 10%;
+  height: 45px;
+  padding: 6px 12px;
+  font-size: 18px;
+  margin-left: 5px;
+  margin-top: 10px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-body {
+  position: relative;
+  padding: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.instructions {
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  width: 292px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 0px;
+  background: white;
+  z-index: 100;
+  text-align: center;
+}
+
+.instructions-header {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  background: lightgreen;
+  z-index: 100;
+}
+
+.modal-footer {
+  padding: 5px;
+  border-top: none;
+  padding: 15px;
+  /* text-align: right; */
+  border-top: 1px solid #e5e5e5;
+}
+input[type="range"] {
+  /* -webkit-appearance: none; */
+  margin: 18px 0;
+  width: 90%;
+  display: block;
+}
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#drawCanvas-container {
+  overflow: auto;
+}
+#photo-draw-modal canvas {
+  border-radius: 3px;
+  margin-top: -1px;
+}
+#drawCanvas {
+  background-color: #fff;
+  cursor: crosshair;
+}
+canvas,
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn {
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.11),
+    1px 1px 0 rgba(255, 255, 255, 0.21) inset;
+}
+.zoomable .btn {
+  margin-right: 5px;
+}
+a {
+  color: #4d90fc;
+  text-decoration: none;
+}
+.col-sm-3 {
+  width: 25%;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* ----------------------------------------- */
+.container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.moveable {
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  width: 250px;
+  height: 200px;
+  text-align: center;
+  font-size: 40px;
+  margin: 0px auto;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+.moveable span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  border-radius: 5px;
+  background: #333;
+  z-index: 10;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  display: none;
+  transform: translate(-100%, -100%);
+  z-index: 3001;
+}
+/* ----------------------------------------- */

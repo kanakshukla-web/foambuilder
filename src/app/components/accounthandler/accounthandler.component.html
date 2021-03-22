@@ -1,0 +1,42 @@
+<ejs-dialog #ejsAccountDialog isModal='true' (close)='closeDialog()' width={{dialogWidth}} height={{dialogHeight}}
+  id='dialog' [showCloseIcon]='showCloseIcon'>
+  <ng-template #header>
+    <h1 style="color: rgb(243, 118, 118); margin-left: 15px;">{{accountData.headerTitle|uppercase}}</h1>
+  </ng-template>
+
+  <div slot="body" class="content">
+    <form class="form-horizontal login-form">
+
+      <fieldset *ngIf='!isForgotPassword'>
+        <div class="form-group">
+          <label for="email-login">Email</label>
+          <input id="email-login" name="email" type="text" required="" class="form-control input-md"
+            placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input id="login-password" name="password" type="password" required="" class="form-control input-md"
+            placeholder="Password">
+        </div>
+        <div class="form-group"><a href="#" (click)='refreshContent()'>{{accountData.linkText}}</a></div>
+        <div class="form-group"><a href="#" (click)='loadForgotPassword()'>{{accountData.forgotButtonText}}</a></div>
+      </fieldset>
+
+      <fieldset *ngIf='isForgotPassword'>
+        <div class="form-group">
+          <label for="email-login">Email</label>
+          <input id="email-login" name="email" type="text" required="" class="form-control input-md"
+            placeholder="Email">
+        </div>
+        <div class="form-group"><a href="#" (click)='loginContent()'>Already have an account? Login</a></div>
+        <div class="form-group"><a href="#" (click)='registerContent()'>Don't have an account yet? Register</a></div>
+      </fieldset>
+
+      <button class='btn' mat-stroked-button color="primary">{{accountData.buttonText}}</button>
+    </form>
+  </div>
+  <!-- <ngx-ui-loader></ngx-ui-loader> -->
+  <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium">
+    <p style="color: white; margin-top: 25px;"> Refreshing... </p>
+  </ngx-spinner>
+</ejs-dialog>

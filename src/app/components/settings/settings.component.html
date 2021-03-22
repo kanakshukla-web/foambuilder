@@ -1,0 +1,57 @@
+<div>
+  <div class='hiddenPanel'>
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <h2>
+      &nbsp;Settings
+    </h2>
+  </div>
+  <hr>
+  <label class="heading">
+    <input type="checkbox" /> Show Grid
+  </label><br>
+  <label class="heading">
+    <input type="checkbox" /> Snap to Grid
+  </label><br>
+  <label class="heading">
+    <input type="checkbox" /> Show Depth Labels
+  </label><br>
+  <label class="heading">
+    <input type="checkbox" /> Auto Snap Shapes
+  </label><br>
+  <form (ngSubmit)="onSubmit()" #rectangleForm="ngForm">
+    <div class="form-group">
+      <label class="form-label" for="length">Grid Size (MM)</label>
+      <input type="text" placeholder="0" class="form-control" id="length" required [(ngModel)]="model.gridSize"
+        name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Grid Size is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="width">Nudge Spacing (MM)</label>
+      <input type="text" placeholder="0" class="form-control" id="width" required [(ngModel)]="model.nudgeSpacing"
+        name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Nudge Spacing is required
+      </div>
+    </div>
+    <!-- <div class="form-group">
+      <label class="form-label" for="depth">Depth (MM)</label>
+      <input type="text" placeholder="0" class="form-control" id="depth" required [(ngModel)]="model.depth" name="name"
+        #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Depth is required
+      </div>
+    </div> -->
+    <!-- <div class="form-group">
+      <label class="form-label" for="notche">Finger Notches</label>
+      <select class="form-select" id="notche" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
+        <option disabled>Set Finger Notches</option>
+        <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
+      </select>
+      <div [hidden]="notche.valid || notche.pristine" class="alert alert-danger">
+        Finger Notche is required
+      </div>
+    </div> -->
+  </form>
+</div>

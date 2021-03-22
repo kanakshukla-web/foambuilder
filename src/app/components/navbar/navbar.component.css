@@ -1,0 +1,75 @@
+#nav {
+  height: 72px;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  top: 0;
+  border-width: 0 0 1px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.center-logo {
+  position: absolute;
+  left: 45%;
+  margin-top: 0.5rem;
+}
+
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  border-left: none;
+  height: 300px;
+}
+
+.icon {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.icon-sm {
+  margin-left: 4px;
+  margin-bottom: 5px;
+}
+
+.hamburger {
+  vertical-align: middle;
+  margin-left: 20px;
+  font-size: 35px;
+  margin-top: 20px;
+}
+
+.save_btn {
+  margin-left: 70px;
+  height: 32px;
+}
+
+.save_btn :hover {
+  color: blue;
+}
+
+.register {
+  margin-right: 20px;
+  margin-top: 30px;
+  float: right;
+  cursor: none;
+}
+.login {
+  margin-right: 30px;
+  margin-top: 30px;
+  float: right;
+  cursor: none;
+}
+
+.register:hover {
+  cursor: pointer;
+  color: rgb(91, 91, 207);
+}
+.login:hover {
+  cursor: pointer;
+  color: rgb(91, 91, 207);
+}

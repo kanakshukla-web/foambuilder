@@ -1,0 +1,80 @@
+<ejs-dialog #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}} height={{typeDialogHeight}}
+  id='dialog' header={{header}} [showCloseIcon]='showCloseIcon'>
+  <ng-template #header>
+    <h1 style="color: rgb(243, 118, 118);">Draw your shape</h1>
+  </ng-template>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <fieldset class="editables" disabled="">
+        <div role="group" aria-label="..." class="btn-group">
+          <button type="button" class="btn btn-sm btn-default disabled initial active">draw points</button>
+          <button type="button" class="btn btn-sm btn-default">add points</button>
+          <button type="button" class="btn btn-sm btn-default">move points</button>
+          <button type="button" class="btn btn-sm btn-default">delete points</button>
+        </div>
+
+        <div class="input-group input-group-sm" style="display: none;">
+          <input type="text" aria-label="length" class="form-control" placeholder="Length">
+          <span class="input-group-addon">MM</span>
+        </div>
+
+        <div class="input-group input-group-sm">
+          <input type="text" aria-label="depth" class="form-control" placeholder="Depth"><span
+            class="input-group-addon">MM</span>
+        </div>
+
+        <div style="margin-right:40px;line-height:22px" class="input-group input-group-sm">
+          <input id="launch-notch-builder" type="checkbox"
+            style="box-shadow:none;width:1em; margin:0 0.5em 0 0; min-width:18px;" class="form-control">
+          <label for="launch-notch-builder"></label>Custom Notch Placement?
+        </div>
+
+        <a href="#" class="btn btn-sm btn-primary disabled">Create Shape</a>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="col-xs-12 help-zone">
+    <div class="alert draw-info">
+      <p>Click point to point to draw, hold shift for straight lines, click on starting point to finish, hold <b>Z</b>
+        and drag for precise angle control.</p>
+    </div>
+  </div>
+
+  <div style="height: 373px; width: 1268px;">
+    <canvas id="drawCanvas" (click)='initDrawPoint()' height="343" width="1258" #drawCanvas></canvas>
+  </div>
+
+  <div class="modal-footer">
+    <div slot="footer">
+      <div class="row editables form-inline">
+        <div class="zoomable col-sm-3">
+          <a href="#" class="btn btn-default">Zoom In</a>
+          <a href="#" class="btn btn-default">Zoom Out</a>
+        </div>
+        <div class="row col-sm-9">
+          <div class="col-sm-5 form-group">
+            <label for="grid-size-input" style="margin-right: 5px">Grid size (MM): </label>
+            <input id="grid-size-input" type="text" class="form-control input-sm">
+            <span class="help-block" style="display: none;"></span>
+          </div>
+          <div class="col-sm-7">
+            <div class="checkbox form-group col-sm-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" style="margin: 0 4px 0" class="input-sm checkbox-inline">Snap to Grid
+              </label>
+            </div>
+            <div class="checkbox form-group col-sm-4">
+              <label class="checkbox-inline">
+                <input type="checkbox" style="margin: 0 4px 0" class="input-sm checkbox-inline">Show Angles
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ejs-dialog>

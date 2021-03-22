@@ -1,0 +1,158 @@
+<head>
+  <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" />
+  <link href="//cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" />
+  <link href="//cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
+</head>
+
+<mat-sidenav-container class="example-container">
+  <!-- navbar header -->
+  <app-navbar></app-navbar>
+
+  <div id="case-info">
+    <div><span>{{foam_name}}</span>
+      <a href="#" data-cypress="case-edit" class="edit"><i (click)="handleEdit()" class="fa fa-pencil"></i></a>
+      <span class="pull-right">Base: {{foam_base}}</span>
+    </div>
+    <div>{{canvasUpperLength}} x {{canvasUpperWidth}} x {{canvasDepth}}</div>
+
+    <div style="margin-top:10px">
+      <div>Lower: {{canvasLowerLength}} x {{canvasLowerWidth}}</div>
+      <div>Corner Radius: {{canvasRadius}}</div>
+    </div>
+
+    <a class="expand"><i id='expand' (click)="expandDiv('case-info')" class="fa fa-chevron-down"></i></a>
+  </div>
+
+  <ul *ngIf="isShapeDragStarted" id="hidden-buttons">
+    X : {{xAxis}} Y : {{yAxis}}
+  </ul>
+
+  <ul id="global-buttons">
+    <li><a href="#"><i (click)='clearSelection(); setSelection("undo"); undo()'
+          class="fa fa-undo"></i><span>Undo</span></a></li>
+    <li><a href="#"><i class="fa fa-repeat"></i><span>Redo</span></a></li>
+    <li><a href="#"><i class="fa fa-cube"></i><span>_3D</span></a></li>
+    <li><a href="#"><i class="fa fa-search-plus"></i><span>Zoom</span></a></li>
+  </ul>
+
+  <div id="layer-selector">
+    <div style="margin-left: 30%; margin-top: 5px;">Tray Builder</div><br>
+    <div class="select-box">
+      <div class="btn-group">
+        <input id="layer-name" tabindex="-1" autocomplete="off" readonly="" disabled="" value="Bottom ( 33 mm )">
+        <button (click)='expandDiv("tray-builder")' class="btn btn-default dropdown-toggle" type="button">
+          <i class="fa fa-database"></i>
+        </button>
+        <ul id="hidden-tray" class="dropdown-menu">
+          <li class="option"><a (click)='handleTray()' class="active">&nbsp; <i
+                class="fa fa-pencil-square-o active"></i> <span style="color: rgb(24, 22, 22);"> Edit Trays </span> </a>
+          </li>
+          <li class="divider"></li>
+          <hr>
+          <li><a class="disabled">&nbsp; <i class="fa fa-check active"></i> <span style="color: darkgray;"> Bottom ( 33
+                mm ) </span> </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <mat-sidenav opened mode="side">
+    <!-- left side bar -->
+    <app-sidenav (addShape)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
+      (drawRectangle)="addShape('rectangle',$event)"></app-sidenav>
+  </mat-sidenav>
+
+  <!-- center canvas area -->
+  <div>
+    <canvas id='myCanvas' class="myCanv" width={{canvasUpperWidth}} height={{canvasUpperLength}} #myCanvas></canvas>
+  </div>
+
+  <div id="konvaContainer" class='konva' [style.width.px]="canvasUpperWidth" [style.height.px]="canvasUpperLength">
+  </div>
+
+  <!-- right side bar -->
+  <mat-sidenav *ngIf='isPropertiesPanelShown' opened mode="side" position="end">
+    <app-properties (makeClone)="startCloning($event)" [properties]=propertiesObject></app-properties>
+  </mat-sidenav>
+
+</mat-sidenav-container>
+
+<!-- edit/resize foamcase -->
+<ejs-dialog *ngIf="isEditClicked" #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon' #ejEditDialog>
+  <ng-template #header>
+    <h1 style="color: rgb(243, 118, 118);">Change Your Case</h1>
+  </ng-template>
+
+  <div slot="body" class="content">
+    <div class="filter-cases">
+      <p>Cuurent Case: {{foam_name}}</p>
+
+      <form (ngSubmit)="onSubmit(editForm)" #editForm>
+        <div class="outline" style="width:150px">
+          <mat-checkbox name="custom_form" style="font-weight: bold;" labelPosition=before>Custom Size Foam
+          </mat-checkbox>
+        </div>
+        <br>
+
+        <div>
+          <div class="outline">
+            <label> Upper Length &nbsp;
+              <input type='number' name="upperlength" value={{canvasUpperLength}}>
+            </label>
+          </div>
+
+          <div class="outline">
+            <label> Upper Width &nbsp;
+              <input type='number' name="upperwidth" value={{canvasUpperWidth}}>
+            </label>
+          </div>
+
+          <div class="outline" style="width:150px">
+            <label> Depth &nbsp;
+              <input type='number' name="depth" value={{canvasDepth}}>
+            </label>
+          </div>
+        </div>
+        <br>
+
+        <div>
+          <div class="outline">
+            <label> Lower Length &nbsp;
+              <input type='number' name="lowerlength" value={{canvasLowerLength}}>
+            </label>
+          </div>
+
+          <div class="outline">
+            <label> Lower Width &nbsp;
+              <input type='number' name="lowerwidth" value={{canvasLowerWidth}}>
+            </label>
+          </div>
+
+          <div class="outline">
+            <label> Corner Radius &nbsp;
+              <input type='number' name="cornerradius" value={{canvasRadius}}>
+            </label>
+          </div>
+        </div>
+        <br>
+        <button type="submit" mat-raised-button class="save_btn">Use This Case</button>
+      </form>
+    </div>
+  </div>
+
+</ejs-dialog>
+
+<!-- traybuilder area -->
+<ejs-dialog *ngIf="isTrayClicked" #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon' #ejEditDialog>
+  <ng-template #header>
+    <h1 style="color: rgb(243, 118, 118);">Tray Builder (edit trays) - {{foam_name|uppercase}}</h1>
+  </ng-template>
+
+  <div slot="body" class="content">
+
+  </div>
+
+</ejs-dialog>
