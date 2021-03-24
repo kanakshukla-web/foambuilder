@@ -1,5 +1,7 @@
 version: 0.1
-
+env:
+  variables:
+    S3_BUCKET: "foambuilder"
 phases:
   install:
     commands:
