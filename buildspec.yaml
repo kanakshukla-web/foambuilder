@@ -1,7 +1,7 @@
 version: 0.1
 env:
   variables:
-    S3_BUCKET: "foambuilder"
+    S3_BUCKET: "ove.foambuilder"
 phases:
   install:
     commands:
