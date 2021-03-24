@@ -1,7 +1,4 @@
 version: 0.1
-env:
-  variables:
-    S3_BUCKET: "ove.foambuilder"
 phases:
   install:
     commands:
@@ -22,10 +19,7 @@ phases:
       # - echo testing...
       # - echo building...
       - ng build --prod
-  post_build:
-     commands:
-      - aws s3 cp dist s3://${S3_BUCKET} --recursive
-      - echo Build completed on `date`
+
 artifacts:
   files:
     - "**/*"
