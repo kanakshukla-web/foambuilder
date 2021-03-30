@@ -1,12 +1,22 @@
 .right_tab {
   float: right;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  border: 1px solid rgb(255, 255, 255);
+  background-color: #ffffff;
   width: 45vh;
   height: 100vh;
   margin-top: 2px;
+  box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
 }
 
+.right_tab h3{
+  font-weight: bold;
+}
+#shape_namem,.right_tab input{
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  margin-bottom: 10px;
+}
 ul {
   list-style-type: none;
   margin: 0;
@@ -26,6 +36,7 @@ li a {
 }
 
 li a:hover {
-  background-color: #a79a9a;
-  cursor: pointer;
+  background-color: #bada55;
+    cursor: pointer;
+    border: 1px solid #a3c043;
 }

@@ -1,17 +1,17 @@
 <div class="left_tab">
   <button (click)="openLib()" class="tablinks" id="defaultOpen">
-    <i class="fa fa-puzzle-piece fa-2x icon"></i><br>Library</button><br><br>
+    <i class="fa fa-puzzle-piece fa-2x icon"></i> Library</button>
   <button (click)='openTracer()' class="tablinks">
-    <i class="fa fa-camera-retro fa-2x icon-sm"></i><br>Photo Tracer</button><br><br>
+    <i class="fa fa-camera-retro fa-2x icon-sm"></i>Photo Tracer</button>
   <button (click)="openNav('Rect')" class="tablinks">
-    <i class="fa fa-square-o fa-2x icon-sm"></i><br>Rect</button><br><br>
+    <i class="fa fa-square-o fa-2x icon-sm"></i>Rect</button>
   <button (click)="openNav('Circle')" class="tablinks">
-    <i class="fa fa-circle-o fa-2x icon-sm"></i><br>Circle</button><br><br>
+    <i class="fa fa-circle-o fa-2x icon-sm"></i>Circle</button>
   <button (click)="openDrawShape()" class="tablinks">
-    <i class="fa fa-pencil fa-2x icon"></i><br>Draw</button><br><br>
+    <i class="fa fa-pencil fa-2x icon"></i>Draw</button>
   <hr>
   <button (click)="openNav('Settings')" class="tablinks">
-    <i class="fa fa fa-cog fa-2x icon-sm"></i><br>Settings</button>
+    <i class="fa fa fa-cog fa-2x icon-sm"></i>Settings</button>
 </div>
 
 <div id="myRectPanel" class="sidepanel">
@@ -104,7 +104,7 @@
 
   <button (click)="loadFile()" mat-raised-button>Trace a Photo
     <input type='file' accept="image/*" id="getFile" (change)="handleInput($event)" style="display:none">
-  </button><br><br>
+  </button>
   <p>Please choose a photo trace</p>
   <p>A PNG with a transparent background will trace automatically.</p>
   <p>A JPG can be manually traced point to point.</p>

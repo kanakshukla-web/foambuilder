@@ -1,6 +1,6 @@
 #nav {
   height: 72px;
-  background-color: #fff;
+  background-color: #4f5467;
   border: 0;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   top: 0;
@@ -39,17 +39,18 @@
 .hamburger {
   vertical-align: middle;
   margin-left: 20px;
-  font-size: 35px;
-  margin-top: 20px;
+  font-size: 35px; 
 }
 
 .save_btn {
   margin-left: 70px;
   height: 32px;
+  background-color: #ff4081;
+  margin-top: 20px;
 }
 
 .save_btn :hover {
-  color: blue;
+  color: #fff;
 }
 
 .register {
