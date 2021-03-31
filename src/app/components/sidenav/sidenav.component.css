@@ -3,13 +3,13 @@
   border: 1px solid rgb(255, 255, 255);
   background-color: #ffffff;
   width: 20vh;
-  height: 100vh;
-  margin-top: 0px;
+  margin-top: 0px;  
+
 }
 
 .left_tab button {
   background-color: inherit;
-  color: black;
+  color: #787f91;
   padding: 10px 10px;
   width: 100%;
   border: none;
@@ -18,10 +18,19 @@
   cursor: pointer;
   transition: 0.3s;
   font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: sans-serif;
+  margin-bottom: 15px;
+}
+.left_tab i{
+  margin-right: 5px;
+  font-size: 16px;
 }
 
 .left_tab button:hover {
-  background-color: #ddd;
+  color: #fb9678;
 }
 
 .left_tab button.active {
@@ -33,12 +42,13 @@
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
-  top: 11vh;
-  left: 20vh;
-  background-color: rgb(245, 245, 245); /* Black*/
+  top: 71px;
+  left: 153px;
+  background-color: rgb(255, 255, 255); /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 10px; /* Place content 60px from the top */
   transition: 0.2s; /* 0.5 second transition effect to slide in the sidepanel */
+  box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
 }
 
 /* The sidepanel links */
@@ -91,7 +101,7 @@
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(10, 6, 6, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s,
     box-shadow ease-in-out 0.15s;
