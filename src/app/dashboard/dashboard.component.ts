@@ -549,7 +549,7 @@ export class DashboardComponent implements OnInit {
       });
 
 
-      console.log(this.tr.nodes());
+      //console.log(this.tr.nodes());
       var shapes = this.stage.find('.rect').toArray();
       var box = this.selectionRectangle.getClientRect();
       var selected = shapes.filter((shape) =>
