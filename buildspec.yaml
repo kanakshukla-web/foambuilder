@@ -25,4 +25,4 @@ artifacts:
     - "**/*"
   discard-paths: no
   base-directory: 'dist*'
-  base-directory: dist/your-app-name
+  base-directory: dist/
