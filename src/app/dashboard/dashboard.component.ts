@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit {
     if (this.isCanvasUpdated) {
       this.fillCanvasBorder();
       this.drawBoard();
-      alert('Canvas updated successfully.');
+      alert('Canvas settings updated successfully.');
       this.isCanvasUpdated = false;
     }
   }
