@@ -1,0 +1,38 @@
+div.outline {
+  border: 1px solid rgb(223, 198, 198);
+  border-radius: 5px;
+  margin: 4px;
+  text-align: center;
+  width: 180px;
+}
+
+input {
+  width: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  border: 1px solid rgb(223, 198, 198);
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+div {
+  display: inline-block;
+
+}
+
+.save_btn {
+  margin: 10px;
+  height: 33px;
+}
+
+.save_btn :hover {
+  color: blue;
+}
+

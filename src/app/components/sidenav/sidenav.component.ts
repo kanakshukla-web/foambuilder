@@ -32,7 +32,7 @@ export class SidenavComponent implements OnInit {
   isCircleClicked: boolean = false;
   isSettingsClicked: boolean = false;
 
-  public typeDialogWidth: string = '95%';
+  public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
 

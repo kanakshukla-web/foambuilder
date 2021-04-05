@@ -10,7 +10,7 @@ export class EjsShapeLibComponent implements OnInit {
   @Output() close = new EventEmitter<string>();
   @Output() addShape = new EventEmitter<ShapeLib>();
 
-  public typeDialogWidth: string = '95%';
+  public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
 

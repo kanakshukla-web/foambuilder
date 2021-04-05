@@ -1,0 +1,11 @@
+<ejs-dialog *ngIf="isTrayClicked" #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon'>
+  <ng-template #header>
+    <h1 style="color: rgb(243, 118, 118);">Tray Builder (edit trays) - {{canvasProperties.case_name|uppercase}}</h1>
+  </ng-template>
+
+  <div slot="body" class="content">
+
+  </div>
+
+</ejs-dialog>

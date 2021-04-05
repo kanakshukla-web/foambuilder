@@ -1,0 +1,78 @@
+<head>
+  <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" />
+  <link href="//cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" />
+  <link href="//cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"> </script>
+</head>
+
+<mat-sidenav-container class="example-container">
+  <!-- navbar header -->
+  <app-navbar></app-navbar>
+
+  <!-- caseInfo menu -->
+  <app-ejs-chnage-case-menu (editEvent)="handleEdit()" (expandEvent)="expandDiv('case-info')"
+    [canvasProperties]='canvasProperties'></app-ejs-chnage-case-menu>
+
+  <ul *ngIf="isShapeDragStarted" id="hidden-buttons">
+    X : {{xAxis}} Y : {{yAxis}}
+  </ul>
+
+  <!-- global-buttons menu -->
+  <app-global-button-menu (clearEvent)="clearSelection()" (setEvent)="setSelection($event)" (revertEvent)="undo()">
+  </app-global-button-menu>
+
+  <!-- tray-builder menu -->
+  <app-ejs-tray-builder-menu (trayEvent)="handleTray()" (expandEvent)="expandDiv($event)"
+    [canvasProperties]="canvasProperties"></app-ejs-tray-builder-menu>
+
+  <!-- <div id="layer-selector">
+    <div style="margin-left: 30%; margin-top: 5px;">Tray Builder</div><br>
+    <div class="select-box">
+      <div class="btn-group">
+        <input id="layer-name" tabindex="-1" autocomplete="off" readonly="" disabled="" value="Bottom ( 33 mm )">
+        <button (click)='expandDiv("tray-builder")' class="btn btn-default dropdown-toggle" type="button">
+          <i class="fa fa-database"></i>
+        </button>
+        <ul id="hidden-tray" class="dropdown-menu">
+          <li class="option"><a (click)='handleTray()' class="active">&nbsp; <i
+                class="fa fa-pencil-square-o active"></i> <span style="color: rgb(24, 22, 22);"> Edit Trays </span> </a>
+          </li>
+          <li class="divider"></li>
+          <hr>
+          <li><a class="disabled">&nbsp; <i class="fa fa-check active"></i> <span style="color: darkgray;"> Bottom ( 33
+                mm ) </span> </a></li>
+        </ul>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- left side bar -->
+  <mat-sidenav opened mode="side">
+    <app-sidenav (addShape)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
+      (drawRectangle)="addShape('rectangle',$event)"></app-sidenav>
+  </mat-sidenav>
+
+  <!-- center canvas area -->
+  <div>
+    <canvas id='myCanvas' class="myCanv" width={{canvasProperties.canvasUpperWidth}}
+      height={{canvasProperties.canvasUpperLength}} #myCanvas></canvas>
+  </div>
+
+  <div id="konvaContainer" class='konva' [style.width.px]="canvasProperties.canvasUpperWidth"
+    [style.height.px]="canvasProperties.canvasUpperLength">
+  </div>
+
+  <!-- right side bar -->
+  <mat-sidenav *ngIf='isPropertiesPanelShown' opened mode="side" position="end">
+    <app-properties (makeClone)="startCloning($event)" [properties]=propertiesObject></app-properties>
+  </mat-sidenav>
+
+</mat-sidenav-container>
+
+<!-- edit/resize foamcase -->
+<app-ejs-change-case (submitForm)="onSubmit($event)" [canvasProperties]='canvasProperties' #changeCase>
+</app-ejs-change-case>
+
+<!-- traybuilder area -->
+<app-ejs-tray-builder (toggleTray)="hideBuilderTray()" [canvasProperties]='canvasProperties' #trayChild>
+</app-ejs-tray-builder>

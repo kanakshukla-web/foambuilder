@@ -20,7 +20,7 @@ export class EjsDrawShapeComponent implements OnInit {
   canvas: ElementRef<HTMLCanvasElement>;
   public ctx: CanvasRenderingContext2D;
 
-  public typeDialogWidth: string = '95%';
+  public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
 

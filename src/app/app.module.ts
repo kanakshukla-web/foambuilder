@@ -1,3 +1,4 @@
+import { EjsChangeCaseTableComponent } from './components/ejs-change-case-table/ejs-change-case-table.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatButtonModule} from '@angular/material/button';
@@ -32,6 +33,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { AccounthandlerComponent } from './components/accounthandler/accounthandler.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { EjsTrayBuilderComponent } from './components/ejs-tray-builder/ejs-tray-builder.component';
+import { EjsChangeCaseComponent } from './components/ejs-change-case/ejs-change-case.component';
+import { EjsChnageCaseMenuComponent } from './components/ejs-chnage-case-menu/ejs-chnage-case-menu.component';
+import { GlobalButtonMenuComponent } from './components/global-button-menu/global-button-menu.component';
+import { EjsTrayBuilderMenuComponent } from './components/ejs-tray-builder-menu/ejs-tray-builder-menu.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -48,6 +56,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     EjsDrawShapeComponent,
     EjsFileHandlerComponent,
     AccounthandlerComponent,
+    EjsTrayBuilderComponent,
+    EjsChangeCaseComponent,
+    EjsChnageCaseMenuComponent,
+    GlobalButtonMenuComponent,
+    EjsTrayBuilderMenuComponent,
+    EjsChangeCaseTableComponent
     //NgxMoveableComponent
   ],
   imports: [
@@ -65,12 +79,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     KonvaModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatFormFieldModule,
     NgxUiLoaderModule,
     NgxSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

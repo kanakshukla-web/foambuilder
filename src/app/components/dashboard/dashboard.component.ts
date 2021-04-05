@@ -1,6 +1,9 @@
-import { Properties, Rectangle } from './../interfaces/intefaces';
-import { ShapeService } from './../services/shape.service';
-import { TextNodeService } from './../services/text-node.service';
+import { EjsChangeCaseComponent } from './../ejs-change-case/ejs-change-case.component';
+import { CanvasService } from './../../services/canvas.service';
+import { EjsTrayBuilderComponent } from './../ejs-tray-builder/ejs-tray-builder.component';
+import { Properties, Rectangle } from '../../interfaces/intefaces';
+import { ShapeService } from '../../services/shape.service';
+import { TextNodeService } from '../../services/text-node.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
@@ -19,27 +22,32 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('ejEditDialog') ejDialog: DialogComponent;
   public targetElement: HTMLElement;
-
-  public typeDialogWidth: string = '95%';
+  public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
+
+  @ViewChild('trayChild') trayChild: EjsTrayBuilderComponent;
+  @ViewChild('changeCase') changeCase: EjsChangeCaseComponent;
 
   img_Src: any;
   panelOpenState = false;
 
   // canvas properties
-  foam_name = 'custom';
-  foam_base = '33';
-  canvasUpperLength = 475; // length = height
-  canvasUpperWidth = 700;
-  canvasDepth = 100;
-  canvasLowerLength = 200; // length = height
-  canvasLowerWidth = 120;
-  canvasRadius = 25;
+  canvasProperties = {
+    case_name: '',
+    foam_base: '',
+    canvasUpperLength: 0,
+    canvasUpperWidth: 0,
+    canvasDepth: 0,
+    canvasLowerLength: 0,
+    canvasLowerWidth: 0,
+    canvasRadius: 0,
+  };
 
   isEditClicked = false;
   isCanvasUpdated = false;
   isPropertiesPanelShown = false;
+
   propertiesObject: Properties = {
     id: 1,
     shape_name: 'rectangle',
@@ -57,8 +65,8 @@ export class DashboardComponent implements OnInit {
   newBoundriesShape: any;
 
   public configStage: Observable<any> = of({
-    width: this.canvasUpperWidth,
-    height: this.canvasUpperLength,
+    width: this.canvasProperties.canvasUpperWidth,
+    height: this.canvasProperties.canvasUpperLength,
   });
   public configCircle: Observable<any> = of({
     x: 200,
@@ -85,7 +93,7 @@ export class DashboardComponent implements OnInit {
   erase: boolean = false;
   transformers: Konva.Transformer[] = [];
   openTrayCount = 0;
-  isTrayClicked = false;
+  //isTrayClicked = false;
   tr: Konva.Transformer;
 
   x1;
@@ -99,10 +107,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private shapeService: ShapeService,
+    private canvasService: CanvasService,
     private textNodeService: TextNodeService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.canvasProperties = JSON.parse(this.canvasService.getInitialConfigurations());
+  }
 
   ngAfterViewChecked() {
     if (this.isCanvasUpdated) {
@@ -114,7 +125,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initilizeCanvas(this.canvasUpperLength, this.canvasUpperWidth);
+    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
     this.initStage();
     this.addLineListeners();
 
@@ -130,11 +141,11 @@ export class DashboardComponent implements OnInit {
   }
 
   initilizeCanvas(length, width) {
-    this.canvasUpperLength = length; // length = height
-    this.canvasUpperWidth = width;
+    this.canvasProperties.canvasUpperLength = length; // length = height
+    this.canvasProperties.canvasUpperWidth = width;
     this.ctx = this.canvas.nativeElement.getContext('2d');
-    this.canvas.nativeElement.width = this.canvasUpperWidth;
-    this.canvas.nativeElement.height = this.canvasUpperLength;
+    this.canvas.nativeElement.width = this.canvasProperties.canvasUpperWidth;
+    this.canvas.nativeElement.height = this.canvasProperties.canvasUpperLength;
 
     this.fillCanvasBorder();
     this.drawBoard();
@@ -142,8 +153,8 @@ export class DashboardComponent implements OnInit {
 
   drawBoard() {
     // canvas grid
-    var bw = this.canvasUpperWidth; // Box width
-    var bh = this.canvasUpperLength; // Box height
+    var bw = this.canvasProperties.canvasUpperWidth; // Box width
+    var bh = this.canvasProperties.canvasUpperLength; // Box height
     var p = 0; // Padding
 
     for (var x = 0; x <= bw; x += 30) {
@@ -164,13 +175,13 @@ export class DashboardComponent implements OnInit {
     // fill grid colors to canvas
     //top
     this.ctx.beginPath();
-    this.ctx.rect(0, 0, this.canvasUpperWidth, 55);
+    this.ctx.rect(0, 0, this.canvasProperties.canvasUpperWidth, 55);
     this.ctx.fillStyle = '#FFFFDA';
     this.ctx.fill();
 
     //bottom
     this.ctx.beginPath();
-    this.ctx.rect(0, this.canvasUpperLength - 50, this.canvasUpperWidth, 55);
+    this.ctx.rect(0, this.canvasProperties.canvasUpperLength - 50, this.canvasProperties.canvasUpperWidth, 55);
     this.ctx.fillStyle = '#FFFFDA';
     this.ctx.fill();
 
@@ -182,24 +193,26 @@ export class DashboardComponent implements OnInit {
 
     //right
     this.ctx.beginPath();
-    this.ctx.rect(this.canvasUpperWidth - 55, 0, 55, 555);
+    this.ctx.rect(this.canvasProperties.canvasUpperWidth - 55, 0, 55, 555);
     this.ctx.fillStyle = '#FFFFDA';
     this.ctx.fill();
   }
 
   closeDialog() {
     this.isEditClicked = false;
-    this.isTrayClicked = false;
+    //this.isTrayClicked = false;
     this.hideBuilderTray();
     this.ejDialog.hide();
   }
 
   handleEdit() {
-    this.isEditClicked = true;
+    //this.isEditClicked = true;
+    this.changeCase.openDialog();
   }
 
   handleTray() {
-    this.isTrayClicked = true;
+    //this.isTrayClicked = true;
+    this.trayChild.openTray();
   }
 
   public onOverlayClick: EmitType<object> = () => {
@@ -215,12 +228,13 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit(formInput) {
-    this.canvasUpperLength = formInput.elements['upperlength'].value;
-    this.canvasUpperWidth = formInput.elements['upperwidth'].value;
+    this.canvasProperties.canvasUpperLength = formInput.elements['upperlength'].value;
+    this.canvasProperties.canvasUpperWidth = formInput.elements['upperwidth'].value;
 
     this.isCanvasUpdated = true;
-    this.initilizeCanvas(this.canvasUpperLength, this.canvasUpperWidth);
-    this.closeDialog();
+    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
+    //this.closeDialog();
+    this.changeCase.closeDialog();
   }
 
   expandDiv(id) {
@@ -260,8 +274,8 @@ export class DashboardComponent implements OnInit {
 
   initStage() {
     if (this.stage == null) {
-      let width = this.canvasUpperWidth;
-      let height = this.canvasUpperLength;
+      let width = this.canvasProperties.canvasUpperWidth;
+      let height = this.canvasProperties.canvasUpperLength;
       this.stage = new Konva.Stage({
         container: 'konvaContainer',
         width: width,
@@ -378,8 +392,8 @@ export class DashboardComponent implements OnInit {
       this.isShapeDragStarted = false;
     });
 
-    rectangle.addEventListener('transformstart', () => {});
-    rectangle.addEventListener('transform', () => {});
+    rectangle.addEventListener('transformstart', () => { });
+    rectangle.addEventListener('transform', () => { });
     rectangle.addEventListener('transformend', () => {
       this.getNewRectDimensions(rectangle);
     });

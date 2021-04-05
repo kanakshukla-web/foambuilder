@@ -1,0 +1,15 @@
+<div id="case-info">
+  <div><span>{{canvasProperties.case_name}}</span>
+    <a href="#" data-cypress="case-edit" class="edit"><i (click)="handleEdit()" class="fa fa-pencil"></i></a>
+    <span class="pull-right">Base: {{canvasProperties.foam_base}}</span>
+  </div>
+  <div>{{canvasProperties.canvasUpperLength}} x {{canvasProperties.canvasUpperWidth}} x
+    {{canvasProperties.canvasDepth}}</div>
+
+  <div style="margin-top:10px">
+    <div>Lower: {{canvasProperties.canvasLowerLength}} x {{canvasProperties.canvasLowerWidth}}</div>
+    <div>Corner Radius: {{canvasProperties.canvasRadius}}</div>
+  </div>
+
+  <a class="expand"><i id='expand' (click)="expandDiv('case-info')" class="fa fa-chevron-down"></i></a>
+</div>

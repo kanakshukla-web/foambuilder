@@ -1,0 +1,48 @@
+<div class="example-container mat-elevation-z8">
+
+  <mat-form-field>
+    <mat-label>Filter Cases by Name</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. custom" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Case Name -->
+    <ng-container matColumnDef="CaseName">
+      <th mat-header-cell *matHeaderCellDef>Case Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.CaseName}} </td>
+    </ng-container>
+
+    <!-- Interior Size -->
+    <ng-container matColumnDef="InteriorSize">
+      <th mat-header-cell *matHeaderCellDef> Interior Size </th>
+      <td mat-cell *matCellDef="let element"> {{element.InteriorSize}} </td>
+    </ng-container>
+
+    <!-- UseCaseButton -->
+    <ng-container matColumnDef="UseCaseButton">
+      <th mat-header-cell *matHeaderCellDef>Use This Case</th>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary"
+          (click)="addCase(element.name)">Use This Case</button> </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+  </table>
+</div>

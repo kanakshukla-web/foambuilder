@@ -1,0 +1,20 @@
+<div id="layer-selector">
+  <div style="margin-left: 30%; margin-top: 5px;">Tray Builder</div><br>
+  <div class="select-box">
+    <div class="btn-group">
+      <input id="layer-name" tabindex="-1" autocomplete="off" readonly="" disabled="" value="Bottom ( 33 mm )">
+      <button (click)='expandDiv("tray-builder")' class="btn btn-default dropdown-toggle" type="button">
+        <i class="fa fa-database"></i>
+      </button>
+      <ul id="hidden-tray" class="dropdown-menu">
+        <li class="option"><a (click)='handleTray()' class="active">&nbsp; <i
+              class="fa fa-pencil-square-o active"></i> <span style="color: rgb(24, 22, 22);"> Edit Trays </span> </a>
+        </li>
+        <li class="divider"></li>
+        <hr>
+        <li><a class="disabled">&nbsp; <i class="fa fa-check active"></i> <span style="color: darkgray;"> Bottom ( 33
+              mm ) </span> </a></li>
+      </ul>
+    </div>
+  </div>
+</div>

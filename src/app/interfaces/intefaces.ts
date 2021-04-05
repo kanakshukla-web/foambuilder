@@ -7,7 +7,7 @@ export class Rectangle {
     public fingerNotch: string,
     public depth: number,
     public cornerRadius?: number
-  ) {}
+  ) { }
 }
 
 export class Circle {
@@ -19,7 +19,7 @@ export class Circle {
     public fingerNotch: string,
     public width?: number,
     public cornerRadius?: number
-  ) {}
+  ) { }
 }
 
 export class Settings {
@@ -29,7 +29,7 @@ export class Settings {
     public gridSize: number,
     public nudgeSpacing: number,
     public units?: string
-  ) {}
+  ) { }
 }
 
 export class ShapeLib {
@@ -41,7 +41,7 @@ export class ShapeLib {
     public shapes?: string,
     public shapeImg?: string,
     public shapeDimensions?: string
-  ) {}
+  ) { }
 }
 
 export class Properties {
@@ -55,7 +55,7 @@ export class Properties {
     public yLoc: number,
     public angle: number,
     public image_Src?: string
-  ) {}
+  ) { }
 }
 
 export class AccountData {
@@ -65,5 +65,10 @@ export class AccountData {
     public linkText?: string,
     public forgotButtonText?: string,
     public buttonText?: string
-  ) {}
+  ) { }
+}
+
+export interface CaseDescription {
+  CaseName: string;
+  InteriorSize: string;
 }
