@@ -1,62 +1,63 @@
 .sidebar-user {
-  padding:10px 25px;
-
+  padding: 10px 25px;
   position: relative;
-
   text-align: center;
   overflow: hidden;
   border-bottom: 1px solid #34404f;
   border-top: 1px solid #34404f;
 }
 
-.profile_img img{
+.profile_img img {
   width: 50px;
-  height:50px;
+  height: 50px;
   object-fit: cover;
-  border-radius:50%;
-
+  border-radius: 50%;
 }
-.sidebar-user h6{
+
+.sidebar-user h6 {
   padding: 10px 0px 0px 0px;
 }
-.sidebar-user p{
+
+.sidebar-user p {
   margin-top: -10px;
   text-transform: capitalize;
 }
-.trace_a_photo{
+
+.trace_a_photo {
   background-color: #001227;
   color: #FFF;
   text-transform: uppercase;
 }
-.header_modal h1{
+
+.header_modal h1 {
   color: #202e3e;
   text-transform: uppercase;
   font-weight: 500;
-
 }
-.center-logo img{
+
+.center-logo img {
   width: 90%;
   padding: 10px 0px;
-
 }
 
-.trace__photo{
+.trace__photo {
   margin-top: 30px;
 }
-.instruction_grid{
+
+.instruction_grid {
   display: grid;
   grid-template-columns: 35% 65%;
   grid-gap: 1rem;
- margin-top: 30px;
- padding: 20px;
-
+  margin-top: 30px;
+  padding: 20px;
 }
+
 .mat-drawer-inner-container {
   width: 100%;
   height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  background-color: #202e3e !important ;
+  background-color: #202e3e !important;
 }
 
 .e-dialog .e-dlg-header-content {
@@ -66,13 +67,12 @@
   margin-bottom: 10px;
 }
 
-.instructions_photo{
+.instructions_photo {
   background-color: #e5e5e5;
   padding: 15px;
   margin-top: 20px;
   display: inline-block;
   border-radius: 5px;
-
 }
 
 .instructions_ul {
@@ -80,7 +80,8 @@
   padding: 0px;
   box-sizing: border-box;
 }
-.instructions_ul li{
+
+.instructions_ul li {
   font-size: 15px;
   list-style-type: decimal;
   margin-left: 10px;
@@ -88,13 +89,12 @@
   color: #111;
   text-transform: inherit;
   font-weight: 500;
-
 }
+
 .left_tab {
   float: left;
   /* border: 1px solid #1c1f22;
   background-color: #1c1f22; */
-
   border: 1px solid #001227;
   background-color: #001227;
   width: 200px;
@@ -102,35 +102,29 @@
   font-weight: 400;
   color: #FFF;
   height: 99.5vh;
-  overflow:auto;
+  overflow: auto;
 }
 
-.fas , .far {
-
+.fas, .far {
   font-size: 15px !important;
   height: 25px;
   width: 25px;
   line-height: 25px;
-
   color: rgb(247, 247, 247);
-
-
-
 }
 
-.tablinks span{
-
+.tablinks span {
   margin-left: 0px;
   font-weight: 500;
   font-family: "Open Sans", sans-serif !important;
 }
 
 .mat-drawer-inner-container {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: #1c1f22 !important;
-    -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #1c1f22 !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .left_tab button {
@@ -149,20 +143,17 @@
   align-items: center;
   font-weight: 400;
   text-transform: capitalize;
-
-  border-bottom:  1px solid #34404f;
-
+  border-bottom: 1px solid #34404f;
 }
-.left_tab i{
+
+.left_tab i {
   margin-right: 10px;
   font-size: 15px;
 }
 
-.logo img{
-
+.logo img {
   width: 85%;
- margin: 15px 0px 10px;
-
+  margin: 15px 0px 10px;
 }
 
 .left_tab button:hover {
@@ -174,21 +165,29 @@
 }
 
 .sidepanel {
-  height: 90%; /* Specify a height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
+  height: 90%;
+  /* Specify a height */
+  width: 0;
+  /* 0 width - change this with JavaScript */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Stay on top */
   top: 71px;
   left: 204px;
-
-  background-color: rgb(223, 223, 223); /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 10px; /* Place content 60px from the top */
-  transition: 0.2s; /* 0.5 second transition effect to slide in the sidepanel */
+  background-color: rgb(223, 223, 223);
+  /* Black*/
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding-top: 10px;
+  /* Place content 60px from the top */
+  transition: 0.2s;
+  /* 0.5 second transition effect to slide in the sidepanel */
   box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
 }
 
 /* The sidepanel links */
+
 .sidepanel a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -199,11 +198,13 @@
 }
 
 /* When you mouse over the navigation links, change their color */
+
 .sidepanel a:hover {
   color: #f1f1f1;
 }
 
 /* Position and style the close button (top right corner) */
+
 .sidepanel .closebtn {
   position: absolute;
   top: 0;
@@ -213,6 +214,7 @@
 }
 
 /* Style the button that is used to open the sidepanel */
+
 .openbtn {
   font-size: 20px;
   cursor: pointer;
@@ -240,8 +242,7 @@
   border-radius: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(255, 249, 249, 0.075);
   box-shadow: inset 0 1px 1px rgba(209, 209, 209, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s,
-    box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
@@ -253,10 +254,7 @@
   margin-bottom: 5px;
 }
 
-.input-lg,
-.input-group-lg > .form-control,
-.input-group-lg > .input-group-addon,
-.input-group-lg > .input-group-btn > .btn {
+.input-lg, .input-group-lg>.form-control, .input-group-lg>.input-group-addon, .input-group-lg>.input-group-btn>.btn {
   height: 46px;
   padding: 10px 16px;
   font-size: 18px;
@@ -265,7 +263,6 @@
 }
 
 .save_btn {
-
   margin-left: 260px;
   width: 100px;
   background-color: #202e3e;
@@ -300,10 +297,12 @@
   max-width: calc(33% - 10px);
   min-height: 450px;
 }
+
 #shape-library-modal ul.search-results li .image {
   text-align: center;
   margin-bottom: 5px;
 }
+
 #shape-library-modal ul.search-results li p.desc {
   width: 250px;
   white-space: nowrap;
@@ -313,6 +312,7 @@
   margin-bottom: 21px;
   cursor: pointer;
 }
+
 #shape-library-modal ul.search-results li p.desc.mfrid {
   margin-top: 2px;
   margin-bottom: 5px;
@@ -326,15 +326,18 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
+
 #shape-library-modal ul.search-results li p.dimensions {
   font-size: 11px;
   margin-top: 2px;
   margin-bottom: 5px;
 }
+
 .row {
   margin-left: -15px;
   margin-right: -15px;
 }
+
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -346,6 +349,7 @@ label {
 #shape-library-modal ul.search-results li .container-buttons .btn-fake {
   width: 100%;
 }
+
 #shape-library-modal ul.search-results li .container-buttons .btn {
   margin: 1rem 0 0 0;
   min-width: 95px;
@@ -356,6 +360,7 @@ label {
   border-radius: 4px;
   padding: 5px;
 }
+
 .btn {
   display: inline-block;
   margin-bottom: 0;
@@ -376,6 +381,7 @@ label {
   -ms-user-select: none;
   user-select: none;
 }
+
 fieldset[disabled] .btn {
   /* cursor: not-allowed; */
   opacity: 0.65;
@@ -383,17 +389,20 @@ fieldset[disabled] .btn {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
 img {
   vertical-align: middle;
 }
+
 #shape-library-modal ul.search-results li fieldset[disabled] {
   cursor: not-allowed;
 }
+
 p {
   margin: 0 0 10px;
 }
-.form-select {
 
+.form-select {
   height: 45px;
   padding: 6px 12px;
   font-size: 18px;
@@ -441,49 +450,58 @@ p {
   /* text-align: right; */
   border-top: 1px solid #e5e5e5;
 }
+
 input[type="range"] {
   /* -webkit-appearance: none; */
   margin: 18px 0;
   width: 90%;
   display: block;
 }
+
 .row {
   margin-left: -15px;
   margin-right: -15px;
 }
+
 #drawCanvas-container {
   overflow: auto;
 }
+
 #photo-draw-modal canvas {
   border-radius: 3px;
   margin-top: -1px;
 }
+
 #drawCanvas {
   background-color: #fff;
   cursor: crosshair;
 }
-canvas,
-progress {
+
+canvas, progress {
   display: inline-block;
   vertical-align: baseline;
 }
+
 .btn-default {
   color: #333;
   background-color: #fff;
   border-color: #ccc;
 }
+
 .btn {
   border-radius: 4px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.11),
-    1px 1px 0 rgba(255, 255, 255, 0.21) inset;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.11), 1px 1px 0 rgba(255, 255, 255, 0.21) inset;
 }
+
 .zoomable .btn {
   margin-right: 5px;
 }
+
 a {
   color: #4d90fc;
   text-decoration: none;
 }
+
 .col-sm-3 {
   width: 25%;
   position: relative;
@@ -493,6 +511,7 @@ a {
 }
 
 /* ----------------------------------------- */
+
 .container {
   position: relative;
   top: 50%;
@@ -535,9 +554,10 @@ a {
   transform: translate(-100%, -100%);
   z-index: 3001;
 }
+
 /* ----------------------------------------- */
 
-.lib_shape{
+.lib_shape {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
@@ -547,16 +567,15 @@ a {
   overflow: auto;
   border: 2px solid #CCC;
   padding: 15px;
-  border-radius:5px;
-
+  border-radius: 5px;
 }
-.items{
+
+.items {
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
   background-color: rgb(255, 254, 254);
-  margin: 5px;
 }
 
 fieldset {
@@ -570,9 +589,11 @@ fieldset {
   max-height: 140px;
   max-width: 100%;
 }
+
 .items fieldset[disabled] img.shape-thumb {
   opacity: 0.5;
 }
+
 .items img.shapeorientation {
   max-height: 100px;
   border: 1px solid #ccc;
@@ -581,22 +602,24 @@ fieldset {
   max-width: 100%;
 }
 
-.items .title{
+.items .title {
   font-size: 15px;
   font-weight: 500;
 }
 
-.values_drop_down{
+.values_drop_down {
   font-size: 15px;
 }
-.results{
-   display: inline-block;
-   display: grid;
-   text-align: right;
-   color: rgb(51, 51, 51);
-   background-color: rgb(252, 252, 252);
-   font-size: 15px;
-   padding: 10px;
-   font-weight: 500;
-   margin: 10px 0px 0px 0px;
+
+.results {
+  display: inline-block;
+  text-align: center;
+  color: rgb(51, 51, 51);
+  background-color: rgb(255, 255, 255);
+  font-size: 15px;
+  padding: 10px;
+  font-weight: 500;
+  margin: 10px 0px 0px 0px;
+  width: 30%;
+  font-style: italic;
 }

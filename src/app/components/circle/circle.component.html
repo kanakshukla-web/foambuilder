@@ -12,31 +12,24 @@
   <form (ngSubmit)="onSubmit()" #rectangleForm="ngForm">
     <div class="form-group">
       <label class="form-label" for="diameter">Diameter (MM)</label>
-      <input type="text" placeholder="0" class="form-control" id="diameter" required [(ngModel)]="model.diameter"
-        name="name" #name="ngModel">
+      <input type="text" placeholder="0" class="form-control" required [(ngModel)]="model.diameter" name="name"
+        #name="ngModel">
       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
         Diameter is required
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label" for="depth">Depth (MM)</label>
-      <input type="text" placeholder="0" class="form-control" id="depth" required [(ngModel)]="model.depth" name="name"
+      <label class="form-label" for="depth_lbl">Depth (MM)</label>
+      <input type="text" placeholder="0" class="form-control" required [(ngModel)]="model.depth" name="name"
         #name="ngModel">
       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
         depth is required
       </div>
     </div>
-    <!-- <div class="form-group">
-      <label class="form-label" for="depth">Depth (MM)</label>
-      <input type="text" placeholder="0" class="form-control" id="depth" required [(ngModel)]="model.depth" name="name"
-        #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        Depth is required
-      </div>
-    </div> -->
+
     <div class="form-group">
       <label class="form-label" for="notche">Finger Notches</label>
-      <select class="form-select" id="notche" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
+      <select class="form-select" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
         <option disabled>Set Finger Notches</option>
         <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
       </select>
@@ -47,7 +40,7 @@
     <button type="submit" mat-raised-button class="form-btn" [disabled]="!rectangleForm.form.valid">
       Add Circle
     </button>
-   
+
     <div class="img__btm"><img src="assets/circle_menu.png"></div>
   </form>
 </div>

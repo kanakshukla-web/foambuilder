@@ -26,9 +26,11 @@
       <select class="form-select" id="shape" required [(ngModel)]="model.shapes" name="shape" #shape="ngModel">
         <option *ngFor="let shape of shapes" class="values_drop_down" [value]="shape">{{shape}}</option>
       </select>
+      <p class="results">{{totalResults}} Results</p>
     </div>
+
   </div>
-  <div class="results">{{totalResults}} Results</div>
+
 
   <div class="lib_shape">
     <div *ngFor="let shape of ShapesList">
