@@ -13,7 +13,8 @@ export class EjsChangeCaseComponent implements OnInit {
   @Output() submitForm = new EventEmitter();
   @Input() canvasProperties;
 
-  isEditClicked = false;
+  isCustomSizeFoam: boolean = false;
+  isEditClicked: boolean = false;
   public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '98%';
   public showCloseIcon: boolean = true;
@@ -33,5 +34,8 @@ export class EjsChangeCaseComponent implements OnInit {
   closeDialog() {
     this.isEditClicked = false;
     this.ejDialog.hide();
+  }
+  onNgModelChange(e: any) {
+    this.isCustomSizeFoam = !this.isCustomSizeFoam
   }
 }

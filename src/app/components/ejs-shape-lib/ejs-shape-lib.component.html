@@ -3,67 +3,71 @@
 
   <ng-template #header>
     <div class="header_modal">
-    <h1>Shape Library</h1>
+      <h1>Shape Library</h1>
     </div>
   </ng-template>
 
-  <div id='shape-library-modal' style="padding:10px 20px;">
+  <div id='shape-library-modal'>
     <div>
       <input type="search" class="form-control input-lg" placeholder="Search">
 
       <select class="form-select" id="categoty" required [(ngModel)]="model.category" name="categoty"
         #categoty="ngModel">
         <option disabled>Category</option>
-        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+        <option *ngFor="let category of categories" class="values_drop_down" [value]="category">{{category}}</option>
       </select>
 
-      <select style="color:darkgray;width: 8%;" class="form-select" id="brand" required [(ngModel)]="model.brand"
-        name="brand" #brand="ngModel">
+      <select class="values_drop_down" class="form-select" id="brand" required [(ngModel)]="model.brand" name="brand"
+        #brand="ngModel">
         <option disabled>Brand</option>
-        <option *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+        <option *ngFor="let brand of brands" class="values_drop_down" [value]="brand">{{brand}}</option>
       </select>
 
-      <select style="width:23%" class="form-select" id="shape" required [(ngModel)]="model.shapes" name="shape"
-        #shape="ngModel">
-        <option *ngFor="let shape of shapes" [value]="shape">{{shape}}</option>
+      <select class="form-select" id="shape" required [(ngModel)]="model.shapes" name="shape" #shape="ngModel">
+        <option *ngFor="let shape of shapes" class="values_drop_down" [value]="shape">{{shape}}</option>
       </select>
     </div>
+  </div>
+  <div class="results">{{totalResults}} Results</div>
 
+  <div class="lib_shape">
     <div *ngFor="let shape of ShapesList">
-      <ul class="search-results">
-        <li>
-          <p class="title"> {{shape.ShapeName}}</p>
-          <div class="image">
-            <fieldset disabled=""><img class="shape-thumb" src={{shape.ShapeImageSrc}}>
+
+      <div class="items">
+
+        <p class="title"> {{shape.ShapeName}}</p>
+        <div class="image">
+          <fieldset disabled=""><img class="shape-thumb" src={{shape.ShapeImageSrc}}>
+          </fieldset>
+        </div>
+        <p class="desc">{{shape.ShapeDescription}}</p>
+        <div>
+          <p class="desc mfrid">Mfr ID: {{shape.MfrID}}</p>
+          <label for="584784ee6a5ca31bc401668b">Orientation</label>
+          <select class="form-control" id="584784ee6a5ca31bc401668b">
+
+            <option *ngFor="let data of shape.Orientation" [value]="data.Name">
+              {{data.Name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="row container-buttons container-fluid" style="text-align: left;">
+          <div style="width: 50%;">
+            <fieldset disabled="">
+              <img class="shapeorientation" src="assets/cbimage.jpg">
+              <img class="orientation-prev">
             </fieldset>
           </div>
-          <p class="desc">{{shape.ShapeDescription}}</p>
-          <div>
-            <p class="desc mfrid">Mfr ID: {{shape.MfrID}}</p>
-            <label for="584784ee6a5ca31bc401668b">Orientation</label>
-            <select class="form-control" id="584784ee6a5ca31bc401668b">
-
-              <option *ngFor="let data of shape.Orientation" [value]="data.Name">
-                {{data.Name}}
-              </option>
-            </select>
+          <div style="width: 50%;">
+            <button class="save_btn" mat-raised-button (click)="drawShapeOnCanvas()">Add Shape</button>
           </div>
-
-          <div class="row container-buttons container-fluid">
-            <div style="width: 50%;">
-              <fieldset disabled="">
-                <img class="shapeorientation" src="assets/cbimage.jpg">
-                <img class="orientation-prev">
-              </fieldset>
-            </div>
-            <div style="width: 50%;">
-              <button class="save_btn" mat-raised-button (click)="drawShapeOnCanvas()">Add Shape</button>
-            </div>
-          </div>
-          <p [(ngModel)]="model.shapeDimensions" id='dimension' class="dimensions" #dimension="ngModel">57 x 217 x 108
-          </p>
-        </li>
-      </ul>
+        </div>
+        <!-- <p style="text-align: left;" [(ngModel)]="model.shapeDimensions" id='dimension' class="dimensions"
+          #dimension="ngModel">57 x 217 x 108
+        </p> -->
+        <p style="text-align: left; margin-top: -20px;">57 x 217 x 108</p>
+      </div>
     </div>
   </div>
 </ejs-dialog>

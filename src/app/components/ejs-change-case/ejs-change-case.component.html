@@ -1,4 +1,4 @@
-<ejs-dialog *ngIf="isEditClicked" isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+<!-- <ejs-dialog *ngIf="isEditClicked" isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
   height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon' #ejEditDialog>
   <ng-template #header>
     <h1 style="color: rgb(243, 118, 118);">Change Your Case</h1>
@@ -62,4 +62,75 @@
 
     <app-ejs-change-case-table></app-ejs-change-case-table>
   </div>
+</ejs-dialog> -->
+
+<ejs-dialog *ngIf="isEditClicked" isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon' #ejEditDialog>
+
+  <ng-template #header>
+    <div class="header_modal">
+      <h1>Draw your shape</h1>
+    </div>
+  </ng-template>
+
+  <div class="change-case-table-99">
+    <div class="top_case">
+      <h3> <b>Current Case: {{canvasProperties.case_name}}</b></h3>
+      <form (ngSubmit)="onSubmit(editForm)" #editForm>
+        <div class="outline" style="width:150px">
+          <mat-checkbox name="custom_form" type="checkbox" ngModel (ngModelChange)="onNgModelChange($event)"
+            labelPosition=before><b>Custom Size Foam</b>
+          </mat-checkbox>
+        </div>
+        <br>
+        <div class="" *ngIf="isCustomSizeFoam">
+          <div>
+            <div class="outline">
+              <label> Upper Length &nbsp;
+                <input type='number' name="upperlength" value={{canvasProperties.canvasUpperLength}}>
+              </label>
+            </div>
+
+            <div class="outline">
+              <label> Upper Width &nbsp;
+                <input type='number' name="upperwidth" value={{canvasProperties.canvasUpperWidth}}>
+              </label>
+            </div>
+
+            <div class="outline" style="width:150px">
+              <label> Depth &nbsp;
+                <input type='number' name="depth" value={{canvasProperties.canvasDepth}}>
+              </label>
+            </div>
+          </div>
+          <br>
+          <div>
+            <div class="outline">
+              <label> Lower Length &nbsp;
+                <input type='number' name="lowerlength" value={{canvasProperties.canvasLowerLength}}>
+              </label>
+            </div>
+            <div class="outline">
+              <label> Lower Width &nbsp;
+                <input type='number' name="lowerwidth" value={{canvasProperties.canvasLowerWidth}}>
+              </label>
+            </div>
+            <div class="outline">
+              <label> Corner Radius &nbsp;
+                <input type='number' name="cornerradius" value={{canvasProperties.canvasRadius}}>
+              </label>
+            </div>
+          </div>
+          <br>
+          <button type="submit" mat-raised-button class="save_btn">Use This Case</button>
+        </div>
+      </form>
+    </div>
+    <div class="botom_case">
+      <div class="change-case-table" *ngIf="!isCustomSizeFoam">
+        <app-ejs-change-case-table></app-ejs-change-case-table>
+      </div>
+    </div>
+  </div>
+
 </ejs-dialog>

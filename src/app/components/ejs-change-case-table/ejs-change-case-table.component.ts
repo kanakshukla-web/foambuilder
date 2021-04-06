@@ -12,7 +12,7 @@ import { CaseDescription } from 'src/app/interfaces/intefaces';
 export class EjsChangeCaseTableComponent implements OnInit {
 
   CASE_DATA: CaseDescription[] = [];
-  displayedColumns: string[] = ['select', 'CaseName', 'InteriorSize','UseCaseButton'];
+  displayedColumns: string[] = ['select', 'CaseName', 'InteriorSize', 'UseCaseButton'];
   dataSource = new MatTableDataSource<CaseDescription>(this.CASE_DATA);
   selection = new SelectionModel<CaseDescription>(true, []);
 
@@ -50,8 +50,7 @@ export class EjsChangeCaseTableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  addCase(name)
-  {
+  addCase(name) {
     alert(name);
   }
 

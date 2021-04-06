@@ -1,3 +1,4 @@
+import { EjsPhotoTracerComponent } from './../ejs-photo-tracer/ejs-photo-tracer.component';
 import { EjsShapeLibComponent } from './../ejs-shape-lib/ejs-shape-lib.component';
 import { Rectangle } from './../../interfaces/intefaces';
 import {
@@ -16,15 +17,13 @@ import { ShapeLib, Circle } from 'src/app/interfaces/intefaces';
   styleUrls: ['./sidenav.component.css'],
 })
 export class SidenavComponent implements OnInit {
-  @ViewChild('drawCanvas', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;
-  public ctx: CanvasRenderingContext2D;
 
   @Output() addShape = new EventEmitter<ShapeLib>();
   @Output() drawRectangle = new EventEmitter<Rectangle>();
   @Output() drawCircle = new EventEmitter<Circle>();
   //@Output() drawPoint = new EventEmitter<string>();
   @ViewChild('shapeLibChild') shapeLibChild: EjsShapeLibComponent;
+  @ViewChild('photoTracerChild') photoTracerChild: EjsPhotoTracerComponent;
 
   //isLibOpened: boolean = false;
   isTracerOpened: boolean = false;
@@ -38,41 +37,13 @@ export class SidenavComponent implements OnInit {
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
 
-  model = new ShapeLib(
-    1,
-    '',
-    'Category',
-    'Brand',
-    'Public & Private Shapes Only'
-  );
-  categories = [
-    'Audio',
-    'Binoculars',
-    'Bottles',
-    'Bows/Crossbows',
-    'Camera',
-    'Camera Lenses',
-    'Computers/Tablets',
-    'Drones',
-  ];
-  brands = ['Audio', 'Binoculars'];
-  shapes = [
-    'Public & Private Shapes Only',
-    'Public Shapes Only',
-    'Private Shapes Only',
-  ];
-
   isFileSelected: boolean = false;
-  tracer_Img: any;
+
   imgURL: any;
 
   constructor() { }
 
   ngOnInit(): void { }
-
-  initilizeCanvas() {
-    this.ctx = this.canvas.nativeElement.getContext('2d');
-  }
 
   openLib() {
     //this.isLibOpened = true;
@@ -81,7 +52,8 @@ export class SidenavComponent implements OnInit {
 
   openTracer() {
     this.isFileSelected = false;
-    this.isTracerOpened = true;
+    //this.isTracerOpened = true;
+    this.photoTracerChild.openTracerInstrctions();
   }
 
   openDrawShape() {
@@ -121,17 +93,14 @@ export class SidenavComponent implements OnInit {
   closeDialog() {
     //this.isLibOpened = false;
     this.shapeLibChild.closeDialog();
-    this.isTracerOpened = false;
+    //this.isTracerOpened = false;
+    this.photoTracerChild.closeTracerInstrctions();
     this.isDrawOpened = false;
   }
 
-  // startDrawPoint(){
-  //   this.drawPoint.emit("stratDrawPoint")
-  // }
-
-  drawShapeOnCanvas() {
+  drawShapeOnCanvas(model) {
     this.closeDialog();
-    this.addShape.emit(this.model);
+    this.addShape.emit(model);
   }
 
   drawRectOnCanvas(event: Rectangle) {
@@ -142,26 +111,4 @@ export class SidenavComponent implements OnInit {
     this.drawCircle.emit(event);
   }
 
-  loadFile() {
-    document.getElementById('getFile').click();
-  }
-
-  handleInput(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      console.log(file);
-      this.isFileSelected = true;
-      this.isTracerOpened = false;
-      this.addImageToCanvas();
-    }
-  }
-
-  addImageToCanvas() {
-    this.initilizeCanvas();
-    this.tracer_Img = new Image();
-    this.tracer_Img.src = '/assets/cbimage.jpg';
-    this.tracer_Img.onload = () => {
-      this.ctx.drawImage(this.tracer_Img, 50, 50);
-    };
-  }
 }

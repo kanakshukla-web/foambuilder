@@ -1,10 +1,10 @@
 <div class="example-container mat-elevation-z8">
-
-  <mat-form-field>
-    <mat-label>Filter Cases by Name</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. custom" #input>
-  </mat-form-field>
-
+  <div class="">
+    <mat-form-field>
+      <mat-label>Filter Cases by Name</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. custom" #input>
+    </mat-form-field>
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Checkbox Column -->

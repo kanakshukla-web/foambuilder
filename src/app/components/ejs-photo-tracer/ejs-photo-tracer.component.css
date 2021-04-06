@@ -1,0 +1,173 @@
+.trace_a_photo {
+  background-color: #001227;
+  color: #FFF;
+  text-transform: uppercase;
+}
+
+.trace__photo {
+  margin-top: 30px;
+}
+
+.instruction_grid {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-gap: 1rem;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.mat-drawer-inner-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #202e3e !important;
+}
+
+.e-dialog .e-dlg-header-content {
+  border-bottom: none;
+  padding: 18px 15px 0px 15px;
+  background-color: #e7eaea;
+  margin-bottom: 10px;
+}
+
+.instructions_photo {
+  background-color: #e5e5e5;
+  padding: 15px;
+  margin-top: 20px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.instructions_ul {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.instructions_ul li {
+  font-size: 15px;
+  list-style-type: decimal;
+  margin-left: 10px;
+  line-height: 30px;
+  color: #111;
+  text-transform: inherit;
+  font-weight: 500;
+}
+
+
+.modal-body {
+  position: relative;
+  padding: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.instructions {
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  width: 292px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 0px;
+  background: white;
+  z-index: 100;
+  text-align: center;
+}
+
+.instructions-header {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  background: lightgreen;
+  z-index: 100;
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+.modal-footer {
+  padding: 5px;
+  border-top: none;
+  padding: 15px;
+  border-top: 1px solid #e5e5e5;
+}
+
+input[type="range"] {
+  margin: 18px 0;
+  width: 90%;
+  display: block;
+}
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+#drawCanvas-container {
+  overflow: auto;
+}
+
+#photo-draw-modal canvas {
+  border-radius: 3px;
+  margin-top: -1px;
+}
+
+#drawCanvas {
+  background-color: #fff;
+  cursor: crosshair;
+}
+
+canvas, progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn {
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.11), 1px 1px 0 rgba(255, 255, 255, 0.21) inset;
+}
+
+.zoomable .btn {
+  margin-right: 5px;
+}
+
+a {
+  color: #4d90fc;
+  text-decoration: none;
+}
+
+.col-sm-3 {
+  width: 25%;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+

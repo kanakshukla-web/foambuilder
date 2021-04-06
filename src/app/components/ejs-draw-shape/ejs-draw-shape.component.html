@@ -1,10 +1,10 @@
 <ejs-dialog #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}} height={{typeDialogHeight}}
   id='dialog' header={{header}} [showCloseIcon]='showCloseIcon'>
- 
-  
+
+
   <ng-template #header>
     <div class="header_modal">
-    <h1>Draw your shape</h1>
+      <h1>Draw your shape</h1>
     </div>
   </ng-template>
 
@@ -53,45 +53,27 @@
   <div class="modal-footer">
     <div slot="footer">
       <div class="row editables">
-       
-
-
         <div class="draw_shapes_grid">
           <div class="zoomable">
             <a href="#" class="btn btn-default Zoom"> <i class="fas fa-search-plus"></i> Zoom In</a>
             <a href="#" class="btn btn-default Zoom"> <i class="fas fa-search-minus"></i> Zoom Out</a>
           </div>
-            <div class="">
-               
-              <input id="" type="text" placeholder="Grid size (MM)" class="form-control">
-              <span class="help-block"    style="display: none;"></span>
-            </div>
-            <div class="check_box">
+          <div class="">
 
-              <div class="snap_to_grid"> 
-                <input type="checkbox"  class=""> &nbsp; Snap to Grid
-               </div>
+            <input id="" type="text" placeholder="Grid size (MM)" class="form-control">
+            <span class="help-block" style="display: none;"></span>
+          </div>
+          <div class="check_box">
 
-              <div class="snap_to_grid">
-                <input type="checkbox"  class=""> &nbsp; Show Angles
-                </div>
+            <div class="snap_to_grid">
+              <input type="checkbox" class=""> &nbsp; Snap to Grid
             </div>
 
+            <div class="snap_to_grid">
+              <input type="checkbox" class=""> &nbsp; Show Angles
+            </div>
+          </div>
         </div>
-
-        <!-- <div class="row col-sm-3">
-          <div class="col-sm-5 form-group">
-           
-          </div>
-          <div class="col-sm-7">
-            <div class="checkbox form-group">
-              
-            </div>
-            <div class="checkbox form-group">
-             
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>

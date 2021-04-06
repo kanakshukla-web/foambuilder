@@ -11,8 +11,8 @@
         alt="#" width="100%" class="">
 
     </div>
-    <h6 class="">ELANA</h6>
-    <p>general manager</p>
+    <h6 class="">Tom</h6>
+    <p>Executive Director</p>
   </div>
 
   <button (click)="openLib()" class="tablinks" id="defaultOpen">
@@ -45,83 +45,15 @@
 </div>
 
 <!-- shape Library -->
-<app-ejs-shape-lib (addShape)="drawShapeOnCanvas()" #shapeLibChild></app-ejs-shape-lib>
+<app-ejs-shape-lib (addShape)="drawShapeOnCanvas($event)" #shapeLibChild></app-ejs-shape-lib>
 
-<!-- draw your shape -->
-<ejs-dialog *ngIf='isTracerOpened' header={{header}} #ejTypeDialog isModal='true' (close)='closeDialog()'
-  width={{typeDialogWidth}} height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
-
-  <ng-template #header>
-    <div class="header_modal">
-      <h1>Draw your shape</h1>
-    </div>
-  </ng-template>
-
-  <div class="instruction_grid">
-    <div class="instructions_photo">
-      <ul class="instructions_ul">
-        <li>Please choose a photo trace</li>
-        <li>A PNG with a transparent background will trace automatically.</li>
-        <li>A JPG can be manually traced point to point</li>
-      </ul>
-
-      <div class="trace__photo">
-        <button (click)="loadFile()" mat-raised-button class="trace_a_photo">Trace a Photo
-          <input type='file' accept="image/*" id="getFile" (change)="handleInput($event)" style="display:none">
-        </button>
-      </div>
-    </div>
-    <div class="instructions_photo_list">
-      <img src="assets/photo_instructions.png" width="100%" alt="instructions.png" />
-    </div>
-  </div>
-
-</ejs-dialog>
-
+<!-- draw shape with grid-->
 <div *ngIf='isDrawOpened'>
   <app-ejs-draw-shape (close)="closeDialog()"></app-ejs-draw-shape> -->
 </div>
 
-<ejs-dialog *ngIf='isFileSelected' header={{header}} #ejTypeDialog isModal='true' (close)='closeDialog()'
-  width={{typeDialogWidth}} height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
+<!-- Photo Tracer -->
+<app-ejs-photo-tracer #photoTracerChild></app-ejs-photo-tracer>
 
 
-  <ng-template #header>
-    <div class="header_modal">
-      <h1>Draw your shape</h1>
-    </div>
-  </ng-template>
 
-  <div class="modal-body">
-    <div class="instructions">
-      <div class="instructions-header">Photo Tracer Instructions</div>
-      <h3>Auto Trace</h3>
-      <div class="col-md-12">Pull Slider LEFT to outline shape</div>
-      <div class="col-md-12">
-        <!-- <input type="range" min="0" max="100" value="100" class="form-control"> -->
-        <mat-slider style="margin-top: 20px; height: 50px;" min="1" max="5" step="1" value="5" class="form-control">
-        </mat-slider>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <img *ngIf="imgURL" id="draw-src" [src]="imgURL">
-        <div id="draw-canvas-container" style="height: 373px; /*width: 1268px; */ ">
-          <canvas id="drawCanvas" height="350" width="700"
-            style="border: 1px solid rgb(190, 170, 170); margin-left: 32px;">
-          </canvas>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <div slot="footer">
-        <div class="row editables form-inline">
-          <div class="zoomable col-sm-3"><a href="#" class="btn btn-default">Zoom In</a><a href="#"
-              class="btn btn-default">Zoom Out</a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</ejs-dialog>
