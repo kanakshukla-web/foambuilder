@@ -3,10 +3,10 @@
 /* html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Roboto:100&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100&display=swap"); */
 html, body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Poppins', sans-serif  !important;
   position: relative;
   margin: 0;
   padding: 0;
@@ -17,6 +17,11 @@ html, body {
   font-weight: 300;
 }
 
+
+.form-label  {
+  margin-left: 5px;
+  font-weight:500 !important;
+}
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
@@ -50,4 +55,40 @@ hr {
   border-bottom: 1px dashed #bada55;
   width: 100%;
 
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(214, 212, 212);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(207, 207, 207);
+  border: 1px solid rgb(187, 187, 187);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(236, 236, 236);
+}
+.e-control, .e-css {
+  /* font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont"; */
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
+  background-color: #f7f7f7;
+}
+
+.mat-h1, .mat-headline, .mat-typography h1 {
+  /* font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif; */
+  letter-spacing: normal;
+  /* margin: 0 0 16px; */
 }

@@ -1,3 +1,12 @@
+.img__btm img{
+ 
+  width: 50%;
+  display: grid;
+  margin: 30px auto 0px;
+ 
+  padding: 10px;
+}
+
 .form-group {
   margin-top: 20px;
 }
@@ -35,9 +44,12 @@
 }
 
 .form-btn{
-  margin-left: 10px;
+  margin-left: 5px;
   margin-top: 20px;
-  width: 90%;
+  width: 95%;
+  background-color: #202e3e;
+  color: #FFF;
+  text-transform: uppercase;
 }
 
 .hiddenPanel a {
@@ -50,13 +62,14 @@
 }
 
 .hiddenPanel a:hover {
-  color: #f1f1f1;
+  color: #2c3744;
 }
 
 .hiddenPanel .closebtn {
   position: absolute;
   top: 0;
-  right: 25px;
-  font-size: 36px;
+  right: 0;
+  font-size: 30px;
   margin-left: 50px;
+  color: #202e3e;
 }

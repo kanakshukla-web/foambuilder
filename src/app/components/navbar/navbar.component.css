@@ -1,20 +1,22 @@
 #nav {
   height: 72px;
-  background-color: #4f5467;
+  /* background-color: #202e3e; */
+  background-color: #FFF;
   border: 0;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   top: 0;
   border-width: 0 0 1px;
   position: fixed;
   right: 0;
-  left: 0;
+  left: 205px;
   z-index: 1030;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
 }
 
 .center-logo {
   position: absolute;
-  left: 45%;
-  margin-top: 0.5rem;
+  left:25px;
+  margin-top:5px;
 }
 
 .tabcontent {
@@ -42,11 +44,24 @@
   font-size: 35px;
 }
 
+i.fas.fa-save {
+  font-size: 15px;
+  margin-top: -4px;
+}
+.menu_bar{
+  color:  rgb(32 46 62)  !important;
+
+  margin-top: 25px;
+  margin-left: 25px !important;
+}
+
 .save_btn {
-  margin-left: 70px;
+  margin-right: 25px;
   height: 32px;
-  background-color: #ff4081;
+  background-color:#11b142!important;
   margin-top: 20px;
+  color: #FFF;
+  float: right;
 }
 
 .save_btn :hover {

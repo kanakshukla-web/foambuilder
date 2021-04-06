@@ -1,3 +1,59 @@
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(10, 6, 6, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.header_modal h1 {
+  color: #202e3e;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+#shape-library-modal input[type="search"] {
+  width: 250px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+.input-lg,
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-addon,
+.input-group-lg > .input-group-btn > .btn {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33333;
+  border-radius: 6px;
+}
+
+.save_btn {
+  margin-left: 260px;
+  width: 100px;
+  background-color: #202e3e;
+  color: #FFF;
+}
+
+.save_btn :hover {
+  color: blue;
+}
+
+
 #shape-library-modal ul.search-results {
   list-style-type: none;
   padding-left: 0;
@@ -144,5 +200,20 @@ p {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+.modal-body {
+  position: relative;
+  padding: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.e-dialog .e-dlg-header-content {
+  border-bottom: none;
+  padding: 18px 15px 0px 15px;
+  background-color: #e7eaea;
+  margin-bottom: 10px;
+}
+
 
 

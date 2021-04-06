@@ -1,4 +1,4 @@
-import { CanvasService } from './../../services/canvas.service';
+import { CanvasService } from './../../services/canvas/canvas.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';

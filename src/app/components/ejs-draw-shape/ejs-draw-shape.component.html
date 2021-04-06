@@ -1,9 +1,12 @@
 <ejs-dialog #ejTypeDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}} height={{typeDialogHeight}}
   id='dialog' header={{header}} [showCloseIcon]='showCloseIcon'>
+ 
+  
   <ng-template #header>
-    <h1 style="color: rgb(243, 118, 118);">Draw your shape</h1>
+    <div class="header_modal">
+    <h1>Draw your shape</h1>
+    </div>
   </ng-template>
-
 
   <div class="row">
     <div class="col-md-12">
@@ -43,36 +46,52 @@
     </div>
   </div>
 
-  <div style="height: 373px; width: 1268px;">
+  <div style="height: auto; width: 100%;">
     <canvas id="drawCanvas" (click)='initDrawPoint()' height="343" width="1258" #drawCanvas></canvas>
   </div>
 
   <div class="modal-footer">
     <div slot="footer">
-      <div class="row editables form-inline">
-        <div class="zoomable col-sm-3">
-          <a href="#" class="btn btn-default">Zoom In</a>
-          <a href="#" class="btn btn-default">Zoom Out</a>
+      <div class="row editables">
+       
+
+
+        <div class="draw_shapes_grid">
+          <div class="zoomable">
+            <a href="#" class="btn btn-default Zoom"> <i class="fas fa-search-plus"></i> Zoom In</a>
+            <a href="#" class="btn btn-default Zoom"> <i class="fas fa-search-minus"></i> Zoom Out</a>
+          </div>
+            <div class="">
+               
+              <input id="" type="text" placeholder="Grid size (MM)" class="form-control">
+              <span class="help-block"    style="display: none;"></span>
+            </div>
+            <div class="check_box">
+
+              <div class="snap_to_grid"> 
+                <input type="checkbox"  class=""> &nbsp; Snap to Grid
+               </div>
+
+              <div class="snap_to_grid">
+                <input type="checkbox"  class=""> &nbsp; Show Angles
+                </div>
+            </div>
+
         </div>
-        <div class="row col-sm-9">
+
+        <!-- <div class="row col-sm-3">
           <div class="col-sm-5 form-group">
-            <label for="grid-size-input" style="margin-right: 5px">Grid size (MM): </label>
-            <input id="grid-size-input" type="text" class="form-control input-sm">
-            <span class="help-block" style="display: none;"></span>
+           
           </div>
           <div class="col-sm-7">
-            <div class="checkbox form-group col-sm-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" style="margin: 0 4px 0" class="input-sm checkbox-inline">Snap to Grid
-              </label>
+            <div class="checkbox form-group">
+              
             </div>
-            <div class="checkbox form-group col-sm-4">
-              <label class="checkbox-inline">
-                <input type="checkbox" style="margin: 0 4px 0" class="input-sm checkbox-inline">Show Angles
-              </label>
+            <div class="checkbox form-group">
+             
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

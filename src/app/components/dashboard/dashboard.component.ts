@@ -1,9 +1,9 @@
+import { TextNodeService } from './../../services/textNode/text-node.service';
+import { CanvasService } from './../../services/canvas/canvas.service';
+import { ShapeService } from './../../services/shapes/shape.service';
 import { EjsChangeCaseComponent } from './../ejs-change-case/ejs-change-case.component';
-import { CanvasService } from './../../services/canvas.service';
 import { EjsTrayBuilderComponent } from './../ejs-tray-builder/ejs-tray-builder.component';
 import { Properties, Rectangle } from '../../interfaces/intefaces';
-import { ShapeService } from '../../services/shape.service';
-import { TextNodeService } from '../../services/text-node.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';

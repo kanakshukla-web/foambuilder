@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CaseDescription } from '../interfaces/intefaces';
+import { CaseDescription } from '../../interfaces/intefaces';
 
 @Injectable({
   providedIn: 'root'

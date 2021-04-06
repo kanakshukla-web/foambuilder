@@ -1,3 +1,4 @@
+import { EjsShapeLibComponent } from './../ejs-shape-lib/ejs-shape-lib.component';
 import { Rectangle } from './../../interfaces/intefaces';
 import {
   Component,
@@ -23,8 +24,9 @@ export class SidenavComponent implements OnInit {
   @Output() drawRectangle = new EventEmitter<Rectangle>();
   @Output() drawCircle = new EventEmitter<Circle>();
   //@Output() drawPoint = new EventEmitter<string>();
+  @ViewChild('shapeLibChild') shapeLibChild: EjsShapeLibComponent;
 
-  isLibOpened: boolean = false;
+  //isLibOpened: boolean = false;
   isTracerOpened: boolean = false;
   isDrawOpened: boolean = false;
 
@@ -64,16 +66,17 @@ export class SidenavComponent implements OnInit {
   tracer_Img: any;
   imgURL: any;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   initilizeCanvas() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
   openLib() {
-    this.isLibOpened = true;
+    //this.isLibOpened = true;
+    this.shapeLibChild.openDialog();
   }
 
   openTracer() {
@@ -116,7 +119,8 @@ export class SidenavComponent implements OnInit {
   }
 
   closeDialog() {
-    this.isLibOpened = false;
+    //this.isLibOpened = false;
+    this.shapeLibChild.closeDialog();
     this.isTracerOpened = false;
     this.isDrawOpened = false;
   }

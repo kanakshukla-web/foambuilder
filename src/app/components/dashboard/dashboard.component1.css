@@ -333,15 +333,6 @@ a {
 } */
 
 /* ----------------------------------------- */
-i.fa.fa-pencil {
-  background-color: #f44336;
-  color: #edf1f5;
-  padding: 3px;
-  font-size: 10px;
-  border-radius: 0px;
-  /* border: 1px solid; */
-}
-
 
 .konva {
   text-align: center;
@@ -385,23 +376,10 @@ div {
 }
 
 .save_btn {
-  background-color: #202e3e;
-  color: #FFF;
   margin: 10px;
+  height: 33px;
 }
+
 .save_btn :hover {
   color: blue;
-}
-
-
-.myCanv {
-  padding: 0px;
-  background: white;
-  position: absolute;
-  top: 0px;
-  left: 5px;
-  display: block;
-  border-radius: 50px;
-  margin-top: 70px;
-  border: 1px solid rgb(43, 41, 41);
 }

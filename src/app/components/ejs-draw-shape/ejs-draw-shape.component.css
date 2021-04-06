@@ -2,6 +2,61 @@
   margin-left: -15px;
   margin-right: -15px;
 }
+
+.draw_shapes_grid{
+  display: grid;
+  grid-template-columns: repeat(3 , 1fr);
+  grid-gap: 1rem;
+  background-color: rgb(241, 243, 242);
+  padding: 10px;
+}
+.btn.btn-default.Zoom {
+ 
+  border: 1px solid;
+}
+
+.check_box{
+  display: grid;
+  grid-template-columns: repeat(2 , 1fr);
+  grid-gap: 1rem;
+}
+
+.snap_to_grid{
+  text-align: center;
+  display:flex;
+ justify-content: center;
+ place-items: center;
+}
+.draw-info p{
+
+  font-size: 15px;
+  padding: 5px 0px;
+  margin-left: -15px;
+  font-weight: 500;
+}
+.header_modal h1{
+  color: #202e3e;
+  text-transform: uppercase;
+   
+}
+.btn-default{
+  margin-right: 10px;
+  text-transform: uppercase;
+  border: 1px solid #202e3e;
+}
+.e-dialog .e-dlg-header-content {
+  border-bottom: none;
+  padding: 18px 15px 0px 15px;
+  background-color: #e7eaea;
+  margin-bottom: 10px;
+}
+
+.Zoom{
+  background-color: aquamarine;
+  border: 1px solid red;
+}
+
+
 .col-md-12 {
   width: 100%;
   position: relative;
@@ -310,6 +365,7 @@ canvas {
 #drawCanvas {
   background-color: rgb(233, 219, 219);
   cursor: crosshair;
+  width: 100%;
 }
 .e-btn.e-icon-btn,
 .e-css.e-btn.e-icon-btn {
@@ -322,8 +378,9 @@ canvas {
 }
 .modal-footer {
   padding: 15px;
-  text-align: right;
+   
   border-top: 1px solid #e5e5e5;
+  
 }
 .zoomable .btn {
   margin-right: 5px;

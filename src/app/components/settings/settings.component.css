@@ -52,11 +52,12 @@
 .hiddenPanel a:hover {
   color: #f1f1f1;
 }
-
+ 
 .hiddenPanel .closebtn {
   position: absolute;
   top: 0;
-  right: 25px;
-  font-size: 36px;
+  right: 0;
+  font-size: 30px;
   margin-left: 50px;
+  color: #202e3e;
 }
