@@ -1,6 +1,6 @@
 import { CanvasService } from './../../services/canvas/canvas.service';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CaseDescription } from 'src/app/interfaces/intefaces';
 
@@ -12,9 +12,10 @@ import { CaseDescription } from 'src/app/interfaces/intefaces';
 export class EjsChangeCaseTableComponent implements OnInit {
 
   CASE_DATA: CaseDescription[] = [];
-  displayedColumns: string[] = ['select', 'CaseName', 'InteriorSize', 'UseCaseButton'];
+  displayedColumns: string[] = ['CaseName', 'InteriorSize', 'UseCaseButton'];
   dataSource = new MatTableDataSource<CaseDescription>(this.CASE_DATA);
   selection = new SelectionModel<CaseDescription>(true, []);
+  @Output() updateCaseFormEvent = new EventEmitter();
 
   constructor(private canvasService: CanvasService) { }
 
@@ -50,8 +51,14 @@ export class EjsChangeCaseTableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  addCase(name) {
-    alert(name);
+  addCase(CaseName, CaseDimensions) {
+    //console.log(CaseDimensions);
+    let caseData = this.CASE_DATA.filter((currentValue) => {
+      return currentValue.CaseName === CaseName;
+    })
+    //console.log(caseData);
+    //alert(`CaseName ${CaseName} && Dimensions ${CaseDimensions}`);
+    this.updateCaseFormEvent.emit(caseData);
   }
 
 }

@@ -8,7 +8,7 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
+    <!-- <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
           [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
@@ -19,7 +19,7 @@
           [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
         </mat-checkbox>
       </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Case Name -->
     <ng-container matColumnDef="CaseName">
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="UseCaseButton">
       <th mat-header-cell *matHeaderCellDef>Use This Case</th>
       <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary"
-          (click)="addCase(element.name)">Use This Case</button> </td>
+          (click)="addCase(element.CaseName,element.InteriorSize)">Use This Case</button> </td>
     </ng-container>
 
 

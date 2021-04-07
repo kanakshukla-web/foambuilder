@@ -96,10 +96,10 @@ export class DashboardComponent implements OnInit {
   //isTrayClicked = false;
   tr: Konva.Transformer;
 
-  x1;
-  y1;
-  x2;
-  y2;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
   selectionRectangle = new Konva.Rect({
     fill: 'rgba(0,0,255,0.5)',
   });
@@ -234,6 +234,23 @@ export class DashboardComponent implements OnInit {
     this.isCanvasUpdated = true;
     this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
     //this.closeDialog();
+    this.changeCase.closeDialog();
+  }
+
+  updateCanvasFormArea(CaseObj) {
+    //alert(`I am from Dashboard Component. Your CaseName ${CaseObj.CaseName} && Dimensions ${CaseObj.CaseDimensions}`);
+    let { CaseName, CornerRadius, LowerLength, LowerWidth, TotalDepth, Length, Width } = CaseObj[0];
+
+    this.canvasProperties.case_name = CaseName;
+    this.canvasProperties.canvasRadius = CornerRadius;
+    this.canvasProperties.canvasLowerLength = LowerLength;
+    this.canvasProperties.canvasLowerWidth = LowerWidth;
+    this.canvasProperties.foam_base = TotalDepth;
+
+    this.canvasProperties.canvasUpperLength = Length;
+    this.canvasProperties.canvasUpperWidth = Width;
+    this.isCanvasUpdated = true;
+    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
     this.changeCase.closeDialog();
   }
 
@@ -407,7 +424,7 @@ export class DashboardComponent implements OnInit {
     this.shapes.push(rectangle);
     this.layer.add(rectangle);
     this.stage.add(this.layer);
-    //this.addTransformerListeners();
+    this.addTransformerListeners();
 
     this.nodesArray.push(rectangle);
     this.tr.nodes(this.nodesArray);

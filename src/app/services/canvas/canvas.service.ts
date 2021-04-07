@@ -25,22 +25,98 @@ export class CanvasService {
 
   getCaseDimensionsList() {
     const CASE_DATA: CaseDescription[] = [
-      { CaseName: '3I-0702-1', InteriorSize: '197mm x 54mm x 16mm' },
-      { CaseName: '3I-0705-3', InteriorSize: '191mm x 127mm x 70mm' },
-      { CaseName: '3I-0806-3', InteriorSize: '216mm x 152mm x 81mm' },
-      { CaseName: '3I-0907-4', InteriorSize: '241mm x 187mm x 73mm' },
-      { CaseName: '3I-0907-6', InteriorSize: '241mm x 187mm x 125mm' },
-      { CaseName: '3I-0702-1', InteriorSize: '197mm x 54mm x 16mm' },
-      { CaseName: '3I-0705-3', InteriorSize: '191mm x 127mm x 70mm' },
-      { CaseName: '3I-0806-3', InteriorSize: '216mm x 152mm x 81mm' },
-      { CaseName: '3I-0907-4', InteriorSize: '241mm x 187mm x 73mm' },
-      { CaseName: '3I-0907-6', InteriorSize: '241mm x 187mm x 125mm' },
-      { CaseName: '3I-0702-1', InteriorSize: '197mm x 54mm x 16mm' },
-      { CaseName: '3I-0705-3', InteriorSize: '191mm x 127mm x 70mm' },
-      { CaseName: '3I-0806-3', InteriorSize: '216mm x 152mm x 81mm' },
-      { CaseName: '3I-0907-4', InteriorSize: '241mm x 187mm x 73mm' },
-      { CaseName: '3I-0907-6', InteriorSize: '241mm x 187mm x 125mm' },
+      {
+        CaseID: 1,
+        CaseName: "MAX002",
+        Length: 212,
+        Width: 140,
+        TotalDepth: 47,
+        BaseDepth: 33,
+        CornerRadius: 15,
+        LowerLength: 205,
+        LowerWidth: 131,
+      }, {
+        CaseID: 1,
+        CaseName: "Nanuk 905",
+        Length: 197,
+        Width: 54,
+        TotalDepth: 16,
+        BaseDepth: 33,
+        CornerRadius: 12,
+        LowerLength: 190,
+        LowerWidth: 50,
+      },
+      {
+        CaseID: 1,
+        CaseName: "Nanuk 330",
+        Length: 433,
+        Width: 167,
+        TotalDepth: 113,
+        BaseDepth: 33,
+        CornerRadius: 10,
+        LowerLength: 425,
+        LowerWidth: 162,
+      },
+      {
+        CaseID: 1,
+        CaseName: "3I-0702-1",
+        Length: 559,
+        Width: 330,
+        TotalDepth: 251,
+        BaseDepth: 33,
+        CornerRadius: 10,
+        LowerLength: 555,
+        LowerWidth: 325,
+      },
+      {
+        CaseID: 1,
+        CaseName: "MAX520TR",
+        Length: 212,
+        Width: 140,
+        TotalDepth: 47,
+        BaseDepth: 33,
+        CornerRadius: 15,
+        LowerLength: 205,
+        LowerWidth: 131,
+      }, {
+        CaseID: 1,
+        CaseName: "MAX235H155",
+        Length: 212,
+        Width: 140,
+        TotalDepth: 47,
+        BaseDepth: 33,
+        CornerRadius: 15,
+        LowerLength: 205,
+        LowerWidth: 131,
+      },
+      {
+        CaseID: 1,
+        CaseName: "3I-0705-3",
+        Length: 212,
+        Width: 140,
+        TotalDepth: 47,
+        BaseDepth: 33,
+        CornerRadius: 15,
+        LowerLength: 205,
+        LowerWidth: 131,
+      },
+      {
+        CaseID: 1,
+        CaseName: "3I-0907-4",
+        Length: 212,
+        Width: 140,
+        TotalDepth: 47,
+        BaseDepth: 33,
+        CornerRadius: 15,
+        LowerLength: 205,
+        LowerWidth: 131,
+      }
+
     ];
+
+    CASE_DATA.forEach(element => {
+      element.InteriorSize = `${element.Length}mm x ${element.Width}mm x ${element.TotalDepth}mm`
+    });
     return CASE_DATA;
   }
 }

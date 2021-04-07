@@ -69,6 +69,14 @@ export class AccountData {
 }
 
 export interface CaseDescription {
+  CaseID: number,
   CaseName: string;
-  InteriorSize: string;
+  InteriorSize?: string;
+  Length: number,
+  Width: number,
+  TotalDepth: number,
+  BaseDepth: number,
+  CornerRadius: number,
+  LowerLength: number,
+  LowerWidth: number
 }

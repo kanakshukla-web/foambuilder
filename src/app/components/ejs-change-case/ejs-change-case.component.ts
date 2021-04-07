@@ -11,6 +11,8 @@ export class EjsChangeCaseComponent implements OnInit {
   @ViewChild('ejEditDialog') ejDialog: DialogComponent;
 
   @Output() submitForm = new EventEmitter();
+  @Output() updateCaseFormEvent = new EventEmitter();
+
   @Input() canvasProperties;
 
   isCustomSizeFoam: boolean = false;
@@ -31,11 +33,15 @@ export class EjsChangeCaseComponent implements OnInit {
     this.submitForm.emit(editForm);
   }
 
+  updateFormCase(caseDataObj) {
+    this.updateCaseFormEvent.emit(caseDataObj);
+  }
+
   closeDialog() {
     this.isEditClicked = false;
     this.ejDialog.hide();
   }
   onNgModelChange(e: any) {
-    this.isCustomSizeFoam = !this.isCustomSizeFoam
+    this.isCustomSizeFoam = !this.isCustomSizeFoam;
   }
 }
