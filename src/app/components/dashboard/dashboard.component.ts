@@ -579,7 +579,6 @@ export class DashboardComponent implements OnInit {
         this.layer.batchDraw();
       });
 
-
       //console.log(this.tr.nodes());
       var shapes = this.stage.find('.rect').toArray();
       var box = this.selectionRectangle.getClientRect();
