@@ -1,6 +1,8 @@
+import { ShapeLibFilterPipe } from './../../../shape-lib-filter.pipe';
 import { ShapeLibraryService } from './../../services/shapeLibrary/shape-library.service';
 import { ShapeLib } from './../../interfaces/intefaces';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+//import { ShapeLibFilterPipe } from '../ShapeLibFilterPipe';
 
 @Component({
   selector: 'app-ejs-shape-lib',

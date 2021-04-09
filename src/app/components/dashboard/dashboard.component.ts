@@ -1,3 +1,5 @@
+import { SharedService } from './../../services/shared.service';
+import { ConfirmDialogComponent } from './../shared/confirm-dialog/confirm-dialog.component';
 import { TextNodeService } from './../../services/textNode/text-node.service';
 import { CanvasService } from './../../services/canvas/canvas.service';
 import { ShapeService } from './../../services/shapes/shape.service';
@@ -9,6 +11,8 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { Observable, of } from 'rxjs';
 import Konva from 'konva';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogModel } from '../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -68,15 +72,15 @@ export class DashboardComponent implements OnInit {
     width: this.canvasProperties.canvasUpperWidth,
     height: this.canvasProperties.canvasUpperLength,
   });
-  public configCircle: Observable<any> = of({
-    x: 200,
-    y: 200,
-    radius: 70,
-    fill: 'red',
-    draggable: true,
-    stroke: 'black',
-    strokeWidth: 4,
-  });
+  // public configCircle: Observable<any> = of({
+  //   x: 200,
+  //   y: 200,
+  //   radius: 70,
+  //   fill: 'red',
+  //   draggable: true,
+  //   stroke: 'black',
+  //   strokeWidth: 4,
+  // });
 
   shapes: any = [];
   stage: Konva.Stage;
@@ -108,7 +112,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private shapeService: ShapeService,
     private canvasService: CanvasService,
-    private textNodeService: TextNodeService
+    private textNodeService: TextNodeService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -287,6 +292,25 @@ export class DashboardComponent implements OnInit {
     this.openTrayCount = 0;
   }
 
+  confirmDialog(shape): void {
+    let dialogRef = this.sharedService.showConfirmationDialog();
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      (dialogResult) ? this.deleteShape(shape) : null;
+    });
+  }
+
+  deleteShape(shape) {
+    const removedShape = this.shapes.pop();
+    this.transformers.forEach((t) => {
+      t.detach();
+    });
+    if (removedShape) {
+      removedShape.remove();
+    }
+    this.layer.draw();
+    this.isPropertiesPanelShown = false;
+  }
+
   //<---------Konva Methods------------------->
 
   initStage() {
@@ -336,42 +360,31 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // draws circle on the canvas area
   drawCircle(radius: number, xAxis: number, yAxix: number) {
     const circle = this.shapeService.circle(radius, xAxis, yAxix);
 
-    circle.addEventListener('click', (event) => {
-      this.propertiesObject = {
-        id: 2,
-        shape_name: 'circle',
-        length: radius,
-        width: radius,
-        depth: 50,
-        xLoc: Math.round(circle.absolutePosition().x),
-        yLoc: Math.round(circle.absolutePosition().y),
-        angle: 90,
-      };
+    //<----- add listners to circle--------->
+    circle.addEventListener('click', () => {
+      this.getNewcircleDimensions(circle, radius);
       this.isPropertiesPanelShown = true;
     });
 
-    circle.addEventListener('dragend', (event) => {
-      this.propertiesObject = {
-        id: 2,
-        shape_name: 'circle',
-        length: radius,
-        width: radius,
-        depth: 50,
-        xLoc: Math.round(circle.absolutePosition().x),
-        yLoc: Math.round(circle.absolutePosition().y),
-        angle: 90,
-      };
+    circle.addEventListener('dragend', () => {
+      this.getNewcircleDimensions(circle, radius);
       this.isShapeDragStarted = false;
-      //console.log(circle.absolutePosition());
     });
 
     circle.addEventListener('dragmove', (event) => {
       this.isShapeDragStarted = true;
       this.xAxis = Math.round(circle.absolutePosition().x);
       this.yAxis = Math.round(circle.absolutePosition().y);
+    });
+
+    circle.addEventListener('transformstart', () => { });
+    circle.addEventListener('transform', () => { });
+    circle.addEventListener('transformend', () => {
+      this.getNewcircleDimensions(circle,radius);
     });
 
     this.shapes.push(circle);
@@ -384,6 +397,33 @@ export class DashboardComponent implements OnInit {
     this.layer.draw();
   }
 
+  getNewcircleDimensions(circle, radius) {
+    let condition = this.newBoundriesShape != null;
+
+    let newHeight = condition
+      ? Math.round(this.newBoundriesShape.height)
+      : circle.getSelfRect().height;
+    let newWidth = condition
+      ? Math.round(this.newBoundriesShape.width)
+      : circle.getSelfRect().width;
+    let rotation = condition
+      ? Math.round(this.newBoundriesShape.rotation)
+      : circle.rotation();
+
+    return (this.propertiesObject = {
+      id: 2,
+      shape_name: 'circle',
+      length: newHeight,
+      width: newWidth,
+      depth: 50,
+      xLoc: Math.round(circle.absolutePosition().x),
+      yLoc: Math.round(circle.absolutePosition().y),
+      angle: rotation,
+    });
+  }
+
+
+  //draws rectangle on the canvas
   drawRectangle(
     rectWidth: number,
     rectHeight: number,
@@ -398,7 +438,6 @@ export class DashboardComponent implements OnInit {
     );
 
     //<----- add listners to rectangle--------->
-
     rectangle.addEventListener('click', () => {
       this.getNewRectDimensions(rectangle);
       this.isPropertiesPanelShown = true;
@@ -700,6 +739,7 @@ export class DashboardComponent implements OnInit {
     component.tr = new Konva.Transformer({
       boundBoxFunc: function (oldBoundBox, newBoundBox) {
         component.newBoundriesShape = newBoundBox;
+        console.log(component.newBoundriesShape);
         return newBoundBox;
       },
     });

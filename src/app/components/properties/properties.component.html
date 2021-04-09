@@ -1,22 +1,29 @@
 <div class="right_tab">
   <div>
     <input id="shape_name" type="text" [(ngModel)]="properties.shape_name" placeholder="Unnamed Shape" autocomplete="off"
-      style="margin-left: 20px; margin-top: 10px; width: 85%" /><br>
-    <label style="margin-left: 20px;" for="">{{properties.length}}mm X {{properties.width}}mm X
-      {{properties.depth}}mm</label>
+      style="margin-left:5px; margin-top: 10px; width: 90%" />
+     <div class="right_side_segments">
+       <div class="top_segments">
+      <p class=""> {{properties.length}}mm X {{properties.width}}mm X
+      {{properties.depth}}mm</p>
+
+      <p style="text-align: right;" > <i class="fas fa-copy"></i></p>
+    </div>
+      </div>
   </div>
   <hr>
-  <div>
+  <div class="right_side_segments">
     <ul>
       <li><a (click)="handleClone()" >Clone</a></li>
       <li><a>Tools</a></li>
       <li><a>Align</a></li>
-      <li><a>Delete</a></li>
+      <li><a (click)="handleDeleteShape()">Delete</a></li>
     </ul>
   </div>
   <hr>
-  <h3 style="margin-left: 20px; margin-bottom: 10px;">Groups</h3>
-  <div>
+
+  <div class="right_side_segments">
+    <p class="right_side_segments_title">Groups</p>
     <ul>
       <li><a>Group</a></li>
       <li><a>Ungroup</a></li>
@@ -24,30 +31,33 @@
     </ul>
   </div>
   <hr>
-  <h3 style="margin-left: 20px; margin-bottom: 10px;">Lock</h3>
-  <div>
+
+  <div class="right_side_segments">
+    <p class="right_side_segments_title">Lock</p>
     <ul>
       <li><a>Lock</a></li>
     </ul>
   </div>
   <hr>
-  <h3 style="margin-left: 20px; margin-bottom: 10px;">Private Library</h3>
-  <div>
+
+  <div class="right_side_segments">
+    <p class="right_side_segments_title">Private Library</p>
     <ul>
       <li><a>Add to Library</a></li>
     </ul>
   </div>
   <hr>
-  <h3 style="margin-left: 20px; margin-bottom: 10px;">Flip / Mirror</h3>
-  <div>
+
+  <div class="right_side_segments">
+    <p class="right_side_segments_title">Flip / Mirror</p>
     <ul>
       <li><a>Flip</a></li>
       <li><a>Mirror</a></li>
     </ul>
   </div>
   <hr>
-  <div>
-    <table style="margin-left: 20px;">
+  <div class="right_side_segments">
+    <table style="margin-left:5px;">
       <h3 style="margin-left: 0px; margin-bottom: auto;">Position</h3>
       <tr>
         <th>X</th>

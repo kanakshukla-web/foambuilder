@@ -1,4 +1,4 @@
-<div class="" style="padding: 10px;">
+<!-- <div class="" style="padding: 10px;">
   <div class='hiddenPanel'>
     <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
     <h2>
@@ -49,4 +49,68 @@
 
     <div class="img__btm"><img src="assets/rectangle_menu.png"></div>
   </form>
+</div> -->
+
+<div class="" style="padding: 10px;">
+  <div class='hiddenPanel'>
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <h2>
+      &nbsp; Add a Rectangle
+    </h2>
+  </div>
+  <hr>
+  <label class="heading">
+    <input type="checkbox" /> Rounded Corner?
+  </label>
+
+  <form (ngSubmit)="onSubmit()" #rectangleForm="ngForm">
+
+    <div class="form-group">
+      <label class="form-label" for="length">Length (MM)</label>
+      <input type="number" placeholder="0" class="form-control" required [(ngModel)]="model.length" name="length"
+        [ngClass]="{ 'is-invalid': rectangleForm.submitted && length.invalid }" #length="ngModel">
+      <div class="invalid-feedback" *ngIf="rectangleForm.submitted && length.invalid">
+        <p *ngIf="length.errors.required">Length is required</p>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="width">Width (MM)</label>
+      <input type="number" placeholder="0" class="form-control" required [(ngModel)]="model.width" name="width"
+        [ngClass]="{ 'is-invalid': rectangleForm.submitted && width.invalid }" #width="ngModel">
+
+      <div class="invalid-feedback" *ngIf="rectangleForm.submitted && width.invalid">
+        <p *ngIf="width.errors.required">Width is required</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="depth">Depth (MM)</label>
+      <input type="number" placeholder="0"  class="form-control" required [(ngModel)]="model.depth" name="depth"
+        [ngClass]="{ 'is-invalid': rectangleForm.submitted && depth.invalid }" #depth="ngModel">
+
+      <div class="invalid-feedback" *ngIf="rectangleForm.submitted && depth.invalid">
+        <p *ngIf="depth.errors.required">Depth is required</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="fingerNotch">Finger Notches</label>
+      <select class="form-select" required [(ngModel)]="model.fingerNotch" name="fingerNotch"
+        [ngClass]="{ 'is-invalid': rectangleForm.submitted && fingerNotch.invalid }" #fingerNotch="ngModel">
+        <option value="undefined" disabled>Select Finger Notches</option>
+        <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
+      </select>
+
+      <div class="invalid-feedback" *ngIf="rectangleForm.submitted && fingerNotch.invalid">
+        <p *ngIf="fingerNotch.errors.required"> Finger Notche is required</p>
+      </div>
+    </div>
+
+    <button type="submit" mat-raised-button class="form-btn" [disabled]="!rectangleForm.form.valid"> Add
+      Rectangle
+    </button>
+  </form>
+  <div class="img__btm"><img src="assets/rectangle_menu.png"></div>
 </div>

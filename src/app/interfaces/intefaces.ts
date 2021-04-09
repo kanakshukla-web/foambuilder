@@ -1,25 +1,20 @@
 export class Rectangle {
-  constructor(
-    public id: number,
-    public name: string,
-    public length: number,
-    public width: number,
-    public fingerNotch: string,
-    public depth: number,
-    public cornerRadius?: number
-  ) { }
+  public id: number;
+  public name: string;
+  public length: number;
+  public width: number;
+  public fingerNotch: string;
+  public depth: number;
+  public cornerRadius?: number
 }
-
 export class Circle {
-  constructor(
-    public id: number,
-    public name: string,
-    public diameter: number,
-    public depth: number,
-    public fingerNotch: string,
-    public width?: number,
-    public cornerRadius?: number
-  ) { }
+  public id: number;
+  public name: string;
+  public diameter: number;
+  public depth: number;
+  public fingerNotch: string;
+  public width?: number;
+  public cornerRadius?: number
 }
 
 export class Settings {

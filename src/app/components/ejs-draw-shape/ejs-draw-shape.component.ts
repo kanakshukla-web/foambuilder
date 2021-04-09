@@ -40,53 +40,62 @@ export class EjsDrawShapeComponent implements OnInit {
   lineCounter = 0;
   drawingObject = { type: '', background: '', border: '' };
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.canvas.nativeElement.addEventListener('click', this.clickListener);
     this.canvas.nativeElement.addEventListener('mousemove', this.moveListner);
+    this.Update();
   }
 
   clickListener = (event) => {
+
     this.counter++;
     if (this.counter == 1) this.isDrawStart = true;
 
-    this.mouseClickPosition = this.getClientOffset(event);
-    this.Points.push({
-      x: this.mouseClickPosition.x,
-      y: this.mouseClickPosition.y,
-      clickCount: this.counter,
-    });
-    console.log(this.mouseClickPosition);
+    // this.mouseClickPosition = this.getClientOffset(event);
+    // this.Points.push({
+    //   x: this.mouseClickPosition.x,
+    //   y: this.mouseClickPosition.y,
+    //   clickCount: this.counter,
+    // });
+    // console.log(this.mouseClickPosition);
 
-    if (this.counter > 1) {
-      // this.Points.forEach((point, index) => {
-      this.ctx.beginPath();
-      this.ctx.lineWidth = 5;
-      this.ctx.strokeStyle = 'red';
-      this.ctx.moveTo(this.mouseClickPosition.x, this.mouseClickPosition.y);
-      this.ctx.lineTo(this.lastClickPosition.x, this.lastClickPosition.y);
-      this.ctx.stroke();
-      // });
-    }
-    this.lastClickPosition = this.mouseClickPosition;
-    //this.drawDots();
+    // if (this.counter > 1) {
+    //   // this.Points.forEach((point, index) => {
+    //   this.ctx.beginPath();
+    //   this.ctx.lineWidth = 5;
+    //   this.ctx.strokeStyle = 'red';
+    //   this.ctx.moveTo(this.mouseClickPosition.x, this.mouseClickPosition.y);
+    //   this.ctx.lineTo(this.lastClickPosition.x, this.lastClickPosition.y);
+    //   this.ctx.stroke();
+    //   // });
+    // }
+    // this.lastClickPosition = this.mouseClickPosition;
+    // //this.drawDots();
+
+
+    this.Points.push({ x: event.offsetX, y: event.offsetY });
+    this.Update();
+
   };
 
   moveListner = (event) => {
     if (!this.isDrawStart) return;
 
-    this.lineCoordinates = this.getClientOffset(event);
-    this.clearCanvas();
-    this.drawLine();
-    //this.Update();
+    // this.lineCoordinates = this.getClientOffset(event);
+    // //this.clearCanvas();
+    // this.drawLine();
+    // this.Update();
+    console.log("moveListner..")
   };
 
   mouseupListener = (event) => {
     this.isDrawStart = false;
+    console.log("mouseupListener..")
   };
 
   getClientOffset = (event) => {
@@ -113,6 +122,7 @@ export class EjsDrawShapeComponent implements OnInit {
     );
   };
 
+
   closeDialog() {
     this.close.emit('close');
   }
@@ -136,16 +146,36 @@ export class EjsDrawShapeComponent implements OnInit {
     //this.clearCanvas();
 
     // Draw the shape
+    // this.ctx.beginPath();
+    // this.Points.forEach((point, index, arr) => {
+    //   if (arr.length > 0) {
+    //     if (index == 0) this.ctx.moveTo(point.x, point.y);
+
+    //     if (index != arr.length - 1)
+    //       this.ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
+    //   }
+    // });
+    // this.ctx.fillStyle = '#ddf7f7'; //this is the shapes color
+    // this.ctx.closePath();
+    // this.ctx.fill();
+    // this.ctx.stroke();
+    // this.drawDots();
+
+    this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+    // Draw the shape
     this.ctx.beginPath();
     this.Points.forEach((point, index, arr) => {
-      if (arr.length > 0) {
-        if (index == 0) this.ctx.moveTo(point.x, point.y);
+      if (arr.length > 1) {
+
+        if (index == 0)
+          this.ctx.moveTo(point.x, point.y);
 
         if (index != arr.length - 1)
           this.ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
+
       }
     });
-    this.ctx.fillStyle = '#ddf7f7'; //this is the shapes color
+    this.ctx.fillStyle = "#ddf7f7"; //this is the shapes color
     this.ctx.closePath();
     this.ctx.fill();
     this.ctx.stroke();

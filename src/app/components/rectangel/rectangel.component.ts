@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class RectangelComponent implements OnInit {
   @Output() drawRectangle = new EventEmitter<Rectangle>();
 
-  model = new Rectangle(1, 'rectangle', 0, 0, 'None', 10);
+  model = new Rectangle();
   notches = [
     'Top and Bottom',
     'Left and Right',

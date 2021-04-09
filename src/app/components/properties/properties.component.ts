@@ -9,6 +9,7 @@ import { Properties } from 'src/app/interfaces/intefaces';
 export class PropertiesComponent implements OnInit {
   @Input() properties: Properties;
   @Output() makeClone = new EventEmitter<Properties>();
+  @Output() deleteShape = new EventEmitter<Properties>();
 
   constructor() { }
 
@@ -17,6 +18,10 @@ export class PropertiesComponent implements OnInit {
 
   handleClone(){
     this.makeClone.emit(this.properties);
+  }
+
+  handleDeleteShape(){
+    this.deleteShape.emit(this.properties);
   }
 
 }

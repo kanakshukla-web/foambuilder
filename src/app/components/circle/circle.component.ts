@@ -9,7 +9,7 @@ import { Circle } from 'src/app/interfaces/intefaces';
 export class CircleComponent implements OnInit {
   @Output() drawCircle = new EventEmitter<Circle>();
 
-  model = new Circle(1, 'circle', 0, 0, 'None', 10);
+  model = new Circle();
   notches = [
     'Top and Bottom',
     'Left and Right',

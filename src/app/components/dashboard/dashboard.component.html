@@ -44,13 +44,15 @@
 
     <!-- right side bar -->
     <mat-sidenav *ngIf='isPropertiesPanelShown' opened mode="side" position="end">
-      <app-properties (makeClone)="startCloning($event)" [properties]=propertiesObject></app-properties>
+      <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
+        [properties]=propertiesObject></app-properties>
     </mat-sidenav>
 
   </mat-sidenav-container>
 
   <!-- edit/resize foamcase -->
-  <app-ejs-change-case (updateCaseFormEvent)="updateCanvasFormArea($event)" (submitForm)="onSubmit($event)" [canvasProperties]='canvasProperties' #changeCase>
+  <app-ejs-change-case (updateCaseFormEvent)="updateCanvasFormArea($event)" (submitForm)="onSubmit($event)"
+    [canvasProperties]='canvasProperties' #changeCase>
   </app-ejs-change-case>
 
   <!-- traybuilder area -->
