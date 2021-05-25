@@ -1,4 +1,4 @@
-<div class="right_tab">
+<!-- <div class="right_tab">
   <div>
     <input id="shape_name" type="text" [(ngModel)]="properties.shape_name" placeholder="Unnamed Shape" autocomplete="off"
       style="margin-left:5px; margin-top: 10px; width: 90%" />
@@ -66,13 +66,13 @@
       </tr>
       <tr>
         <td>
-          <input id="x-axis" [(ngModel)]="properties.xLoc" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="x-axis" [(ngModel)]="properties.xLoc" type="number" autocomplete="off" style="width: 60px;" />
         </td>
         <td>
-          <input id="y-axis" [(ngModel)]="properties.yLoc" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="y-axis" [(ngModel)]="properties.yLoc" type="number" autocomplete="off" style="width: 60px;" />
         </td>
         <td>
-          <input id="angle" [(ngModel)]="properties.angle" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="angle" [(ngModel)]="properties.angle" type="number" autocomplete="off" style="width: 60px;" />
         </td>
       </tr>
       <tr>
@@ -82,13 +82,13 @@
       </tr>
       <tr>
         <td>
-          <input id="length" [(ngModel)]="properties.length" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="length" [(ngModel)]="properties.length" type="number" autocomplete="off" style="width: 60px;" />
         </td>
         <td>
-          <input id="width" [(ngModel)]="properties.width" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="width" [(ngModel)]="properties.width" type="number" autocomplete="off" style="width: 60px;" />
         </td>
         <td>
-          <input id="depth" [(ngModel)]="properties.depth" type="number" autocomplete="off" style="width: 50px;" />
+          <input id="depth" [(ngModel)]="properties.depth" type="number" autocomplete="off" style="width: 60px;" />
         </td>
       </tr>
 
@@ -96,4 +96,115 @@
     <hr>
     <h3 style="margin-left: 20px;">Tray/Layer</h3>
   </div>
+</div> -->
+
+
+
+
+
+<div class="right_tab">
+  <div>
+    <input id="shape_name" type="text" [(ngModel)]="properties.shape_name" placeholder="Unnamed Shape"
+      autocomplete="off" style="margin-left:5px; margin-top: 10px; width: 90%" />
+    <div class="right_side_segments">
+      <div class="top_segments">
+        <p class=""> {{properties.length}}mm X {{properties.width}}mm X
+          {{properties.depth}}mm</p>
+
+        <p style="text-align: right;"> <i class="fas fa-copy"></i></p>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+
+  <ul class="list_items">
+    <li (click)="handleClone()"> Clone</li>
+    <li (click)="isToolsFun()">Tools <i class="fas fa-sort-down"></i></li>
+    <li (click)="isAlignfun()">Align</li>
+    <li (click)="handleDeleteShape()">Delete</li>
+  </ul>
+
+
+  <div class="" *ngIf="isTools">
+
+    <div class="right_side_segments">
+      <p class="right_side_segments_title">Groups</p>
+      <ul>
+        <li><a>Group</a></li>
+        <li><a>Ungroup</a></li>
+        <li><a>Merge</a></li>
+      </ul>
+    </div>
+    <hr>
+
+    <div class="right_side_segments">
+      <p class="right_side_segments_title">Lock</p>
+      <ul>
+        <li><a>Lock</a></li>
+      </ul>
+    </div>
+    <hr>
+
+    <div class="right_side_segments">
+      <p class="right_side_segments_title">Private Library</p>
+      <ul>
+        <li><a>Add to Library</a></li>
+      </ul>
+    </div>
+
+    <div class="right_side_segments">
+      <p class="right_side_segments_title">Flip / Mirror</p>
+      <ul>
+        <li><a>Flip</a></li>
+        <li><a>Mirror</a></li>
+      </ul>
+    </div>
+    <hr>
+    <div class="right_side_segments">
+      <table style="margin-left:5px;">
+        <h3 style="margin-left: 0px; margin-bottom: auto;">Position</h3>
+        <tr>
+          <th>X</th>
+          <th>Y</th>
+          <th>Angle</th>
+        </tr>
+        <tr>
+          <td>
+            <input id="x-axis" [(ngModel)]="properties.xLoc" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+          <td>
+            <input id="y-axis" [(ngModel)]="properties.yLoc" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+          <td>
+            <input id="angle" [(ngModel)]="properties.angle" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+        </tr>
+        <tr>
+          <th>Length</th>
+          <th>Width</th>
+          <th>Depth</th>
+        </tr>
+        <tr>
+          <td>
+            <input id="length" [(ngModel)]="properties.length" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+          <td>
+            <input id="width" [(ngModel)]="properties.width" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+          <td>
+            <input id="depth" [(ngModel)]="properties.depth" type="number" autocomplete="off" style="width: 60px;" />
+          </td>
+        </tr>
+
+      </table>
+      <hr>
+      <h3 style="margin-left: 20px;">Tray/Layer</h3>
+    </div>
+  </div>
+
+  <div class="" *ngIf="isAlign">
+    <h2>align</h2>
+  </div>
+
 </div>

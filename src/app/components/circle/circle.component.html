@@ -1,50 +1,3 @@
-<!-- <div style="padding: 10px;">
-  <div class='hiddenPanel'>
-    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-    <h2>
-      &nbsp;Add Circle
-    </h2>
-  </div>
-  <hr>
-  <label class="heading">
-    Circle <input type="radio" /> Oval <input type="radio" />
-  </label>
-  <form (ngSubmit)="onSubmit()" #rectangleForm="ngForm">
-    <div class="form-group">
-      <label class="form-label" for="diameter">Diameter (MM)</label>
-      <input type="text" placeholder="0" class="form-control" required [(ngModel)]="model.diameter" name="name"
-        #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        Diameter is required
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="depth_lbl">Depth (MM)</label>
-      <input type="text" placeholder="0" class="form-control" required [(ngModel)]="model.depth" name="name"
-        #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        depth is required
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" for="notche">Finger Notches</label>
-      <select class="form-select" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
-        <option disabled>Set Finger Notches</option>
-        <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
-      </select>
-      <div [hidden]="notche.valid || notche.pristine" class="alert alert-danger">
-        Finger Notche is required
-      </div>
-    </div>
-    <button type="submit" mat-raised-button class="form-btn" [disabled]="!rectangleForm.form.valid">
-      Add Circle
-    </button>
-
-    <div class="img__btm"><img src="assets/circle_menu.png"></div>
-  </form>
-</div> -->
-
 <div style="padding: 10px;">
   <div class='hiddenPanel'>
     <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
@@ -53,46 +6,114 @@
     </h2>
   </div>
   <hr>
+
   <label class="heading">
-    Circle <input type="radio" /> Oval <input type="radio" />
+    Circle <input name="options" [(ngModel)]="options" type="radio" [value]="false" [checked]="options" />
+    Oval <input type="radio" name="options" [(ngModel)]="options" type="radio" [value]="true" [checked]="!options" />
   </label>
-  <form (ngSubmit)="onSubmit()" #circleForm="ngForm">
-    <div class="form-group">
-      <label class="form-label" for="diameter">Diameter (MM)</label>
-      <input type="text" placeholder="0" name="diameter" class="form-control" required [(ngModel)]="model.diameter"
-        [ngClass]="{ 'is-invalid': circleForm.submitted && diameter.invalid }" #diameter="ngModel">
 
-      <div class="invalid-feedback" *ngIf="circleForm.submitted && diameter.invalid">
-        <p *ngIf="diameter.errors.required">Diameter is required</p>
+  <div *ngIf="options">
+    <form (ngSubmit)="onSubmit1(ovalForm)" #ovalForm="ngForm">
+      <div class="form-group">
+        <label class="form-label" for="diameter">Length (MM)</label>
+        <input type="text" placeholder="0" name="length" class="form-control" required [(ngModel)]="modeloval.length"
+          [ngClass]="{ 'is-invalid': ovalForm.submitted && length.invalid }" #length="ngModel">
+
+        <div class="invalid-feedback" *ngIf="ovalForm.submitted && length.invalid">
+          <p *ngIf="length.errors.required">Length is required</p>
+        </div>
+        <span class="errmsg" *ngIf="lengths > 50">Length less then 50</span>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label" for="depth">Depth (MM)</label>
-      <input type="text" placeholder="0" class="form-control" name="depth" required [(ngModel)]="model.depth" #depth="ngModel"
-        [ngClass]="{ 'is-invalid': circleForm.submitted && depth.invalid }" #diameter="ngModel">
+      <div class="form-group">
+        <label class="form-label" for="depth">Width (MM)</label>
+        <input type="text" placeholder="0" class="form-control" name="width" required [(ngModel)]="modeloval.width"
+          #width="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && width.invalid }" >
 
-      <div class="invalid-feedback" *ngIf="circleForm.submitted && depth.invalid">
-        <p *ngIf="depth.errors.required">Depth is required</p>
+        <div class="invalid-feedback" *ngIf="ovalForm.submitted && width.invalid">
+          <p *ngIf="width.errors.required">Width is required</p>
+        </div>
+        <span class="errmsg" *ngIf="widths > 50">depths less then 50</span>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label" for="notche">Finger Notches</label>
-      <select class="form-select"  required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
+      <div class="form-group">
+        <label class="form-label" for="depth">Depth (MM)</label>
+        <input type="text" placeholder="0" class="form-control" name="depth" required [(ngModel)]="modeloval.depth"
+          #depth="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && depth.invalid }" >
 
-        <option value="undefined" disabled>Select Finger Notches</option>
-        <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
-      </select>
-      <div [hidden]="notche.valid || notche.pristine" class="alert alert-danger">
-        Finger Notche is required
+        <div class="invalid-feedback" *ngIf="ovalForm.submitted && depth.invalid">
+          <p *ngIf="depth.errors.required">Depth is required</p>
+        </div>
+        <span class="errmsg" *ngIf="depthsoval > 50">depths less then 50</span>
       </div>
-    </div>
 
-    <button type="submit" mat-raised-button class="form-btn" [disabled]="!circleForm.form.valid">
-      Add Circle
-    </button>
+      <div class="form-group">
+        <label class="form-label" for="notche">Finger Notches</label>
+        <select class="form-select" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
 
-    <div class="img__btm"><img src="assets/circle_menu.png"></div>
-  </form>
+          <option value="undefined" disabled>Select Finger Notches</option>
+          <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
+        </select>
+        <div [hidden]="notche.valid || notche.pristine" class="alert alert-danger">
+          Finger Notche is required
+        </div>
+      </div>
+
+      <button type="submit" mat-raised-button class="form-btn" [disabled]="!ovalForm.form.valid">
+        Add Oval
+      </button>
+
+      <div class="img__btm"><img src="assets/circle_menu.png"></div>
+    </form>
+  </div>
+
+  <!-- Cicle FOrm below-->
+
+  <div *ngIf="!options">
+    <form (ngSubmit)="onSubmit(circleForm)" #circleForm="ngForm">
+      <div class="form-group">
+        <label class="form-label" for="diameter">Diameter (MM)</label>
+        <input type="text" placeholder="0" name="diameter" class="form-control" required [(ngModel)]="model.diameter"
+          [ngClass]="{ 'is-invalid': circleForm.submitted && diameter.invalid }" #diameter="ngModel">
+
+        <div class="invalid-feedback" *ngIf="circleForm.submitted && diameter.invalid">
+          <p *ngIf="isError && diameter.errors.required">Diameter is required</p>
+        </div>
+
+        <span class="errmsg" *ngIf="isError && diameters > 50">diameters less then 50</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="depth">Depth (MM)</label>
+        <input type="text" placeholder="0" class="form-control" name="depth" required [(ngModel)]="model.depth"
+          #depth="ngModel" [ngClass]="{ 'is-invalid': circleForm.submitted && depth.invalid }" #diameter="ngModel">
+
+        <div class="invalid-feedback" *ngIf="circleForm.submitted && depth.invalid">
+          <p *ngIf="isError && depth.errors.required">Depth is required</p>
+        </div>
+        <span class="errmsg" *ngIf="isError && depths > 50">depths less then 50</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="notche">Finger Notches</label>
+        <select class="form-select" required [(ngModel)]="model.fingerNotch" name="notche" #notche="ngModel">
+
+          <option value="undefined" disabled>Select Finger Notches</option>
+          <option *ngFor="let notch of notches" [value]="notch">{{notch}}</option>
+        </select>
+        <div [hidden]="notche.valid || notche.pristine" class="alert alert-danger">
+          Finger Notche is required
+        </div>
+      </div>
+
+      <button type="submit" mat-raised-button class="form-btn" [disabled]="!circleForm.form.valid">
+        Add Circle
+      </button>
+
+      <div class="img__btm"><img src="assets/circle_menu.png"></div>
+    </form>
+
+  </div>
+
+
 </div>

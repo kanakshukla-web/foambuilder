@@ -32,6 +32,11 @@ li {
   margin-left: 5px;
   background-color: rgb(255, 255, 255);
   border: 1px solid #ccc;
+  padding: 5px;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
 }
 
 li a {
@@ -56,6 +61,7 @@ p.right_side_segments_title {
   margin: 0px;
   padding: 0px 5px 5px;
   font-size: 15px;
+  padding: 10px 5px;
   font-weight: 500;
 }
 .top_segments{
@@ -75,4 +81,12 @@ i.fas.fa-copy {
 }
 hr{
   margin-bottom: 10px;
+}
+
+.list_items{
+  padding: 10px 0px;
+}
+.list_items li{
+  padding: 5px 12px;
+ border-radius: 0px;
 }

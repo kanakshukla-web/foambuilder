@@ -12,8 +12,8 @@ export class CanvasService {
     let canvasProperties = {
       case_name: 'Custom',
       foam_base: '33',
-      canvasUpperLength: 475,
-      canvasUpperWidth: 700,
+      canvasUpperLength: 470,
+      canvasUpperWidth: 690,
       canvasDepth: 100,
       canvasLowerLength: 200,
       canvasLowerWidth: 120,

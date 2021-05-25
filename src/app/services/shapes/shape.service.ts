@@ -5,17 +5,17 @@ import Konva from 'konva';
   providedIn: 'root',
 })
 export class ShapeService {
-  constructor() {}
+  constructor() { }
 
-  circle(radius: number, xAxis: number, yAxis: number) {
+  circle(radius: number, xAxis: number, yAxis: number, fillColor: string, strokeColor: string, isDraggable: boolean) {
     return new Konva.Circle({
       x: xAxis,
       y: yAxis,
       radius: radius,
-      fill: 'rgb(75,196,51)',
-      stroke: 'black',
+      fill: fillColor,//'rgb(75,196,51)',
+      stroke: strokeColor,
       strokeWidth: 2,
-      draggable: true,
+      draggable: isDraggable,
     });
   }
 
@@ -30,22 +30,19 @@ export class ShapeService {
     });
   }
 
-  rectangle(
-    rectWidth: number,
-    rectHeight: number,
-    xAxis: number,
-    yAxis: number
+  rectangle(rectWidth: number, rectHeight: number, xAxis: number, yAxis: number, fillColor: string, strokeColor: string, isDraggable: boolean, cornerRadius: number
   ) {
     return new Konva.Rect({
       x: xAxis,
       y: yAxis,
-      width: rectHeight,
-      height: rectWidth,
-      fill: 'rgb(75,196,51)',
-      stroke: 'black',
+      width: rectWidth,
+      height: rectHeight,
+      fill: fillColor,//'rgb(147,220,133)',
+      stroke: strokeColor,
       strokeWidth: 2,
-      draggable: true,
+      draggable: isDraggable,
       strokeScaleEnabled: false,
+      cornerRadius: cornerRadius
     });
   }
 
@@ -56,9 +53,24 @@ export class ShapeService {
       image: imageObj,
       width: 100,
       height: 300,
-      draggable:true
+      draggable: true
     });
     imageObj.src = imageUrl;
     return img;
+  }
+
+  text(textString: string, xLoc: number, yLoc: number) {
+    return new Konva.Text({
+      text: textString,
+      x: xLoc,
+      y: yLoc,
+      fontSize: 18,
+      fontFamily: 'Calibri',
+      fill: '#000',
+      width: 100,
+      padding: 5,
+      align: 'center',
+      verticalAlign: 'middle',
+    });
   }
 }

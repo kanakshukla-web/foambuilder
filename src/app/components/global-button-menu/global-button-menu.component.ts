@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-global-button-menu',
@@ -10,6 +11,7 @@ export class GlobalButtonMenuComponent implements OnInit {
   @Output() clearEvent = new EventEmitter<string>();
   @Output() setEvent = new EventEmitter<string>();
   @Output() revertEvent = new EventEmitter<string>();
+  @Output() zoomEvent = new EventEmitter<string>();
 
   constructor() { }
 
@@ -23,6 +25,10 @@ export class GlobalButtonMenuComponent implements OnInit {
   setSelection(id)
   {
     this.setEvent.emit(id);
+  }
+
+  handleZoom(){
+    this.zoomEvent.emit();
   }
 
   undo(){

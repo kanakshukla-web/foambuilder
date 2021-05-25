@@ -1,6 +1,9 @@
 <div id="case-info">
   <div><span>{{canvasProperties.case_name}}</span>
-    <a href="#" data-cypress="case-edit" class="edit"><i (click)="handleEdit()" class="fa fa-pencil"></i></a>
+    <a href="#" data-cypress="case-edit" class="edit">
+      <!-- <i (click)="handleEdit()" class="fa fa-pencil"></i> -->
+      <mat-icon (click)="handleEdit()" >edit</mat-icon>
+    </a>
     <span class="pull-right">Base: {{canvasProperties.foam_base}}</span>
   </div>
   <div>{{canvasProperties.canvasUpperLength}} x {{canvasProperties.canvasUpperWidth}} x

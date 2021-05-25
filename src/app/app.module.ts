@@ -43,6 +43,7 @@ import { GlobalButtonMenuComponent } from './components/global-button-menu/globa
 import { EjsTrayBuilderMenuComponent } from './components/ejs-tray-builder-menu/ejs-tray-builder-menu.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { RectanglecustomnotchComponent } from './components/rectanglecustomnotch/rectanglecustomnotch.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { MatInputModule } from '@angular/material/input';
     GlobalButtonMenuComponent,
     EjsTrayBuilderMenuComponent,
     EjsChangeCaseTableComponent,
-    ShapeLibFilterPipe
+    ShapeLibFilterPipe,
+    RectanglecustomnotchComponent
     //NgxMoveableComponent
   ],
   imports: [

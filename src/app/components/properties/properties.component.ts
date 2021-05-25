@@ -7,6 +7,10 @@ import { Properties } from 'src/app/interfaces/intefaces';
   styleUrls: ['./properties.component.css']
 })
 export class PropertiesComponent implements OnInit {
+
+  isTools: boolean = true;
+  isAlign: boolean = false;
+
   @Input() properties: Properties;
   @Output() makeClone = new EventEmitter<Properties>();
   @Output() deleteShape = new EventEmitter<Properties>();
@@ -16,12 +20,21 @@ export class PropertiesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  handleClone(){
+  handleClone() {
     this.makeClone.emit(this.properties);
   }
 
-  handleDeleteShape(){
+  handleDeleteShape() {
     this.deleteShape.emit(this.properties);
+  }
+
+  isAlignfun() {
+    this.isAlign = true;
+    this.isTools = false;
+  }
+  isToolsFun() {
+    this.isTools = true;
+    this.isAlign = false;
   }
 
 }

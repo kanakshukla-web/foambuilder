@@ -17,6 +17,16 @@ export class Circle {
   public cornerRadius?: number
 }
 
+export class Oval {
+  public id: number;
+  public name: string;
+  public diameter: number;
+  public depth: number;
+  public fingerNotch: string;
+  public width?: number;
+  public cornerRadius?: number
+}
+
 export class Settings {
   constructor(
     public id: number,

@@ -60,19 +60,23 @@
   </div>
   <hr>
   <label class="heading">
-    <input type="checkbox" /> Rounded Corner?
+
+    <input type="checkbox" (change)="handleCheckbox()" ng-model="show" />
+    Rounded Corner?
+
+
   </label>
 
-  <form (ngSubmit)="onSubmit()" #rectangleForm="ngForm">
+  <form (ngSubmit)="onSubmit(rectangleForm)" #rectangleForm="ngForm">
 
     <div class="form-group">
       <label class="form-label" for="length">Length (MM)</label>
       <input type="number" placeholder="0" class="form-control" required [(ngModel)]="model.length" name="length"
         [ngClass]="{ 'is-invalid': rectangleForm.submitted && length.invalid }" #length="ngModel">
       <div class="invalid-feedback" *ngIf="rectangleForm.submitted && length.invalid">
-        <p *ngIf="length.errors.required">Length is required</p>
+        <p *ngIf="isError && length.errors.required">Length is required</p>
       </div>
-
+      <span class="errmsg" *ngIf="isError && lengths > 50">Length less then 50</span>
     </div>
 
     <div class="form-group">
@@ -81,22 +85,57 @@
         [ngClass]="{ 'is-invalid': rectangleForm.submitted && width.invalid }" #width="ngModel">
 
       <div class="invalid-feedback" *ngIf="rectangleForm.submitted && width.invalid">
-        <p *ngIf="width.errors.required">Width is required</p>
+        <p *ngIf="isError && width.errors.required">Width is required</p>
       </div>
+      <span class="errmsg" *ngIf="isError && widths > 50">Width less then 50</span>
     </div>
 
     <div class="form-group">
       <label class="form-label" for="depth">Depth (MM)</label>
-      <input type="number" placeholder="0"  class="form-control" required [(ngModel)]="model.depth" name="depth"
+      <input type="number" placeholder="0" class="form-control" required [(ngModel)]="model.depth" name="depth"
         [ngClass]="{ 'is-invalid': rectangleForm.submitted && depth.invalid }" #depth="ngModel">
 
       <div class="invalid-feedback" *ngIf="rectangleForm.submitted && depth.invalid">
-        <p *ngIf="depth.errors.required">Depth is required</p>
+        <p *ngIf="isError && depth.errors.required">Depth is required</p>
       </div>
+      <span class="errmsg" *ngIf="isError && depths > 50">Depths less then 50</span>
     </div>
 
+    <div class="row container-fluid" *ngIf="show" id="divshow">
+
+      <div class="form-group">
+        <div class="finger_nothc_label">
+          <div class="left">
+            <label class="form-label" for="fingerNotch">Corner Radius (MM)</label>
+          </div>
+          <div class="right">
+            <span matTooltip=" Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio voluptatem,">
+              <span> <i class="fas fa-info-circle"></i></span>
+            </span>
+          </div>
+        </div>
+        <input type="number" placeholder="0" class="form-control" required [(ngModel)]="model.cornerRadius"
+          name="cornerRadius" [ngClass]="{ 'is-invalid': rectangleForm.submitted && cornerRadius.invalid }"
+          #cornerRadius="ngModel">
+
+        <div class="invalid-feedback" *ngIf="rectangleForm.submitted && cornerRadius.invalid">
+          <p *ngIf="isError && cornerRadius.errors.required">Corner Radius is required</p>
+        </div>
+      </div>
+
+    </div>
+
+
     <div class="form-group">
-      <label class="form-label" for="fingerNotch">Finger Notches</label>
+      <div class="finger_nothc_label">
+        <div class="left"> <label class="form-label" for="fingerNotch">Finger Notches</label></div>
+        <div class="right">
+          <span matTooltip="The Custom Notch Placement option will open the Finger Notch tool after you finish creating your shape.">
+            <span> <i class="fas fa-info-circle"></i></span>
+          </span>
+        </div>
+      </div>
+
       <select class="form-select" required [(ngModel)]="model.fingerNotch" name="fingerNotch"
         [ngClass]="{ 'is-invalid': rectangleForm.submitted && fingerNotch.invalid }" #fingerNotch="ngModel">
         <option value="undefined" disabled>Select Finger Notches</option>
@@ -104,7 +143,7 @@
       </select>
 
       <div class="invalid-feedback" *ngIf="rectangleForm.submitted && fingerNotch.invalid">
-        <p *ngIf="fingerNotch.errors.required"> Finger Notche is required</p>
+        <p *ngIf="isError && fingerNotch.errors.required"> Finger Notche is required</p>
       </div>
     </div>
 

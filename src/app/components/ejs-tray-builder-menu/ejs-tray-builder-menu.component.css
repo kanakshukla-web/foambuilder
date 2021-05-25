@@ -10,7 +10,7 @@
   border-top-left-radius: 0;
   border-top: 0px;
   background: white;
-  height: 60px;
+  /* height: 60px; */
 }
 
 #layer-selector .title {
@@ -42,9 +42,9 @@
   box-shadow: none;
 
   line-height: 24px;
-  padding-top: 6px;
-  padding-bottom: 3px;
-  height: 13px;
+  /* padding-top: 6px;
+  padding-bottom: 3px; */
+  height: 23px;
   color: transparent;
   text-shadow: 0 0 0 #464849;
 }
@@ -70,7 +70,7 @@
 }
 
 #layer-selector ul.dropdown-menu {
-  width: 176px;
+  width: 190px;
   padding-top: 0px;
   padding-bottom: 2px;
   margin-left: -1px;
@@ -101,7 +101,7 @@
 
 .btn {
   display: inline-block;
-  margin-bottom: 4px;
+  margin-bottom: -3px;
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
@@ -114,8 +114,8 @@
   font-size: 14px;
   line-height: 0.25;
   border-radius: 3px;
-  margin-left: -5px;
-  height: 24px;
+  margin-left: -1px;
+  height: 34px;
   -webkit-user-select: none;
   user-select: none;
   outline: none;
@@ -157,7 +157,7 @@ input {
   width: 50px;
   margin-top: 5px;
   margin-bottom: 5px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   border: 1px solid rgb(223, 198, 198);
 }
 

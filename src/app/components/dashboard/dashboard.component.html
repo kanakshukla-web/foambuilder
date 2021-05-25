@@ -19,7 +19,8 @@
     </ul>
 
     <!-- global-buttons menu -->
-    <app-global-button-menu (clearEvent)="clearSelection()" (setEvent)="setSelection($event)" (revertEvent)="undo()">
+    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="clearSelection()" (setEvent)="setSelection($event)"
+      (revertEvent)="undo()">
     </app-global-button-menu>
 
     <!-- tray-builder menu -->
@@ -42,7 +43,7 @@
       [style.height.px]="canvasProperties.canvasUpperLength">
     </div>
 
-    <!-- right side bar -->
+    <!-- right side bar Properties Panel -->
     <mat-sidenav *ngIf='isPropertiesPanelShown' opened mode="side" position="end">
       <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
         [properties]=propertiesObject></app-properties>
@@ -58,5 +59,8 @@
   <!-- traybuilder area -->
   <app-ejs-tray-builder (toggleTray)="hideBuilderTray()" [canvasProperties]='canvasProperties' #trayChild>
   </app-ejs-tray-builder>
+
+  <!-- custom notch -->
+  <app-rectanglecustomnotch (customNotchEvent)="handleCustomNotch()" #customNotch></app-rectanglecustomnotch>
 
 </div>

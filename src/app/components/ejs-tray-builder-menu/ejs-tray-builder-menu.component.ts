@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-ejs-tray-builder-menu',
