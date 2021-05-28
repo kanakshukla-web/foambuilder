@@ -300,10 +300,10 @@ export class DashboardComponent implements OnInit {
         const circleObj = {
           radius: +event.diameter,
           xAxis: 150,
-          yAxix: 150,
+          yAxis: 150,
           fillColor: '#4BC433',
           strokeColor: 'black',
-          isDraggable: true,
+          isDraggable: false,
           notcheType: event.fingerNotch
         }
         this.selectCircleType(circleObj);
@@ -434,8 +434,8 @@ export class DashboardComponent implements OnInit {
 
     let textProps = {
       textString: this.shapeDepth,
-      xLoc: xAxis + radius / 2,
-      yLoc: yAxis + radius / 2
+      xLoc: xAxis,
+      yLoc: yAxis
     }
 
     switch (circleObj.notcheType) {
@@ -446,9 +446,14 @@ export class DashboardComponent implements OnInit {
         break;
 
       case 'None':
-        let circle = this.drawCircle(circleObj);
-        this.initializeListnersOnCircle(circle, circleObj.radius);
-        this.addShapeToKonvaLayer(circle);
+        // let circle = this.drawCircle(circleObj);
+        // let text = this.createText(textProps);
+        // this.initializeListnersOnCircle(circle, circleObj.radius);
+        // this.addShapeToKonvaLayer(circle);
+
+        this.group.add(this.drawCircle(circleObj), this.createText(textProps));
+        this.initializeListnerOnGroup(this.group);
+        this.addShapeToKonvaLayer(this.group);
         break;
 
       case 'Custom Notch Replacememt': this.handleCustomNotch();
@@ -460,8 +465,8 @@ export class DashboardComponent implements OnInit {
   }
 
   drawCircle(circleProp) {
-    const { radius, xAxis, yAxix, fillColor, strokeColor, isDraggable } = circleProp;
-    const circle = this.shapeService.circle(radius, xAxis, yAxix, fillColor, strokeColor, isDraggable);
+    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleProp;
+    const circle = this.shapeService.circle(radius, xAxis, yAxis, fillColor, strokeColor, isDraggable);
     //this.initializeListnersOnCircle(circle, radius);
     //this.addShapeToKonvaLayer(circle);
     return circle;
@@ -532,7 +537,7 @@ export class DashboardComponent implements OnInit {
     let circleObj = {
       radius: 30,
       xAxis: xAxis + rectWidth / 2,
-      yAxix: yAxis,
+      yAxis: yAxis,
       fillColor: this.shape_notch_color,
       strokeColor: '#B36DD1',
       isDraggable: false
@@ -547,14 +552,14 @@ export class DashboardComponent implements OnInit {
     switch (notcheType) {
       case 'Top and Bottom':
         let top_notch = this.drawCircle(circleObj); //top_notch
-        circleObj.yAxix = yAxis + rectHeight;
+        circleObj.yAxis = yAxis + rectHeight;
         let bottom_notch = this.drawCircle(circleObj);//bottom_notch
         this.updateGroup(this.createRect(rectProps), top_notch, bottom_notch, this.createText(textProps));
         break;
 
       case 'Left and Right':
         circleObj.xAxis = xAxis;
-        circleObj.yAxix = yAxis + rectHeight / 2;
+        circleObj.yAxis = yAxis + rectHeight / 2;
         let left_notch = this.drawCircle(circleObj);//left_notch
         circleObj.xAxis = xAxis + rectWidth;
         let right_notch = this.drawCircle(circleObj); //right_notch
@@ -601,6 +606,7 @@ export class DashboardComponent implements OnInit {
       this.isPropertiesPanelShown = true;
       this.activeShape = group.children[0];
       this.activeShape.attrs.fill = '#4BC433';
+      console.log(group.children[0].getType())
       this.setGroupProperties(group);
     });
 
@@ -638,6 +644,31 @@ export class DashboardComponent implements OnInit {
       : group.children[0].attrs.width;
     let newWidth = condition
       ? Math.round(this.newBoundriesShape.width)
+      : group.children[0].attrs.height;
+    let rotation = condition
+      ? Math.round(this.newBoundriesShape.rotation)
+      : group.children[0].rotation();
+
+    return (this.propertiesObject = {
+      id: group._id,
+      shape_name: 'group',
+      length: newHeight,
+      width: newWidth,
+      depth: this.shapeDepth,
+      xLoc: Math.round(group.children[0].absolutePosition().x),
+      yLoc: Math.round(group.children[0].absolutePosition().y),
+      angle: rotation,
+    });
+  }
+
+  setGroupPropertiesForCircle(group: Konva.Group) {
+    let condition = this.newBoundriesShape != null;
+
+    let newHeight = condition
+      ? Math.round(this.newBoundriesShape.height)
+      : group.children[0].attrs.radius;
+    let newWidth = condition
+      ? Math.round(this.newBoundriesShape.radius)
       : group.children[0].attrs.height;
     let rotation = condition
       ? Math.round(this.newBoundriesShape.rotation)
@@ -716,9 +747,9 @@ export class DashboardComponent implements OnInit {
 
   //<--------------------------------IMAGE--------------------------------------------->
 
-  drawImage(imageUrl: string, xAxis: number, yAxix: number) {
+  drawImage(imageUrl: string, xAxis: number, yAxis: number) {
     var imageObj = new Image();
-    const image = this.shapeService.image(imageUrl, imageObj, xAxis, yAxix);
+    const image = this.shapeService.image(imageUrl, imageObj, xAxis, yAxis);
 
     imageObj.onload = function () {
       image;
@@ -953,7 +984,7 @@ export class DashboardComponent implements OnInit {
         let circleObj = {
           radius: event.width,
           xAxis: event.xLoc + 25,
-          yAxix: event.yLoc + 24,
+          yAxis: event.yLoc + 24,
           fillColor: 'rgb(75,196,51)',
           strokeColor: 'black',
           isDraggable: true

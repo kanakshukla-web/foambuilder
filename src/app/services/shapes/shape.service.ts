@@ -62,7 +62,7 @@ export class ShapeService {
   text(textProps) {
     const { textString, xLoc, yLoc } = textProps;
     return new Konva.Text({
-      text: textString,
+      text: `${textString}mm`,
       x: xLoc,
       y: yLoc,
       fontSize: 18,
