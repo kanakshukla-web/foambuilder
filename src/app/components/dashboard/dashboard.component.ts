@@ -1,3 +1,4 @@
+import { Circle } from 'src/app/interfaces/intefaces';
 import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectanglecustomnotch.component';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
@@ -119,7 +120,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
+    this.initilizeCanvas();
     this.initStage();
     //this.addLineListeners();
 
@@ -139,9 +140,10 @@ export class DashboardComponent implements OnInit {
     this.tapListner();
   }
 
-  initilizeCanvas(length: number, width: number) {
-    this.canvasProperties.canvasUpperLength = length; // length = height
-    this.canvasProperties.canvasUpperWidth = width;
+  initilizeCanvas() {
+
+    this.canvasProperties.canvasUpperLength = this.canvasProperties.canvasUpperLength; // length = height
+    this.canvasProperties.canvasUpperWidth = this.canvasProperties.canvasUpperWidth;
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.canvas.nativeElement.width = this.canvasProperties.canvasUpperWidth;
     this.canvas.nativeElement.height = this.canvasProperties.canvasUpperLength;
@@ -222,7 +224,7 @@ export class DashboardComponent implements OnInit {
     this.canvasProperties.canvasUpperWidth = formInput.elements['upperwidth'].value;
 
     this.isCanvasUpdated = true;
-    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
+    this.initilizeCanvas();
     //this.closeDialog();
     this.changeCase.closeDialog();
   }
@@ -240,7 +242,7 @@ export class DashboardComponent implements OnInit {
     this.canvasProperties.canvasUpperLength = Length;
     this.canvasProperties.canvasUpperWidth = Width;
     this.isCanvasUpdated = true;
-    this.initilizeCanvas(this.canvasProperties.canvasUpperLength, this.canvasProperties.canvasUpperWidth);
+    this.initilizeCanvas();
     this.changeCase.closeDialog();
   }
 
@@ -292,23 +294,51 @@ export class DashboardComponent implements OnInit {
     this.clearSelection();
     this.setSelection(type);
     this.shapeDepth = +event.depth;
-    console.log(event)
 
     switch (type) {
       case 'circle':
-        this.drawCircle(+event.diameter, 150, 150, '#4BC433', 'black', true);
+        const circleObj = {
+          radius: +event.diameter,
+          xAxis: 150,
+          yAxix: 150,
+          fillColor: '#4BC433',
+          strokeColor: 'black',
+          isDraggable: true,
+          notcheType: event.fingerNotch
+        }
+        this.selectCircleType(circleObj);
         break;
+
       case 'rectangle':
-        this.drawRectangle(+event.length, +event.width, 90 + this.randomNumber(10, 50), 90 + this.randomNumber(10, 50), event.fingerNotch, event.cornerRadius);
+        const rectObj = {
+          rectWidth: +event.length,
+          rectHeight: +event.width,
+          xAxis: 90 + this.randomNumber(10, 50),
+          yAxis: 90 + this.randomNumber(10, 50),
+          notcheType: event.fingerNotch,
+          cornerRadius: event.cornerRadius,
+          isDraggable: false,
+          fillColor: this.shape_rect_color,
+          strokeColor: 'black',
+        }
+        this.drawRectangle(rectObj);
         break;
+
       case 'image':
         this.drawImage('/assets/cbimage.jpg', 350, 150);
         break;
+
       case 'line':
         this.drawLine();
         break;
+
       case 'text':
-        this.createText(123, 100, 100);
+        let textProps = {
+          textString: 123,
+          xLoc: 100,
+          yLoc: 100
+        }
+        this.createText(textProps);
         break;
     }
   }
@@ -387,7 +417,7 @@ export class DashboardComponent implements OnInit {
     this.layer.draw();
   }
 
-  addGroupinKonvaLayer(group,text) {
+  addGroupinKonvaLayer(group, text) {
     this.tr = new Konva.Transformer();
     this.layer.add(this.tr);
     this.stage.add(this.layer);
@@ -398,7 +428,39 @@ export class DashboardComponent implements OnInit {
 
   //<--------------------------------CIRCLE--------------------------------------------->
 
-  drawCircle(radius: number, xAxis: number, yAxix: number, fillColor: string, strokeColor: string, isDraggable: boolean) {
+  selectCircleType(circleObj) {
+
+    let { radius, xAxis, yAxis } = circleObj;
+
+    let textProps = {
+      textString: this.shapeDepth,
+      xLoc: xAxis + radius / 2,
+      yLoc: yAxis + radius / 2
+    }
+
+    switch (circleObj.notcheType) {
+      case 'Top and Bottom':
+        break;
+
+      case 'Left and Right':
+        break;
+
+      case 'None':
+        let circle = this.drawCircle(circleObj);
+        this.initializeListnersOnCircle(circle, circleObj.radius);
+        this.addShapeToKonvaLayer(circle);
+        break;
+
+      case 'Custom Notch Replacememt': this.handleCustomNotch();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  drawCircle(circleProp) {
+    const { radius, xAxis, yAxix, fillColor, strokeColor, isDraggable } = circleProp;
     const circle = this.shapeService.circle(radius, xAxis, yAxix, fillColor, strokeColor, isDraggable);
     //this.initializeListnersOnCircle(circle, radius);
     //this.addShapeToKonvaLayer(circle);
@@ -462,60 +524,63 @@ export class DashboardComponent implements OnInit {
 
   //<--------------------------------RECTANGLE--------------------------------------------->
 
-  drawRectangle(rectWidth: number, rectHeight: number, xLocation: number, yLocation: number, notcheType: string, cornerRadius: number) {
+  drawRectangle(rectProps) {
 
-    // let shape_notch_color = '#B36DD1';
-    let strokeColor_circle = '#B36DD1';
-    let strokeColor_rect = 'black';
-    let isDraggable = false;
-
-    let rect = null;
-    let first_notch = null;
-    let second_notch = null;
-    let center_text = null;
-
+    const { rectWidth, rectHeight, xAxis, yAxis, notcheType } = rectProps;
     this.initializeGroup();
+
+    let circleObj = {
+      radius: 30,
+      xAxis: xAxis + rectWidth / 2,
+      yAxix: yAxis,
+      fillColor: this.shape_notch_color,
+      strokeColor: '#B36DD1',
+      isDraggable: false
+    }
+
+    let textProps = {
+      textString: this.shapeDepth,
+      xLoc: xAxis + rectWidth / 2,
+      yLoc: yAxis + rectHeight / 2
+    }
 
     switch (notcheType) {
       case 'Top and Bottom':
-        rect = this.createRect(rectWidth, rectHeight, xLocation, yLocation, this.shape_rect_color, strokeColor_rect, isDraggable, cornerRadius);
-        first_notch = this.drawCircle(30, xLocation + rectWidth / 2, yLocation, this.shape_notch_color, strokeColor_circle, isDraggable);
-        second_notch = this.drawCircle(30, xLocation + rectWidth / 2, yLocation + rectHeight, this.shape_notch_color, strokeColor_circle, isDraggable);
-        center_text = this.createText(this.shapeDepth, xLocation + rectWidth / 2, yLocation + rectHeight / 2);
-        this.updateGroup(rect, first_notch, second_notch, center_text);
+        let top_notch = this.drawCircle(circleObj); //top_notch
+        circleObj.yAxix = yAxis + rectHeight;
+        let bottom_notch = this.drawCircle(circleObj);//bottom_notch
+        this.updateGroup(this.createRect(rectProps), top_notch, bottom_notch, this.createText(textProps));
         break;
 
       case 'Left and Right':
-        rect = this.createRect(rectWidth, rectHeight, xLocation, yLocation, this.shape_rect_color, strokeColor_rect, isDraggable, cornerRadius);
-        first_notch = this.drawCircle(30, xLocation, yLocation + rectHeight / 2, this.shape_notch_color, strokeColor_circle, isDraggable);
-        second_notch = this.drawCircle(30, xLocation + rectWidth, yLocation + rectHeight / 2, this.shape_notch_color, strokeColor_circle, isDraggable);
-        center_text = this.createText(this.shapeDepth, xLocation + rectWidth / 2, yLocation + rectHeight / 2);
-        this.updateGroup(rect, first_notch, second_notch, center_text);
+        circleObj.xAxis = xAxis;
+        circleObj.yAxix = yAxis + rectHeight / 2;
+        let left_notch = this.drawCircle(circleObj);//left_notch
+        circleObj.xAxis = xAxis + rectWidth;
+        let right_notch = this.drawCircle(circleObj); //right_notch
+        this.updateGroup(this.createRect(rectProps), left_notch, right_notch, this.createText(textProps));
+        break;
+
+      case 'None':
+        this.group.add(this.createRect(rectProps), this.createText(textProps));
+        this.initializeListnerOnGroup(this.group);
+        this.addShapeToKonvaLayer(this.group);
         break;
 
       case 'Custom Notch Replacememt': this.handleCustomNotch();
         break;
 
-      case 'None':
-        rect = this.createRect(rectWidth, rectHeight, xLocation, yLocation, this.shape_rect_color, strokeColor_rect, isDraggable, cornerRadius);
-        center_text = this.createText(this.shapeDepth, xLocation + rectWidth / 2, yLocation + rectHeight / 2);
-        this.group.add(rect, center_text);
-        this.initializeListnerOnGroup(this.group);
-        this.addShapeToKonvaLayer(this.group);
-        //this.addGroupinKonvaLayer(this.group,center_text);
-        break;
-
       default:
-        isDraggable = true;
-        const default_rect = this.createRect(rectWidth, rectHeight, xLocation, yLocation, this.shape_rect_color, strokeColor_rect, isDraggable, cornerRadius);
+        rectProps.isDraggable = true;
+        const default_rect = this.createRect(rectProps);
         this.initilizeListenersOnRectangle(default_rect);
         this.addShapeToKonvaLayer(default_rect);
         break;
     }
   }
 
-  createRect(rectWidth: number, rectHeight: number, xLocation: number, yLocation: number, fillColor: string, strokeColor: string, isDraggable: boolean, cornerRadius: number) {
-    const rectangle = this.shapeService.rectangle(rectWidth, rectHeight, xLocation, yLocation, fillColor, strokeColor, isDraggable, cornerRadius);
+  createRect(rectProps) {
+    const rectangle = this.shapeService.rectangle(rectProps);
     //this.initilizeListenersOnRectangle(rectangle);
     //this.addShapeToKonvaLayer(rectangle);
     return rectangle;
@@ -538,6 +603,7 @@ export class DashboardComponent implements OnInit {
       this.activeShape.attrs.fill = '#4BC433';
       this.setGroupProperties(group);
     });
+
     group.addEventListener('dragmove', (event) => {
       this.isShapeDragStarted = true;
       this.xAxis = Math.round(group.children[0].absolutePosition().x);
@@ -558,6 +624,7 @@ export class DashboardComponent implements OnInit {
     group.on('mouseover', function () {
       document.body.style.cursor = 'pointer';
     });
+
     group.on('mouseout', function () {
       document.body.style.cursor = 'default';
     });
@@ -709,8 +776,8 @@ export class DashboardComponent implements OnInit {
 
   //<--------------------------------TEXT--------------------------------------------->
 
-  createText(textContent: number, xLoc: number, yLoc: number) {
-    const text = this.shapeService.text(`${textContent}mm`, xLoc, yLoc);
+  createText(textProps) {
+    const text = this.shapeService.text(textProps);
     text.offsetX(text.width() / 2);
     text.offsetY(text.height() / 2)
     // this.shapes.push(text.textNode);
@@ -872,17 +939,26 @@ export class DashboardComponent implements OnInit {
     //console.log(event);
     switch (event.shape_name) {
       case 'rectangle':
-        this.drawRectangle(
-          event.length,
-          event.width,
-          event.xLoc + 25,
-          event.yLoc + 24,
-          event.fingerNotch,
-          event.cornerRadius
-        );
+        const rectObj = {
+          rectWidth: +event.length,
+          rectHeight: +event.width,
+          xLocation: event.xLoc + 25,
+          yLocation: event.yLoc + 24,
+          notcheType: event.fingerNotch,
+          cornerRadius: event.cornerRadius
+        }
+        this.drawRectangle(rectObj);
         break;
       case 'circle':
-        this.drawCircle(event.width, event.xLoc + 25, event.yLoc + 24, 'rgb(75,196,51)', 'black', true);
+        let circleObj = {
+          radius: event.width,
+          xAxis: event.xLoc + 25,
+          yAxix: event.yLoc + 24,
+          fillColor: 'rgb(75,196,51)',
+          strokeColor: 'black',
+          isDraggable: true
+        }
+        this.drawCircle(circleObj);
         break;
       case 'image':
         this.drawImage(event.image_Src, event.xLoc + 25, event.yLoc + 24);

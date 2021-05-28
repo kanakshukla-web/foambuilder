@@ -35,8 +35,9 @@ export class CanvasService {
         CornerRadius: 15,
         LowerLength: 205,
         LowerWidth: 131,
-      }, {
-        CaseID: 1,
+      },
+      {
+        CaseID: 2,
         CaseName: "Nanuk 905",
         Length: 197,
         Width: 54,
@@ -47,7 +48,7 @@ export class CanvasService {
         LowerWidth: 50,
       },
       {
-        CaseID: 1,
+        CaseID: 3,
         CaseName: "Nanuk 330",
         Length: 433,
         Width: 167,
@@ -58,7 +59,7 @@ export class CanvasService {
         LowerWidth: 162,
       },
       {
-        CaseID: 1,
+        CaseID: 4,
         CaseName: "3I-0702-1",
         Length: 559,
         Width: 330,
@@ -69,7 +70,7 @@ export class CanvasService {
         LowerWidth: 325,
       },
       {
-        CaseID: 1,
+        CaseID: 5,
         CaseName: "MAX520TR",
         Length: 212,
         Width: 140,
@@ -78,8 +79,9 @@ export class CanvasService {
         CornerRadius: 15,
         LowerLength: 205,
         LowerWidth: 131,
-      }, {
-        CaseID: 1,
+      },
+      {
+        CaseID: 6,
         CaseName: "MAX235H155",
         Length: 212,
         Width: 140,
@@ -90,7 +92,7 @@ export class CanvasService {
         LowerWidth: 131,
       },
       {
-        CaseID: 1,
+        CaseID: 7,
         CaseName: "3I-0705-3",
         Length: 212,
         Width: 140,
@@ -101,7 +103,7 @@ export class CanvasService {
         LowerWidth: 131,
       },
       {
-        CaseID: 1,
+        CaseID: 8,
         CaseName: "3I-0907-4",
         Length: 212,
         Width: 140,
@@ -110,8 +112,18 @@ export class CanvasService {
         CornerRadius: 15,
         LowerLength: 205,
         LowerWidth: 131,
+      },
+      {
+        CaseID: 9,
+        CaseName: "Custom",
+        Length: 470,
+        Width: 690,
+        TotalDepth: 33,
+        BaseDepth: 33,
+        CornerRadius: 25,
+        LowerLength: 205,
+        LowerWidth: 131,
       }
-
     ];
 
     CASE_DATA.forEach(element => {

@@ -12,8 +12,9 @@
     Oval <input type="radio" name="options" [(ngModel)]="options" type="radio" [value]="true" [checked]="!options" />
   </label>
 
+  <!-- Oval form -->
   <div *ngIf="options">
-    <form (ngSubmit)="onSubmit1(ovalForm)" #ovalForm="ngForm">
+    <form (ngSubmit)="onSubmitOvalFormData(ovalForm)" #ovalForm="ngForm">
       <div class="form-group">
         <label class="form-label" for="diameter">Length (MM)</label>
         <input type="text" placeholder="0" name="length" class="form-control" required [(ngModel)]="modeloval.length"
@@ -68,9 +69,8 @@
   </div>
 
   <!-- Cicle FOrm below-->
-
   <div *ngIf="!options">
-    <form (ngSubmit)="onSubmit(circleForm)" #circleForm="ngForm">
+    <form (ngSubmit)="onSubmitCircleFormData(circleForm)" #circleForm="ngForm">
       <div class="form-group">
         <label class="form-label" for="diameter">Diameter (MM)</label>
         <input type="text" placeholder="0" name="diameter" class="form-control" required [(ngModel)]="model.diameter"

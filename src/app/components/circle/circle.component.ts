@@ -31,7 +31,7 @@ export class CircleComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onSubmit1(ovalForm) {
+  onSubmitOvalFormData(ovalForm) {
 
     console.log(ovalForm.value)
     if (ovalForm.value.length > 50) {
@@ -48,39 +48,25 @@ export class CircleComponent implements OnInit {
       this.closeNav();
       ovalForm.reset()
     }
-
   }
-  onSubmit(circleForm) {
+
+  onSubmitCircleFormData(circleForm) {
 
     if (circleForm.value.diameter > 60) {
-
       this.diameters = circleForm.value.diameter;
-      //  setTimeout(() => {
-      //   console.log('hide');
-      //   this.msgshowhide = false;
-      // }, 4000);
       this.isError = true;
     }
     if (circleForm.value.depth > 60) {
-
       this.depths = circleForm.value.depth
       this.isError = true;
-
     }
     else {
       this.drawCircle.emit(this.model);
       this.closeNav();
       this.isError = false;
-
       circleForm.controls['diameter'].reset();
       circleForm.controls['depth'].reset()
-
-
     }
-
-
-
-
   }
 
   /* Set the width of the sidebar to 0 (hide it) */

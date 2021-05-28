@@ -30,8 +30,8 @@ export class ShapeService {
     });
   }
 
-  rectangle(rectWidth: number, rectHeight: number, xAxis: number, yAxis: number, fillColor: string, strokeColor: string, isDraggable: boolean, cornerRadius: number
-  ) {
+  rectangle(rectProperties) {
+    const { rectWidth, rectHeight, xAxis, yAxis, fillColor, strokeColor, isDraggable, cornerRadius } = rectProperties
     return new Konva.Rect({
       x: xAxis,
       y: yAxis,
@@ -59,7 +59,8 @@ export class ShapeService {
     return img;
   }
 
-  text(textString: string, xLoc: number, yLoc: number) {
+  text(textProps) {
+    const { textString, xLoc, yLoc } = textProps;
     return new Konva.Text({
       text: textString,
       x: xLoc,
