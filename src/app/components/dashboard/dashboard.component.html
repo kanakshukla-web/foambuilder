@@ -46,7 +46,8 @@
     <!-- right side bar Properties Panel -->
     <mat-sidenav *ngIf='isPropertiesPanelShown' opened mode="side" position="end">
       <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
-        [properties]=propertiesObject></app-properties>
+        [properties]=propertiesObject>
+      </app-properties>
     </mat-sidenav>
 
   </mat-sidenav-container>

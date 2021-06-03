@@ -12,12 +12,12 @@ export class CanvasService {
     let canvasProperties = {
       case_name: 'Custom',
       foam_base: '33',
-      canvasUpperLength: 470,
-      canvasUpperWidth: 690,
+      canvasUpperLength: 470,//470
+      canvasUpperWidth: 690,//690
       canvasDepth: 100,
       canvasLowerLength: 200,
       canvasLowerWidth: 120,
-      canvasRadius: 25,
+      canvasRadius: 0,
     };
 
     return JSON.stringify(canvasProperties);
