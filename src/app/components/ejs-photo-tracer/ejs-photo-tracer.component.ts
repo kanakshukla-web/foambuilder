@@ -1,3 +1,4 @@
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
@@ -6,13 +7,13 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '
   styleUrls: ['./ejs-photo-tracer.component.css']
 })
 export class EjsPhotoTracerComponent implements OnInit {
-
-  @ViewChild('drawCanvas', { static: true })
+  @ViewChild('ejTracerDialog') ejDialog: DialogComponent;
+  @ViewChild('drawCanvas', { static: false })
   canvas: ElementRef<HTMLCanvasElement>;
   public ctx: CanvasRenderingContext2D;
 
   isTracerOpened: boolean = false;
-  isFileSelected :boolean = false;
+  isFileSelected: boolean = false;
   tracer_Img: any;
 
   public typeDialogWidth: string = '98%';
@@ -24,6 +25,10 @@ export class EjsPhotoTracerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit(): void {
+    this.initilizeCanvas();
+  }
+
   initilizeCanvas() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
@@ -33,7 +38,8 @@ export class EjsPhotoTracerComponent implements OnInit {
   }
 
   closeTracerInstrctions() {
-    this.isTracerOpened = false;;
+    this.isTracerOpened = false;
+    this.ejDialog.hide();
   }
 
   loadFile() {

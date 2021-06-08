@@ -1,5 +1,5 @@
 <!-- Photo Tracer Instructions Dialog-->
-<ejs-dialog *ngIf='isTracerOpened' header={{header}} #ejTypeDialog isModal='true' (close)='closeTracerInstrctions()'
+<ejs-dialog *ngIf='isTracerOpened' header={{header}} #ejTracerDialog isModal='true' (close)='closeTracerInstrctions()'
   width={{typeDialogWidth}} height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
 
   <ng-template #header>
@@ -57,7 +57,7 @@
         <img *ngIf="imgURL" id="draw-src" [src]="imgURL">
         <div id="draw-canvas-container" style="height: 373px; /*width: 1268px; */ ">
           <canvas id="drawCanvas" height="350" width="700"
-            style="border: 1px solid rgb(190, 170, 170); margin-left: 32px;">
+            style="border: 1px solid rgb(190, 170, 170); margin-left: 32px;" #drawCanvas>
           </canvas>
         </div>
       </div>

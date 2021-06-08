@@ -1,7 +1,8 @@
+import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { ShapeLibFilterPipe } from './../../../shape-lib-filter.pipe';
 import { ShapeLibraryService } from './../../services/shapeLibrary/shape-library.service';
 import { ShapeLib } from './../../interfaces/intefaces';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 //import { ShapeLibFilterPipe } from '../ShapeLibFilterPipe';
 
 @Component({
@@ -10,6 +11,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./ejs-shape-lib.component.css'],
 })
 export class EjsShapeLibComponent implements OnInit {
+  @ViewChild('ejLibDialog') ejDialog: DialogComponent;
   @Output() close = new EventEmitter<string>();
   @Output() addShape = new EventEmitter<ShapeLib>();
 
@@ -54,6 +56,7 @@ export class EjsShapeLibComponent implements OnInit {
   closeDialog() {
     //this.close.emit('close');
     this.isLibOpened = false;
+    this.ejDialog.hide();
   }
 
   drawShapeOnCanvas() {
