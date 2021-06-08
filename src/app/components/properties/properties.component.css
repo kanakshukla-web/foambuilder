@@ -2,19 +2,19 @@
   float: right;
   border: 1px solid rgb(255, 255, 255);
   background-color: #ffffff;
-  width: 320px;
+  /* width: 320px; */
   height: 100vh;
-  margin-top: 60px;
+  margin-top: -15px;
   box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
   background-color: rgb(253, 253, 253);
   padding: 10px;
 }
 
-.right_tab h3{
+.right_tab h3 {
   font-weight: bold;
 }
 
-#shape_namem,.right_tab input{
+#shape_namem, .right_tab input {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid lightgrey;
@@ -33,7 +33,7 @@ li {
   margin-left: 5px;
   background-color: rgb(255, 255, 255);
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 0px;
   display: block;
   border-radius: 5px;
   cursor: pointer;
@@ -52,7 +52,7 @@ li a:hover {
   color: #FFF;
 }
 
-.right_side_segments{
+.right_side_segments {
   background-color: #edf1f5;
 }
 
@@ -60,19 +60,19 @@ p.right_side_segments_title {
   margin: 0px;
   padding: 0px 5px 5px;
   font-size: 15px;
-  padding: 10px 5px;
+  padding: 5px 5px;
   font-weight: 500;
 }
 
-.top_segments{
+.top_segments {
   display: grid;
   grid-template-columns: 90% 10%;
-  padding: 5px;
+  /* padding: 5px; */
   justify-content: center;
   align-items: center;
 }
 
-p{
+p {
   margin: 0px;
   padding: 0px;
 }
@@ -82,15 +82,21 @@ i.fas.fa-copy {
   margin-top: 4px;
 }
 
-hr{
+hr {
   margin-bottom: 10px;
 }
 
-.list_items{
+/* .list_items{
   padding: 10px 0px;
+} */
+
+.list_items li {
+  padding: 0px 12px;
+  border-radius: 0px;
 }
 
-.list_items li{
-  padding: 5px 12px;
- border-radius: 0px;
+.list_items li:hover {
+  background-color: #001227;
+  cursor: pointer;
+  color: #FFF;
 }

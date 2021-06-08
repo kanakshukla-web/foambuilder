@@ -33,7 +33,6 @@ export class CircleComponent implements OnInit {
 
   onSubmitOvalFormData(ovalForm) {
 
-    console.log(ovalForm.value)
     if (ovalForm.value.length > 50) {
       this.lengths = ovalForm.value.length;
     }

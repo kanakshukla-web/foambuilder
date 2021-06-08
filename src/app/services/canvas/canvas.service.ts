@@ -1,4 +1,6 @@
+import { ShapeService } from './../shapes/shape.service';
 import { Injectable } from '@angular/core';
+import Konva from 'konva';
 import { CaseDescription } from '../../interfaces/intefaces';
 
 @Injectable({
@@ -6,22 +8,324 @@ import { CaseDescription } from '../../interfaces/intefaces';
 })
 export class CanvasService {
 
+  canvasProperties = {
+    case_name: 'Custom',
+    foam_base: '33',
+    canvasUpperLength: 470,//470
+    canvasUpperWidth: 690,//690
+    canvasDepth: 100,
+    canvasLowerLength: 200,
+    canvasLowerWidth: 120,
+    canvasRadius: 0,
+  };
+  stage: Konva.Stage;
+  layer: Konva.Layer;
+  group = new Konva.Group({
+    x: 0,
+    y: 0,
+    rotation: 0,
+    draggable: true,
+  });
+  Points = { x1: 0, y1: 0, x2: 0, y2: 0 };
+  selectionRectangle = new Konva.Rect({ fill: 'rgba(0,0,255,0.5)' });
+  tr: Konva.Transformer;
+
+  erase: boolean = false;
+  selectedButton: any = {
+    circle: false,
+    rectangle: false,
+    line: false,
+    undo: false,
+    erase: false,
+    text: false,
+    image: false,
+  };
+
   constructor() { }
 
-  getInitialConfigurations() {
-    let canvasProperties = {
-      case_name: 'Custom',
-      foam_base: '33',
-      canvasUpperLength: 470,//470
-      canvasUpperWidth: 690,//690
-      canvasDepth: 100,
-      canvasLowerLength: 200,
-      canvasLowerWidth: 120,
-      canvasRadius: 0,
-    };
-
-    return JSON.stringify(canvasProperties);
+  initStage() {
+    if (this.stage == null) {
+      this.stage = new Konva.Stage({
+        container: 'konvaContainer',
+        width: this.canvasProperties.canvasUpperWidth,
+        height: this.canvasProperties.canvasUpperLength,
+      });
+      this.layer = new Konva.Layer();
+      this.fillKonvaContainerBorder();
+      this.stage.add(this.layer);
+      this.drawKonvaGrid();
+    }
   }
+
+  drawKonvaGrid() {
+    let blockSnapSize = 35;
+    var gridLayer = new Konva.Layer();
+    var padding = blockSnapSize;
+
+    for (var i = 0; i < this.canvasProperties.canvasUpperWidth / padding; i++) {
+      gridLayer.add(new Konva.Line({
+        points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProperties.canvasUpperLength],
+        stroke: 'lightblue',
+        strokeWidth: 1.2,
+      }));
+    }
+
+    gridLayer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
+    for (var j = 0; j < this.canvasProperties.canvasUpperLength / padding; j++) {
+      gridLayer.add(new Konva.Line({
+        points: [0, Math.round(j * padding), this.canvasProperties.canvasUpperWidth, Math.round(j * padding)],
+        stroke: 'lightblue',
+        strokeWidth: 1.2,
+      }));
+    }
+    this.stage.add(gridLayer);
+    this.stage.add(this.layer);
+  }
+
+  fillKonvaContainerBorder() {
+    let thickness: number = 35;
+    let borderSize: number = 45;
+    let fillColor = "white"
+
+    //top
+    var topRect = new Konva.Rect({
+      x: 0,
+      y: 0,
+      width: this.canvasProperties.canvasUpperWidth,
+      height: thickness,
+      fill: fillColor,
+      opacity: 0.5,
+      cornerRadius: [borderSize, borderSize, 0, 0],
+    })
+    this.layer.add(topRect);
+
+    //bottom
+    var bottomRect = new Konva.Rect({
+      x: 0,
+      y: this.canvasProperties.canvasUpperLength - thickness,
+      width: this.canvasProperties.canvasUpperWidth,
+      height: thickness,
+      fill: fillColor,
+      opacity: 0.5,
+      cornerRadius: [0, 0, borderSize, borderSize],
+    })
+    this.layer.add(bottomRect);
+
+    //left
+    var leftRect = new Konva.Rect({
+      x: 0,
+      y: 0,
+      width: thickness,
+      height: this.canvasProperties.canvasUpperLength,
+      fill: fillColor,
+      opacity: 0.5,
+      cornerRadius: [borderSize, borderSize, 0, borderSize],
+    })
+    this.layer.add(leftRect);
+
+    //right
+    var rightRect = new Konva.Rect({
+      x: this.canvasProperties.canvasUpperWidth - thickness,
+      y: 0,
+      width: thickness,
+      height: this.canvasProperties.canvasUpperLength,
+      fill: fillColor,
+      opacity: 0.5,
+      cornerRadius: [borderSize, borderSize, borderSize, 0],
+    })
+    this.layer.add(rightRect);
+  }
+
+  getInitialConfigurations() {
+    return JSON.stringify(this.canvasProperties);
+  }
+
+  initializeGroup() {
+    const thisRef = this;
+    this.group = new Konva.Group({
+      x: 0,
+      y: 0,
+      rotation: 0,
+      draggable: true,
+      width: 150,
+      height: 100,
+      dragBoundFunc: function (pos) {
+        var newX = pos.x < -150 ? -150 : pos.x;
+        var newY = pos.y < -200 ? -200 : pos.y;
+        return {
+          x: newX,
+          y: newY,
+        };
+      },
+    });
+  }
+
+  initilaizeListnersOnStage() {
+    // this.touchstart();
+    // this.touchmove();
+    // this.touchend();
+    this.tapListner();
+  }
+
+  //<--------------------------------KONVA STAGE LISTENERS--------------------------------------------->
+  touchstart() {
+    this.stage.on('mousedown touchstart', (e) => {
+      // do nothing if we mousedown on eny shape
+      if (e.target !== this.stage) {
+        return;
+      }
+      this.Points.x1 = this.stage.getPointerPosition().x;
+      this.Points.y1 = this.stage.getPointerPosition().y;
+      this.Points.x2 = this.stage.getPointerPosition().x;
+      this.Points.y2 = this.stage.getPointerPosition().y;
+
+      this.selectionRectangle.visible(true);
+      this.selectionRectangle.width(0);
+      this.selectionRectangle.height(0);
+      this.layer.draw();
+    });
+  }
+
+  touchmove() {
+    this.stage.on('mousemove touchmove', () => {
+      // no nothing if we didn't start selection
+      if (this.selectionRectangle === undefined) {
+        return;
+      }
+      if (!this.selectionRectangle.visible()) {
+        return;
+      }
+      this.Points.x2 = this.stage.getPointerPosition().x;
+      this.Points.y2 = this.stage.getPointerPosition().y;
+
+      this.selectionRectangle.setAttrs({
+        x: Math.min(this.Points.x1, this.Points.x2),
+        y: Math.min(this.Points.y1, this.Points.y2),
+        width: Math.abs(this.Points.x2 - this.Points.x1),
+        height: Math.abs(this.Points.y2 - this.Points.y1),
+      });
+      this.layer.batchDraw();
+    });
+  }
+
+  touchend() {
+    this.stage.on('mouseup touchend', () => {
+      // no nothing if we didn't start selection
+      if (!this.selectionRectangle.visible()) {
+        return;
+      }
+      // update visibility in timeout, so we can check it in click event
+      setTimeout(() => {
+        this.selectionRectangle.visible(false);
+        this.layer.batchDraw();
+      });
+
+      //console.log(this.tr.nodes());
+      var shapes = this.stage.find('.rect').toArray();
+      var box = this.selectionRectangle.getClientRect();
+      var selected = shapes.filter((shape) =>
+        Konva.Util.haveIntersection(box, shape.getClientRect())
+      );
+      this.tr.nodes(selected);
+      this.layer.batchDraw();
+    });
+  }
+
+  tapListner() {
+    // clicks should select/deselect shapes
+    this.stage.on('click tap', (e) => {
+      // if we are selecting with rect, do nothing
+      if (this.selectionRectangle.visible()) {
+        return;
+      }
+
+      // if click on empty area - remove all selections
+      if (e.target === this.stage) {
+        this.tr.nodes([]);
+        this.layer.draw();
+        return;
+      }
+
+      // do nothing if clicked NOT on our rectangles
+      if (!e.target.hasName('rect')) {
+        return;
+      }
+
+      // do we pressed shift or ctrl?
+      const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+      const isSelected = this.tr.nodes().indexOf(e.target) >= 0;
+
+      if (!metaPressed && !isSelected) {
+        // if no key pressed and the node is not selected
+        // select just one
+        this.tr.nodes([e.target]);
+      } else if (metaPressed && isSelected) {
+        // if we pressed keys and node was selected
+        // we need to remove it from selection:
+        const nodes = this.tr.nodes().slice(); // use slice to have new copy of array
+        // remove node from array
+        nodes.splice(nodes.indexOf(e.target), 1);
+        this.tr.nodes(nodes);
+      } else if (metaPressed && !isSelected) {
+        // add the node into selection
+        const nodes = this.tr.nodes().concat([e.target]);
+        this.tr.nodes(nodes);
+      }
+      this.layer.draw();
+    });
+  }
+
+  //<--------------------------------Selection AREA--------------------------------------------->
+
+  clearSelection() {
+    Object.keys(this.selectedButton).forEach((key) => {
+      this.selectedButton[key] = false;
+    });
+  }
+
+  setSelection(type: string) {
+    this.selectedButton[type] = true;
+  }
+
+  addSelectionArea() {
+    this.selectionRectangle.visible(false);
+    this.layer.add(this.selectionRectangle);
+    this.tr = new Konva.Transformer({});
+    this.layer.add(this.tr);
+  }
+
+  //<--------------------------------Konva Line Listener--------------------------------------------->
+
+  addLineListeners(shapeService: ShapeService) {
+    const component = this;
+    let lastLine;
+    let isPaint;
+    this.stage.on('mousedown touchstart', function (e) {
+      if (!component.selectedButton['line'] && !component.erase) {
+        return;
+      }
+      isPaint = true;
+      let pos = component.stage.getPointerPosition();
+      const mode = component.erase ? 'erase' : 'brush';
+      lastLine = shapeService.line(pos, mode);
+      //component.shapes.push(lastLine);
+      component.layer.add(lastLine);
+    });
+    this.stage.on('mouseup touchend', function () {
+      isPaint = false;
+    });
+    // and core function - drawing
+    this.stage.on('mousemove touchmove', function () {
+      if (!isPaint) {
+        return;
+      }
+      const pos = component.stage.getPointerPosition();
+      var newPoints = lastLine.points().concat([pos.x, pos.y]);
+      lastLine.points(newPoints);
+      component.layer.batchDraw();
+    });
+  }
+
 
   getCaseDimensionsList() {
     const CASE_DATA: CaseDescription[] = [

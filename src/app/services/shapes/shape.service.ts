@@ -42,7 +42,7 @@ export class ShapeService {
       strokeWidth: 2,
       draggable: isDraggable,
       strokeScaleEnabled: false,
-      cornerRadius: cornerRadius
+      cornerRadius: cornerRadius,
     });
   }
 

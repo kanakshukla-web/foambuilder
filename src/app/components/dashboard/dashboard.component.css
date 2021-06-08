@@ -55,6 +55,7 @@ body {
 }
 
 /* ----------------------------------------- */
+
 i.fa.fa-pencil {
   background-color: #f44336;
   color: #edf1f5;
@@ -64,20 +65,21 @@ i.fa.fa-pencil {
   /* border: 1px solid; */
 }
 
-
 .konva {
   text-align: center;
   margin-left: 5px;
-  border-radius: 45px;
-  background-color: rgb(197, 211, 201);
+  border-radius: 25px;
+  /* background-color: rgb(197, 211, 201); */
+  background: rgb(253, 244, 244);
   margin-top: 70px;
+  border: 4px solid rgb(90, 138, 138);
 }
 
 .konvaContainer {
   color: black;
 }
 
- div.outline {
+div.outline {
   border: 1px solid rgb(223, 198, 198);
   border-radius: 5px;
   margin: 4px;
@@ -103,7 +105,6 @@ label {
 
 div {
   display: inline-block;
-
 }
 
 .save_btn {
@@ -111,10 +112,10 @@ div {
   color: #FFF;
   margin: 10px;
 }
+
 .save_btn :hover {
   color: blue;
 }
-
 
 .myCanv {
   padding: 0px;

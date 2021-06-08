@@ -1,28 +1,20 @@
-import { Circle } from 'src/app/interfaces/intefaces';
-import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectanglecustomnotch.component';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import Konva from 'konva';
-import { Observable, of } from 'rxjs';
 import { Properties } from '../../interfaces/intefaces';
 import { CanvasService } from './../../services/canvas/canvas.service';
 import { ShapeService } from './../../services/shapes/shape.service';
 import { SharedService } from './../../services/shared.service';
-import { TextNodeService } from './../../services/textNode/text-node.service';
 import { EjsChangeCaseComponent } from './../ejs-change-case/ejs-change-case.component';
 import { EjsTrayBuilderComponent } from './../ejs-tray-builder/ejs-tray-builder.component';
-
+import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectanglecustomnotch.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('myCanvas', { static: false })
-  canvas: ElementRef<HTMLCanvasElement>;
-  public ctx: CanvasRenderingContext2D;
-
   @ViewChild('ejEditDialog') ejDialog: DialogComponent;
   public targetElement: HTMLElement;
   public typeDialogWidth: string = '98%';
@@ -32,18 +24,6 @@ export class DashboardComponent implements OnInit {
   @ViewChild('trayChild') trayChild: EjsTrayBuilderComponent;
   @ViewChild('changeCase') changeCase: EjsChangeCaseComponent;
   @ViewChild('customNotch') customNotchChild: RectanglecustomnotchComponent;
-
-  // canvas properties
-  canvasProperties = {
-    case_name: '',
-    foam_base: '',
-    canvasUpperLength: 0,
-    canvasUpperWidth: 0,
-    canvasDepth: 0,
-    canvasLowerLength: 0,
-    canvasLowerWidth: 0,
-    canvasRadius: 0,
-  };
 
   isCanvasUpdated = false;
   isPropertiesPanelShown = false;
@@ -56,21 +36,7 @@ export class DashboardComponent implements OnInit {
   yAxis: number;
   isShapeDragStarted: boolean = false;
   newBoundriesShape: any;
-
-  public configStage: Observable<any> = of({
-    width: this.canvasProperties.canvasUpperWidth,
-    height: this.canvasProperties.canvasUpperLength,
-  });
-
   shapes: any = [];
-  stage: Konva.Stage;
-  layer: Konva.Layer;
-  group = new Konva.Group({
-    x: 0,
-    y: 0,
-    rotation: 0,
-    draggable: true,
-  });
 
   shape_rect_color = '#93DC85';
   shape_circle_color = '#93DC85';
@@ -78,129 +44,42 @@ export class DashboardComponent implements OnInit {
 
   activeShape;
 
-  selectedButton: any = {
-    circle: false,
-    rectangle: false,
-    line: false,
-    undo: false,
-    erase: false,
-    text: false,
-    image: false,
-  };
-
-  erase: boolean = false;
   transformers: Konva.Transformer[] = [];
   openTrayCount = 0;
-  tr: Konva.Transformer;
+  //tr: Konva.Transformer;
 
-  Points = { x1: 0, y1: 0, x2: 0, y2: 0 };
-  selectionRectangle = new Konva.Rect({ fill: 'rgba(0,0,255,0.5)' });
   nodesArray = [];
   shapeDepth: number;
   activeGroup;
 
   constructor(
     private shapeService: ShapeService,
-    private canvasService: CanvasService,
+    public canvasService: CanvasService,
     private sharedService: SharedService
   ) { }
 
+  //<-------------------lifecycle methods--------------------------->
+
   ngOnInit(): void {
-    this.canvasProperties = JSON.parse(this.canvasService.getInitialConfigurations());
+    this.canvasService.canvasProperties = JSON.parse(this.canvasService.getInitialConfigurations());
   }
 
   ngAfterViewChecked() {
     if (this.isCanvasUpdated) {
-      this.fillCanvasBorder();
-      this.drawBoard();
-      //alert('Canvas settings updated successfully.');
       this.isCanvasUpdated = false;
     }
   }
 
   ngAfterViewInit(): void {
-    this.initilizeCanvas();
-    this.initStage();
-    //this.addLineListeners();
-
-    this.addSelectionArea();
-    this.initilaizeListnersOnStage();
+    this.canvasService.initStage();
+    this.canvasService.addSelectionArea();
+    this.canvasService.initilaizeListnersOnStage();
+    //this.canvasService.addLineListeners(this.shapeService);
   }
 
-  stageClickListener() {
-    this.isPropertiesPanelShown = false;
-    //this.activeShape.attrs.fill = this.shape_rect_color;
-  }
-
-  initilaizeListnersOnStage() {
-    // this.touchstart();
-    // this.touchmove();
-    // this.touchend();
-    this.tapListner();
-  }
-
-  initilizeCanvas() {
-
-    this.canvasProperties.canvasUpperLength = this.canvasProperties.canvasUpperLength; // length = height
-    this.canvasProperties.canvasUpperWidth = this.canvasProperties.canvasUpperWidth;
-    this.ctx = this.canvas.nativeElement.getContext('2d');
-    this.canvas.nativeElement.width = this.canvasProperties.canvasUpperWidth;
-    this.canvas.nativeElement.height = this.canvasProperties.canvasUpperLength;
-    this.fillCanvasBorder();
-    this.drawBoard();
-  }
-
-
-  drawBoard() {
-    // canvas grid
-    var bw = this.canvasProperties.canvasUpperWidth; // Box width
-    var bh = this.canvasProperties.canvasUpperLength; // Box height
-    var p = 0; // Padding
-
-    for (var x = 0; x <= bw; x += 30) {
-      this.ctx.moveTo(0.5 + x + p, p);
-      this.ctx.lineTo(0.5 + x + p, bh + p);
-    }
-
-    for (var x = 0; x <= bh; x += 30) {
-      this.ctx.moveTo(p, 0.5 + x + p);
-      this.ctx.lineTo(bw + p, 0.5 + x + p);
-    }
-    this.ctx.strokeStyle = 'lightblue';
-    this.ctx.lineWidth = 1.2;
-    this.ctx.stroke();
-  }
-
-  fillCanvasBorder() {
-    // fill grid colors to canvas
-    //top
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, this.canvasProperties.canvasUpperWidth, 30);
-    //this.ctx.fillStyle = '#FFFFDA';
-    this.ctx.fillStyle = '#EDEDED';
-    this.ctx.fill();
-
-    //bottom
-    this.ctx.beginPath();
-    this.ctx.rect(0, this.canvasProperties.canvasUpperLength - 30, this.canvasProperties.canvasUpperWidth, 55);
-    this.ctx.fillStyle = '#EDEDED';
-    this.ctx.fill();
-
-    //left
-    this.ctx.beginPath();
-    this.ctx.rect(0, 0, 30, 555);
-    this.ctx.fillStyle = '#EDEDED';
-    this.ctx.fill();
-
-    //right
-    this.ctx.beginPath();
-    this.ctx.rect(this.canvasProperties.canvasUpperWidth - 30, 0, 55, 555);
-    this.ctx.fillStyle = '#EDEDED';
-    this.ctx.fill();
-  }
+  //<----------------------------------------------->
 
   closeDialog() {
-    //this.isTrayClicked = false;
     this.hideBuilderTray();
     this.ejDialog.hide();
   }
@@ -218,11 +97,10 @@ export class DashboardComponent implements OnInit {
   };
 
   onSubmit(formInput) {
-    this.canvasProperties.canvasUpperLength = formInput.elements['upperlength'].value;
-    this.canvasProperties.canvasUpperWidth = formInput.elements['upperwidth'].value;
+    this.canvasService.canvasProperties.canvasUpperLength = formInput.elements['upperlength'].value;
+    this.canvasService.canvasProperties.canvasUpperWidth = formInput.elements['upperwidth'].value;
 
     this.isCanvasUpdated = true;
-    this.initilizeCanvas();
     this.changeCase.closeDialog();
   }
 
@@ -230,16 +108,18 @@ export class DashboardComponent implements OnInit {
     //alert(`I am from Dashboard Component. Your CaseName ${CaseObj.CaseName} && Dimensions ${CaseObj.CaseDimensions}`);
     let { CaseName, CornerRadius, LowerLength, LowerWidth, TotalDepth, Length, Width } = CaseObj[0];
 
-    this.canvasProperties.case_name = CaseName;
-    this.canvasProperties.canvasRadius = CornerRadius;
-    this.canvasProperties.canvasLowerLength = LowerLength;
-    this.canvasProperties.canvasLowerWidth = LowerWidth;
-    this.canvasProperties.foam_base = TotalDepth;
+    this.canvasService.canvasProperties.case_name = CaseName;
+    this.canvasService.canvasProperties.canvasRadius = CornerRadius;
+    this.canvasService.canvasProperties.canvasLowerLength = LowerLength;
+    this.canvasService.canvasProperties.canvasLowerWidth = LowerWidth;
+    this.canvasService.canvasProperties.foam_base = TotalDepth;
 
-    this.canvasProperties.canvasUpperLength = Length;
-    this.canvasProperties.canvasUpperWidth = Width;
+    this.canvasService.canvasProperties.canvasUpperLength = Length;
+    this.canvasService.canvasProperties.canvasUpperWidth = Number((Width * 3.7).toFixed(0)); // 1 mm = 3.7px converting to px
     this.isCanvasUpdated = true;
-    this.initilizeCanvas();
+
+    this.canvasService.stage = null;
+    this.canvasService.initStage();
     this.changeCase.closeDialog();
   }
 
@@ -288,8 +168,8 @@ export class DashboardComponent implements OnInit {
   }
 
   addShape(type: string, event) {
-    this.clearSelection();
-    this.setSelection(type);
+    this.canvasService.clearSelection();
+    this.canvasService.setSelection(type);
     this.shapeDepth = +event.depth;
 
     switch (type) {
@@ -301,7 +181,8 @@ export class DashboardComponent implements OnInit {
           fillColor: '#4BC433',
           strokeColor: 'black',
           isDraggable: false,
-          notcheType: event.fingerNotch
+          notcheType: event.fingerNotch,
+          type: type
         }
         this.selectCircleType(circleObj);
         break;
@@ -317,6 +198,7 @@ export class DashboardComponent implements OnInit {
           isDraggable: false,
           fillColor: this.shape_rect_color,
           strokeColor: 'black',
+          type: type
         }
         this.drawRectangle(rectObj);
         break;
@@ -342,94 +224,31 @@ export class DashboardComponent implements OnInit {
 
   //<----------------------------------Konva Methods--------------------------------------------->
 
-  initStage() {
-    if (this.stage == null) {
-      this.stage = new Konva.Stage({
-        container: 'konvaContainer',
-        width: this.canvasProperties.canvasUpperWidth,
-        height: this.canvasProperties.canvasUpperLength,
-      });
-      this.layer = new Konva.Layer();
-      this.stage.add(this.layer);
-      //this.stage.addEventListener('click', this.stageClickListener);
-    }
-  }
-
-  clearSelection() {
-    Object.keys(this.selectedButton).forEach((key) => {
-      this.selectedButton[key] = false;
-    });
-  }
-
-  setSelection(type: string) {
-    this.selectedButton[type] = true;
-  }
-
-  initializeGroup() {
-    const thisRef = this;
-    this.group = new Konva.Group({
-      x: 0,
-      y: 0,
-      rotation: 0,
-      draggable: true,
-      width: 150,
-      height: 100,
-      dragBoundFunc: function (pos) {
-        var newX = pos.x < -150 ? -150 : pos.x;
-        var newY = pos.y < -200 ? -200 : pos.y;
-        return {
-          x: newX,
-          y: newY,
-        };
-      },
-    });
-  }
-
   deleteShape(shape) {
-    // const removedShape = this.shapes.pop();
-    // this.transformers.forEach((t) => {
-    //   t.detach();
-    // });
-    // if (removedShape) {
-    //   removedShape.remove();
-    // }
-    // this.layer.draw();
-
     this.activeGroup.destroy();
-    this.tr.detach();
-    this.layer.draw();
+    this.canvasService.tr.detach();
+    this.canvasService.layer.draw();
     this.isPropertiesPanelShown = false;
   }
 
   addShapeToKonvaLayer(shape) {
-    //console.log(shape);
     // this.shapes = [];
     // this.nodesArray = [];
 
     this.shapes.push(shape);
-    this.layer.add(shape);
-    this.stage.add(this.layer);
+    this.canvasService.layer.add(shape);
+    this.canvasService.stage.add(this.canvasService.layer);
     this.addTransformerListeners();
 
     this.nodesArray.push(shape);
-    this.tr.nodes(this.nodesArray);
-    this.layer.draw();
-  }
-
-  addGroupinKonvaLayer(group, text) {
-    this.tr = new Konva.Transformer();
-    this.layer.add(this.tr);
-    this.stage.add(this.layer);
-    this.tr.nodes([this.group]);
-    this.layer.draw();
-    this.stage.draw();
+    this.canvasService.tr.nodes(this.nodesArray);
+    this.canvasService.layer.draw();
   }
 
   //<--------------------------------CIRCLE--------------------------------------------->
 
   selectCircleType(circleObj) {
-
-    let { radius, xAxis, yAxis } = circleObj;
+    let { xAxis, yAxis } = circleObj;
 
     let textProps = {
       textString: this.shapeDepth,
@@ -445,9 +264,9 @@ export class DashboardComponent implements OnInit {
         break;
 
       case 'None':
-        this.group.add(this.drawCircle(circleObj), this.createText(textProps));
-        this.initializeListnerOnGroup(this.group);
-        this.addShapeToKonvaLayer(this.group);
+        this.canvasService.group.add(this.drawCircle(circleObj), this.createText(textProps));
+        this.initializeListnerOnGroup(this.canvasService.group, 'circle');
+        this.addShapeToKonvaLayer(this.canvasService.group);
         break;
 
       case 'Custom Notch Replacememt': this.handleCustomNotch();
@@ -461,64 +280,7 @@ export class DashboardComponent implements OnInit {
   drawCircle(circleProp) {
     const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleProp;
     const circle = this.shapeService.circle(radius, xAxis, yAxis, fillColor, strokeColor, isDraggable);
-    //this.initializeListnersOnCircle(circle, radius);
-    //this.addShapeToKonvaLayer(circle);
     return circle;
-  }
-
-  initializeListnersOnCircle(circle: Konva.Circle, radius: number) {
-    circle.addEventListener('click', () => {
-      this.getNewcircleDimensions(circle, radius);
-      this.isPropertiesPanelShown = true;
-    });
-
-    circle.addEventListener('dragend', () => {
-      this.getNewcircleDimensions(circle, radius);
-      this.isShapeDragStarted = false;
-    });
-
-    circle.addEventListener('dragmove', (event) => {
-      this.isShapeDragStarted = true;
-      this.xAxis = Math.round(circle.absolutePosition().x);
-      this.yAxis = Math.round(circle.absolutePosition().y);
-    });
-    circle.on('mouseover', function () {
-      document.body.style.cursor = 'pointer';
-    });
-    circle.on('mouseout', function () {
-      document.body.style.cursor = 'default';
-    });
-
-    circle.addEventListener('transformstart', () => { });
-    circle.addEventListener('transform', () => { });
-    circle.addEventListener('transformend', () => {
-      this.getNewcircleDimensions(circle, radius);
-    });
-  }
-
-  getNewcircleDimensions(circle, radius) {
-    let condition = this.newBoundriesShape != null;
-
-    let newHeight = condition
-      ? Math.round(this.newBoundriesShape.height)
-      : circle.getSelfRect().height;
-    let newWidth = condition
-      ? Math.round(this.newBoundriesShape.width)
-      : circle.getSelfRect().width;
-    let rotation = condition
-      ? Math.round(this.newBoundriesShape.rotation)
-      : circle.rotation();
-
-    return (this.propertiesObject = {
-      id: 2,
-      shape_name: 'circle',
-      length: newHeight,
-      width: newWidth,
-      depth: this.shapeDepth,
-      xLoc: Math.round(circle.absolutePosition().x),
-      yLoc: Math.round(circle.absolutePosition().y),
-      angle: rotation,
-    });
   }
 
   //<--------------------------------RECTANGLE--------------------------------------------->
@@ -526,7 +288,7 @@ export class DashboardComponent implements OnInit {
   drawRectangle(rectProps) {
 
     const { rectWidth, rectHeight, xAxis, yAxis, notcheType } = rectProps;
-    this.initializeGroup();
+    this.canvasService.initializeGroup();
 
     let circleObj = {
       radius: 30,
@@ -534,7 +296,8 @@ export class DashboardComponent implements OnInit {
       yAxis: yAxis,
       fillColor: this.shape_notch_color,
       strokeColor: '#B36DD1',
-      isDraggable: false
+      isDraggable: false,
+      type: 'circle'
     }
 
     let textProps = {
@@ -548,7 +311,7 @@ export class DashboardComponent implements OnInit {
         let top_notch = this.drawCircle(circleObj); //top_notch
         circleObj.yAxis = yAxis + rectHeight;
         let bottom_notch = this.drawCircle(circleObj);//bottom_notch
-        this.updateGroup(this.createRect(rectProps), top_notch, bottom_notch, this.createText(textProps));
+        this.updateGroup(this.createRect(rectProps), top_notch, bottom_notch, this.createText(textProps), 'rect');
         break;
 
       case 'Left and Right':
@@ -557,30 +320,28 @@ export class DashboardComponent implements OnInit {
         let left_notch = this.drawCircle(circleObj);//left_notch
         circleObj.xAxis = xAxis + rectWidth;
         let right_notch = this.drawCircle(circleObj); //right_notch
-        this.updateGroup(this.createRect(rectProps), left_notch, right_notch, this.createText(textProps));
+        this.updateGroup(this.createRect(rectProps), left_notch, right_notch, this.createText(textProps), 'rect');
         break;
 
       case 'None':
-        this.group.add(this.createRect(rectProps), this.createText(textProps));
-        this.initializeListnerOnGroup(this.group);
-        this.addShapeToKonvaLayer(this.group);
+        this.canvasService.group.add(this.createRect(rectProps), this.createText(textProps));
+        this.initializeListnerOnGroup(this.canvasService.group, 'rect');
+        this.addShapeToKonvaLayer(this.canvasService.group);
         break;
 
       case 'Custom Notch Replacememt': this.handleCustomNotch();
         break;
 
       default:
-        rectProps.isDraggable = true;
-        const default_rect = this.createRect(rectProps);
-        this.initilizeListenersOnRectangle(default_rect);
-        this.addShapeToKonvaLayer(default_rect);
+        this.canvasService.group.add(this.createRect(rectProps), this.createText(textProps));
+        this.initializeListnerOnGroup(this.canvasService.group, 'rect');
+        this.addShapeToKonvaLayer(this.canvasService.group);
         break;
     }
   }
 
   createRect(rectProps) {
     const rectangle = this.shapeService.rectangle(rectProps);
-    //this.initilizeListenersOnRectangle(rectangle);
     //this.addShapeToKonvaLayer(rectangle);
     return rectangle;
   }
@@ -589,19 +350,19 @@ export class DashboardComponent implements OnInit {
     this.customNotchChild.openCustomNotchDialog();
   }
 
-  updateGroup(rect: Konva.Rect, first_notch: Konva.Circle, second_notch: Konva.Circle, center_text: Konva.Text) {
-    this.group.add(rect, first_notch, second_notch, center_text);
-    this.initializeListnerOnGroup(this.group);
-    this.addShapeToKonvaLayer(this.group);
+  updateGroup(rect: Konva.Rect, first_notch: Konva.Circle, second_notch: Konva.Circle, center_text: Konva.Text, rootNode: string) {
+    this.canvasService.group.add(rect, first_notch, second_notch, center_text);
+    this.initializeListnerOnGroup(this.canvasService.group, rootNode);
+    this.addShapeToKonvaLayer(this.canvasService.group);
   }
 
-  initializeListnerOnGroup(group: Konva.Group) {
+  initializeListnerOnGroup(group: Konva.Group, rootNode: string) {
     group.addEventListener('click', (event) => {
       this.isPropertiesPanelShown = true;
       this.activeShape = group.children[0];
       this.activeShape.attrs.fill = '#4BC433';
       this.activeGroup = group;
-      this.setGroupProperties(group);
+      rootNode === 'rect' ? this.setGroupProperties(group) : this.setGroupPropertiesForCircle(group);
     });
 
     group.addEventListener('dragmove', (event) => {
@@ -644,8 +405,8 @@ export class DashboardComponent implements OnInit {
       : group.children[0].rotation();
 
     return (this.propertiesObject = {
-      id: group._id,
-      shape_name: 'group',
+      id: 1,
+      shape_name: 'rectangle',
       length: newHeight,
       width: newWidth,
       depth: this.shapeDepth,
@@ -662,55 +423,21 @@ export class DashboardComponent implements OnInit {
       ? Math.round(this.newBoundriesShape.height)
       : group.children[0].attrs.radius;
     let newWidth = condition
-      ? Math.round(this.newBoundriesShape.radius)
-      : group.children[0].attrs.height;
+      ? Math.round(this.newBoundriesShape.height)
+      : group.children[0].attrs.radius;
     let rotation = condition
       ? Math.round(this.newBoundriesShape.rotation)
       : group.children[0].rotation();
 
     return (this.propertiesObject = {
-      id: group._id,
-      shape_name: 'group',
+      id: 2,
+      shape_name: 'circle',
       length: newHeight,
       width: newWidth,
       depth: this.shapeDepth,
       xLoc: Math.round(group.children[0].absolutePosition().x),
       yLoc: Math.round(group.children[0].absolutePosition().y),
       angle: rotation,
-    });
-  }
-
-  initilizeListenersOnRectangle(rectangle: Konva.Rect) {
-
-    rectangle.addEventListener('click', () => {
-      this.getNewRectDimensions(rectangle);
-      this.isPropertiesPanelShown = true;
-      this.activeShape = rectangle;
-      this.activeShape.attrs.fill = '#4BC433';
-    });
-
-    rectangle.addEventListener('dragend', (event) => {
-      this.getNewRectDimensions(rectangle);
-      this.isShapeDragStarted = false;
-    });
-
-    rectangle.addEventListener('transformstart', () => { console.log("transformstart rect") });
-    rectangle.addEventListener('transform', () => { console.log("transform rect") });
-    rectangle.addEventListener('transformend', () => {
-      this.getNewRectDimensions(rectangle);
-    });
-
-    rectangle.on('mouseover', function () {
-      document.body.style.cursor = 'pointer';
-    });
-    rectangle.on('mouseout', function () {
-      document.body.style.cursor = 'default';
-    });
-
-    rectangle.addEventListener('dragmove', (event) => {
-      this.isShapeDragStarted = true;
-      this.xAxis = Math.round(rectangle.absolutePosition().x);
-      this.yAxis = Math.round(rectangle.absolutePosition().y);
     });
   }
 
@@ -728,7 +455,7 @@ export class DashboardComponent implements OnInit {
       : rectangle.rotation();
 
     return (this.propertiesObject = {
-      id: 2,
+      id: 1,
       shape_name: 'rectangle',
       length: newHeight,
       width: newWidth,
@@ -749,9 +476,9 @@ export class DashboardComponent implements OnInit {
       image;
     };
     this.shapes.push(image);
-    this.layer.add(image);
-    this.layer.batchDraw();
-    this.stage.add(this.layer);
+    this.canvasService.layer.add(image);
+    this.canvasService.layer.batchDraw();
+    this.canvasService.stage.add(this.canvasService.layer);
     this.addListnersOnImage(image);
     this.addTransformerListeners();
   }
@@ -816,19 +543,7 @@ export class DashboardComponent implements OnInit {
   //<--------------------------------LINE--------------------------------------------->
 
   drawLine() {
-    this.selectedButton['line'] = true;
-  }
-
-  //<--------------------------------Selection AREA--------------------------------------------->
-
-  addSelectionArea() {
-    // add a new feature, lets add ability to draw selection rectangle
-
-    this.selectionRectangle.visible(false);
-    this.layer.add(this.selectionRectangle);
-
-    this.tr = new Konva.Transformer({});
-    this.layer.add(this.tr);
+    this.canvasService.selectedButton['line'] = true;
   }
 
   //<--------------------------------GLOBAL ACTIONS--------------------------------------------->
@@ -841,19 +556,27 @@ export class DashboardComponent implements OnInit {
     if (removedShape) {
       removedShape.remove();
     }
-    this.layer.draw();
+    this.canvasService.layer.draw();
   }
 
   redo() { }
 
-  zoomCanvas() { }
+  zoomCanvas() {
+    var scaleBy = .1;
+    this.canvasService.canvasProperties.canvasUpperLength += Number((this.canvasService.canvasProperties.canvasUpperLength * scaleBy).toFixed(0));
+    this.canvasService.canvasProperties.canvasUpperWidth += Number((this.canvasService.canvasProperties.canvasUpperWidth * scaleBy).toFixed(0));
+
+    this.isCanvasUpdated = true;
+    this.canvasService.stage = null;
+    this.canvasService.initStage();
+  }
 
   //<--------------------------------SHAPE CLONING--------------------------------------------->
 
   startCloning(event) {
-    //console.log(event);
-    switch (event.shape_name) {
-      case 'rectangle':
+
+    switch (event.id) {
+      case 1:
         const rectObj = {
           rectWidth: +event.length,
           rectHeight: +event.width,
@@ -864,7 +587,7 @@ export class DashboardComponent implements OnInit {
         }
         this.drawRectangle(rectObj);
         break;
-      case 'circle':
+      case 2:
         let circleObj = {
           radius: event.width,
           xAxis: event.xLoc + 25,
@@ -875,7 +598,7 @@ export class DashboardComponent implements OnInit {
         }
         this.drawCircle(circleObj);
         break;
-      case 'image':
+      case 3:
         this.drawImage(event.image_Src, event.xLoc + 25, event.yLoc + 24);
         break;
     }
@@ -885,7 +608,7 @@ export class DashboardComponent implements OnInit {
 
   addTransformerListeners() {
     const component = this;
-    component.tr = new Konva.Transformer({
+    component.canvasService.tr = new Konva.Transformer({
       boundBoxFunc: function (oldBoundBox, newBoundBox) {
         component.newBoundriesShape = newBoundBox;
         return newBoundBox;
@@ -898,20 +621,20 @@ export class DashboardComponent implements OnInit {
       enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
       // resizeEnabled: false,
     });
-    this.stage.on('click', function (e) {
+    this.canvasService.stage.on('click', function (e) {
       if (!this.clickStartShape) {
         return;
       }
       component.transformers = [];
       if (e.target._id == this.clickStartShape._id) {
         //component.addDeleteListener(e.target);
-        component.layer.add(component.tr);
-        component.tr.attachTo(e.target);
-        component.transformers.push(component.tr);
-        component.layer.draw();
+        component.canvasService.layer.add(component.canvasService.tr);
+        component.canvasService.tr.attachTo(e.target);
+        component.transformers.push(component.canvasService.tr);
+        component.canvasService.layer.draw();
       } else {
-        component.tr.detach();
-        component.layer.draw();
+        component.canvasService.tr.detach();
+        component.canvasService.layer.draw();
         component.isPropertiesPanelShown = false;
         if (component.activeShape !== null) {
           component.activeShape.attrs.fill = '#93DC85';
@@ -936,148 +659,7 @@ export class DashboardComponent implements OnInit {
         selectedShape.remove();
         e.preventDefault();
       }
-      component.layer.batchDraw();
-    });
-  }
-
-  //<--------------------------------Line Listener--------------------------------------------->
-
-  addLineListeners() {
-    const component = this;
-    let lastLine;
-    let isPaint;
-    this.stage.on('mousedown touchstart', function (e) {
-      if (!component.selectedButton['line'] && !component.erase) {
-        return;
-      }
-      isPaint = true;
-      let pos = component.stage.getPointerPosition();
-      const mode = component.erase ? 'erase' : 'brush';
-      lastLine = component.shapeService.line(pos, mode);
-      component.shapes.push(lastLine);
-      component.layer.add(lastLine);
-    });
-    this.stage.on('mouseup touchend', function () {
-      isPaint = false;
-    });
-    // and core function - drawing
-    this.stage.on('mousemove touchmove', function () {
-      if (!isPaint) {
-        return;
-      }
-      const pos = component.stage.getPointerPosition();
-      var newPoints = lastLine.points().concat([pos.x, pos.y]);
-      lastLine.points(newPoints);
-      component.layer.batchDraw();
-    });
-  }
-
-  //<--------------------------------KONVA STAGE LISTENERS--------------------------------------------->
-
-  touchstart() {
-    this.stage.on('mousedown touchstart', (e) => {
-      // do nothing if we mousedown on eny shape
-      if (e.target !== this.stage) {
-        return;
-      }
-      this.Points.x1 = this.stage.getPointerPosition().x;
-      this.Points.y1 = this.stage.getPointerPosition().y;
-      this.Points.x2 = this.stage.getPointerPosition().x;
-      this.Points.y2 = this.stage.getPointerPosition().y;
-
-      this.selectionRectangle.visible(true);
-      this.selectionRectangle.width(0);
-      this.selectionRectangle.height(0);
-      this.layer.draw();
-    });
-  }
-
-  touchmove() {
-    this.stage.on('mousemove touchmove', () => {
-      // no nothing if we didn't start selection
-      if (this.selectionRectangle === undefined) {
-        return;
-      }
-      if (!this.selectionRectangle.visible()) {
-        return;
-      }
-      this.Points.x2 = this.stage.getPointerPosition().x;
-      this.Points.y2 = this.stage.getPointerPosition().y;
-
-      this.selectionRectangle.setAttrs({
-        x: Math.min(this.Points.x1, this.Points.x2),
-        y: Math.min(this.Points.y1, this.Points.y2),
-        width: Math.abs(this.Points.x2 - this.Points.x1),
-        height: Math.abs(this.Points.y2 - this.Points.y1),
-      });
-      this.layer.batchDraw();
-    });
-  }
-
-  touchend() {
-    this.stage.on('mouseup touchend', () => {
-      // no nothing if we didn't start selection
-      if (!this.selectionRectangle.visible()) {
-        return;
-      }
-      // update visibility in timeout, so we can check it in click event
-      setTimeout(() => {
-        this.selectionRectangle.visible(false);
-        this.layer.batchDraw();
-      });
-
-      //console.log(this.tr.nodes());
-      var shapes = this.stage.find('.rect').toArray();
-      var box = this.selectionRectangle.getClientRect();
-      var selected = shapes.filter((shape) =>
-        Konva.Util.haveIntersection(box, shape.getClientRect())
-      );
-      this.tr.nodes(selected);
-      this.layer.batchDraw();
-    });
-  }
-
-  tapListner() {
-    // clicks should select/deselect shapes
-    this.stage.on('click tap', (e) => {
-      // if we are selecting with rect, do nothing
-      if (this.selectionRectangle.visible()) {
-        return;
-      }
-
-      // if click on empty area - remove all selections
-      if (e.target === this.stage) {
-        this.tr.nodes([]);
-        this.layer.draw();
-        return;
-      }
-
-      // do nothing if clicked NOT on our rectangles
-      if (!e.target.hasName('rect')) {
-        return;
-      }
-
-      // do we pressed shift or ctrl?
-      const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-      const isSelected = this.tr.nodes().indexOf(e.target) >= 0;
-
-      if (!metaPressed && !isSelected) {
-        // if no key pressed and the node is not selected
-        // select just one
-        this.tr.nodes([e.target]);
-      } else if (metaPressed && isSelected) {
-        // if we pressed keys and node was selected
-        // we need to remove it from selection:
-        const nodes = this.tr.nodes().slice(); // use slice to have new copy of array
-        // remove node from array
-        nodes.splice(nodes.indexOf(e.target), 1);
-        this.tr.nodes(nodes);
-      } else if (metaPressed && !isSelected) {
-        // add the node into selection
-        const nodes = this.tr.nodes().concat([e.target]);
-        this.tr.nodes(nodes);
-      }
-      this.layer.draw();
+      component.canvasService.layer.batchDraw();
     });
   }
 }

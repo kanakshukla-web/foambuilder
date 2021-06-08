@@ -12,20 +12,20 @@
 
     <!-- caseInfo menu -->
     <app-ejs-chnage-case-menu (editEvent)="handleEdit()" (expandEvent)="expandDiv('case-info')"
-      [canvasProperties]='canvasProperties'></app-ejs-chnage-case-menu>
+      [canvasProperties]='canvasService.canvasProperties'></app-ejs-chnage-case-menu>
 
     <ul *ngIf="isShapeDragStarted" id="hidden-buttons">
       X : {{xAxis}} Y : {{yAxis}}
     </ul>
 
     <!-- global-buttons menu -->
-    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="clearSelection()" (setEvent)="setSelection($event)"
+    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="canvasService.clearSelection()" (setEvent)="canvasService.setSelection($event)"
       (revertEvent)="undo()">
     </app-global-button-menu>
 
     <!-- tray-builder menu -->
     <app-ejs-tray-builder-menu (trayEvent)="handleTray()" (expandEvent)="expandDiv($event)"
-      [canvasProperties]="canvasProperties"></app-ejs-tray-builder-menu>
+      [canvasProperties]="canvasService.canvasProperties"></app-ejs-tray-builder-menu>
 
     <!-- left side bar -->
     <mat-sidenav opened mode="side">
@@ -34,13 +34,13 @@
     </mat-sidenav>
 
     <!-- center canvas area -->
-    <div>
+    <!-- <div>
       <canvas id='myCanvas' class="myCanv" width={{canvasProperties.canvasUpperWidth}}
         height={{canvasProperties.canvasUpperLength}} #myCanvas></canvas>
-    </div>
+    </div> -->
 
-    <div id="konvaContainer" class='konva' [style.width.px]="canvasProperties.canvasUpperWidth"
-      [style.height.px]="canvasProperties.canvasUpperLength">
+    <div id="konvaContainer" class='konva' [style.width.px]="canvasService.canvasProperties.canvasUpperWidth"
+      [style.height.px]="canvasService.canvasProperties.canvasUpperLength">
     </div>
 
     <!-- right side bar Properties Panel -->
@@ -54,11 +54,11 @@
 
   <!-- edit/resize foamcase -->
   <app-ejs-change-case (updateCaseFormEvent)="updateCanvasFormArea($event)" (submitForm)="onSubmit($event)"
-    [canvasProperties]='canvasProperties' #changeCase>
+    [canvasProperties]='canvasService.canvasProperties' #changeCase>
   </app-ejs-change-case>
 
   <!-- traybuilder area -->
-  <app-ejs-tray-builder (toggleTray)="hideBuilderTray()" [canvasProperties]='canvasProperties' #trayChild>
+  <app-ejs-tray-builder (toggleTray)="hideBuilderTray()" [canvasProperties]='canvasService.canvasProperties' #trayChild>
   </app-ejs-tray-builder>
 
   <!-- custom notch -->
