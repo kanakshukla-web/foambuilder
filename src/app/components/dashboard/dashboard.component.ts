@@ -548,13 +548,18 @@ export class DashboardComponent implements OnInit {
   redo() { }
 
   zoomCanvas() {
-    var scaleBy = .1;
+    let scaleBy = this.canvasService.canvasProps.zoomScaleValue;
     this.canvasService.canvasProps.upperLength += Number((this.canvasService.canvasProps.upperLength * scaleBy).toFixed(0));
     this.canvasService.canvasProps.upperWidth += Number((this.canvasService.canvasProps.upperWidth * scaleBy).toFixed(0));
-
+    this.updateShapeOnKonva(scaleBy);
     this.isCanvasUpdated = true;
-    this.canvasService.stage = null;
-    this.canvasService.initStage();
+  }
+
+  updateShapeOnKonva(scaleBy: number) {
+    var scaleX = this.canvasService.stage.getAbsoluteScale().x;
+    let scale = scaleX + scaleBy
+    this.canvasService.stage.scale({ x: scale, y: scale });
+    this.canvasService.stage.draw();
   }
 
   //<--------------------------------SHAPE CLONING--------------------------------------------->

@@ -17,6 +17,7 @@ export class CanvasService {
     lowerLength: 200,
     lowerWidth: 120,
     radius: 0,
+    zoomScaleValue: 0.01
   };
   stage: Konva.Stage;
   layer: Konva.Layer;
