@@ -15,42 +15,33 @@ import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectang
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('ejEditDialog') ejDialog: DialogComponent;
+ // @ViewChild('ejEditDialog') ejDialog: DialogComponent;
   public targetElement: HTMLElement;
   public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
   public showCloseIcon: boolean = true;
 
   @ViewChild('trayChild') trayChild: EjsTrayBuilderComponent;
-  @ViewChild('changeCase') changeCase: EjsChangeCaseComponent;
+  @ViewChild('changeCase') changeCaseChild: EjsChangeCaseComponent;
   @ViewChild('customNotch') customNotchChild: RectanglecustomnotchComponent;
 
   isCanvasUpdated = false;
-  isPropertiesPanelShown = false;
-
-  propertiesObject: Properties = {
-    id: 0, shape_name: '', length: 0, width: 0, depth: 0, xLoc: 0, yLoc: 0, angle: 0,
-  };
+  propsVisibility = false;
+  canvasProperties: {};
 
   xAxis: number;
   yAxis: number;
   isShapeDragStarted: boolean = false;
   newBoundriesShape: any;
   shapes: any = [];
-
-  shape_rect_color = '#93DC85';
-  shape_circle_color = '#93DC85';
-  shape_notch_color = '#B36DD1';
-
-  activeShape;
+  activeShape: any;
 
   transformers: Konva.Transformer[] = [];
   openTrayCount = 0;
-  //tr: Konva.Transformer;
 
   nodesArray = [];
   shapeDepth: number;
-  activeGroup;
+  activeGroup: any;
 
   constructor(
     private shapeService: ShapeService,
@@ -61,7 +52,7 @@ export class DashboardComponent implements OnInit {
   //<-------------------lifecycle methods--------------------------->
 
   ngOnInit(): void {
-    this.canvasService.canvasProperties = JSON.parse(this.canvasService.getInitialConfigurations());
+    this.canvasService.canvasProps = JSON.parse(this.canvasService.getInitialConfigurations());
   }
 
   ngAfterViewChecked() {
@@ -74,53 +65,51 @@ export class DashboardComponent implements OnInit {
     this.canvasService.initStage();
     this.canvasService.addSelectionArea();
     this.canvasService.initilaizeListnersOnStage();
-    //this.canvasService.addLineListeners(this.shapeService);
   }
 
   //<----------------------------------------------->
 
   closeDialog() {
     this.hideBuilderTray();
-    this.ejDialog.hide();
+    //this.ejDialog.hide();
   }
 
   handleEdit() {
-    this.changeCase.openDialog();
+    this.changeCaseChild.openDialog();
   }
 
   handleTray() {
     this.trayChild.openTray();
   }
 
-  public onOverlayClick: EmitType<object> = () => {
-    this.ejDialog.hide();
-  };
+  // public onOverlayClick: EmitType<object> = () => {
+  //   this.ejDialog.hide();
+  // };
 
   onSubmit(formInput) {
-    this.canvasService.canvasProperties.canvasUpperLength = formInput.elements['upperlength'].value;
-    this.canvasService.canvasProperties.canvasUpperWidth = formInput.elements['upperwidth'].value;
+    this.canvasService.canvasProps.upperLength = formInput.elements['upperlength'].value;
+    this.canvasService.canvasProps.upperWidth = formInput.elements['upperwidth'].value;
 
     this.isCanvasUpdated = true;
-    this.changeCase.closeDialog();
+    this.changeCaseChild.closeDialog();
   }
 
   updateCanvasFormArea(CaseObj) {
-    //alert(`I am from Dashboard Component. Your CaseName ${CaseObj.CaseName} && Dimensions ${CaseObj.CaseDimensions}`);
     let { CaseName, CornerRadius, LowerLength, LowerWidth, TotalDepth, Length, Width } = CaseObj[0];
 
-    this.canvasService.canvasProperties.case_name = CaseName;
-    this.canvasService.canvasProperties.canvasRadius = CornerRadius;
-    this.canvasService.canvasProperties.canvasLowerLength = LowerLength;
-    this.canvasService.canvasProperties.canvasLowerWidth = LowerWidth;
-    this.canvasService.canvasProperties.foam_base = TotalDepth;
+    this.canvasService.canvasProps.case_name = CaseName;
+    this.canvasService.canvasProps.radius = CornerRadius;
+    this.canvasService.canvasProps.lowerLength = LowerLength;
+    this.canvasService.canvasProps.lowerWidth = LowerWidth;
+    this.canvasService.canvasProps.foam_base = TotalDepth;
 
-    this.canvasService.canvasProperties.canvasUpperLength = Length;
-    this.canvasService.canvasProperties.canvasUpperWidth = Number((Width * 3.7).toFixed(0)); // 1 mm = 3.7px converting to px
+    this.canvasService.canvasProps.upperLength = Length;
+    this.canvasService.canvasProps.upperWidth = Number((Width * 3.7).toFixed(0)); // 1 mm = 3.7px converting to px
     this.isCanvasUpdated = true;
 
     this.canvasService.stage = null;
     this.canvasService.initStage();
-    this.changeCase.closeDialog();
+    this.changeCaseChild.closeDialog();
   }
 
   expandDiv(id: string) {
@@ -196,7 +185,7 @@ export class DashboardComponent implements OnInit {
           notcheType: event.fingerNotch,
           cornerRadius: event.cornerRadius,
           isDraggable: false,
-          fillColor: this.shape_rect_color,
+          fillColor: '#93DC85',
           strokeColor: 'black',
           type: type
         }
@@ -228,7 +217,7 @@ export class DashboardComponent implements OnInit {
     this.activeGroup.destroy();
     this.canvasService.tr.detach();
     this.canvasService.layer.draw();
-    this.isPropertiesPanelShown = false;
+    this.propsVisibility = false;
   }
 
   addShapeToKonvaLayer(shape) {
@@ -264,7 +253,7 @@ export class DashboardComponent implements OnInit {
         break;
 
       case 'None':
-        this.canvasService.group.add(this.drawCircle(circleObj), this.createText(textProps));
+        this.canvasService.group.add(this.shapeService.circle(circleObj), this.createText(textProps));
         this.initializeListnerOnGroup(this.canvasService.group, 'circle');
         this.addShapeToKonvaLayer(this.canvasService.group);
         break;
@@ -275,12 +264,6 @@ export class DashboardComponent implements OnInit {
       default:
         break;
     }
-  }
-
-  drawCircle(circleProp) {
-    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleProp;
-    const circle = this.shapeService.circle(radius, xAxis, yAxis, fillColor, strokeColor, isDraggable);
-    return circle;
   }
 
   //<--------------------------------RECTANGLE--------------------------------------------->
@@ -294,7 +277,7 @@ export class DashboardComponent implements OnInit {
       radius: 30,
       xAxis: xAxis + rectWidth / 2,
       yAxis: yAxis,
-      fillColor: this.shape_notch_color,
+      fillColor: '#B36DD1',
       strokeColor: '#B36DD1',
       isDraggable: false,
       type: 'circle'
@@ -306,25 +289,41 @@ export class DashboardComponent implements OnInit {
       yLoc: yAxis + rectHeight / 2
     }
 
+    let groupProps = {}
+
     switch (notcheType) {
       case 'Top and Bottom':
-        let top_notch = this.drawCircle(circleObj); //top_notch
+        let top_notch = this.shapeService.circle(circleObj); //top_notch
         circleObj.yAxis = yAxis + rectHeight;
-        let bottom_notch = this.drawCircle(circleObj);//bottom_notch
-        this.updateGroup(this.createRect(rectProps), top_notch, bottom_notch, this.createText(textProps), 'rect');
+        let bottom_notch = this.shapeService.circle(circleObj);//bottom_notch
+        groupProps = {
+          rect: this.shapeService.rectangle(rectProps),
+          first_notch: top_notch,
+          second_notch: bottom_notch,
+          center_text: this.createText(textProps),
+          rootNode: 'rect'
+        }
+        this.updateGroup(groupProps);
         break;
 
       case 'Left and Right':
         circleObj.xAxis = xAxis;
         circleObj.yAxis = yAxis + rectHeight / 2;
-        let left_notch = this.drawCircle(circleObj);//left_notch
+        let left_notch = this.shapeService.circle(circleObj);//left_notch
         circleObj.xAxis = xAxis + rectWidth;
-        let right_notch = this.drawCircle(circleObj); //right_notch
-        this.updateGroup(this.createRect(rectProps), left_notch, right_notch, this.createText(textProps), 'rect');
+        let right_notch = this.shapeService.circle(circleObj); //right_notch
+        groupProps = {
+          rect: this.shapeService.rectangle(rectProps),
+          first_notch: left_notch,
+          second_notch: right_notch,
+          center_text: this.createText(textProps),
+          rootNode: 'rect'
+        }
+        this.updateGroup(groupProps);
         break;
 
       case 'None':
-        this.canvasService.group.add(this.createRect(rectProps), this.createText(textProps));
+        this.canvasService.group.add(this.shapeService.rectangle(rectProps), this.createText(textProps));
         this.initializeListnerOnGroup(this.canvasService.group, 'rect');
         this.addShapeToKonvaLayer(this.canvasService.group);
         break;
@@ -333,24 +332,19 @@ export class DashboardComponent implements OnInit {
         break;
 
       default:
-        this.canvasService.group.add(this.createRect(rectProps), this.createText(textProps));
+        this.canvasService.group.add(this.shapeService.rectangle(rectProps), this.createText(textProps));
         this.initializeListnerOnGroup(this.canvasService.group, 'rect');
         this.addShapeToKonvaLayer(this.canvasService.group);
         break;
     }
   }
 
-  createRect(rectProps) {
-    const rectangle = this.shapeService.rectangle(rectProps);
-    //this.addShapeToKonvaLayer(rectangle);
-    return rectangle;
-  }
-
   handleCustomNotch() {
     this.customNotchChild.openCustomNotchDialog();
   }
 
-  updateGroup(rect: Konva.Rect, first_notch: Konva.Circle, second_notch: Konva.Circle, center_text: Konva.Text, rootNode: string) {
+  updateGroup(groupProps) {
+    const { rect, first_notch, second_notch, center_text, rootNode } = groupProps;
     this.canvasService.group.add(rect, first_notch, second_notch, center_text);
     this.initializeListnerOnGroup(this.canvasService.group, rootNode);
     this.addShapeToKonvaLayer(this.canvasService.group);
@@ -358,7 +352,7 @@ export class DashboardComponent implements OnInit {
 
   initializeListnerOnGroup(group: Konva.Group, rootNode: string) {
     group.addEventListener('click', (event) => {
-      this.isPropertiesPanelShown = true;
+      this.propsVisibility = true;
       this.activeShape = group.children[0];
       this.activeShape.attrs.fill = '#4BC433';
       this.activeGroup = group;
@@ -404,7 +398,7 @@ export class DashboardComponent implements OnInit {
       ? Math.round(this.newBoundriesShape.rotation)
       : group.children[0].rotation();
 
-    return (this.propertiesObject = {
+    return (this.canvasProperties = {
       id: 1,
       shape_name: 'rectangle',
       length: newHeight,
@@ -429,7 +423,7 @@ export class DashboardComponent implements OnInit {
       ? Math.round(this.newBoundriesShape.rotation)
       : group.children[0].rotation();
 
-    return (this.propertiesObject = {
+    return (this.canvasProperties = {
       id: 2,
       shape_name: 'circle',
       length: newHeight,
@@ -454,7 +448,7 @@ export class DashboardComponent implements OnInit {
       ? Math.round(this.newBoundriesShape.rotation)
       : rectangle.rotation();
 
-    return (this.propertiesObject = {
+    return (this.canvasProperties = {
       id: 1,
       shape_name: 'rectangle',
       length: newHeight,
@@ -485,7 +479,7 @@ export class DashboardComponent implements OnInit {
 
   addListnersOnImage(image) {
     image.addEventListener('click', () => {
-      this.propertiesObject = {
+      this.canvasProperties = {
         id: 3,
         shape_name: 'image',
         length: image.getHeight(),
@@ -497,11 +491,11 @@ export class DashboardComponent implements OnInit {
         image_Src: '/assets/cbimage.jpg',
       };
       this.activeGroup = image;
-      this.isPropertiesPanelShown = true;
+      this.propsVisibility = true;
     });
 
     image.addEventListener('dragend', (event) => {
-      this.propertiesObject = {
+      this.canvasProperties = {
         id: 3,
         shape_name: 'image',
         length: image.getHeight(),
@@ -563,8 +557,8 @@ export class DashboardComponent implements OnInit {
 
   zoomCanvas() {
     var scaleBy = .1;
-    this.canvasService.canvasProperties.canvasUpperLength += Number((this.canvasService.canvasProperties.canvasUpperLength * scaleBy).toFixed(0));
-    this.canvasService.canvasProperties.canvasUpperWidth += Number((this.canvasService.canvasProperties.canvasUpperWidth * scaleBy).toFixed(0));
+    this.canvasService.canvasProps.upperLength += Number((this.canvasService.canvasProps.upperLength * scaleBy).toFixed(0));
+    this.canvasService.canvasProps.upperWidth += Number((this.canvasService.canvasProps.upperWidth * scaleBy).toFixed(0));
 
     this.isCanvasUpdated = true;
     this.canvasService.stage = null;
@@ -596,7 +590,7 @@ export class DashboardComponent implements OnInit {
           strokeColor: 'black',
           isDraggable: true
         }
-        this.drawCircle(circleObj);
+        this.shapeService.circle(circleObj);
         break;
       case 3:
         this.drawImage(event.image_Src, event.xLoc + 25, event.yLoc + 24);
@@ -635,12 +629,12 @@ export class DashboardComponent implements OnInit {
       } else {
         component.canvasService.tr.detach();
         component.canvasService.layer.draw();
-        component.isPropertiesPanelShown = false;
+        component.propsVisibility = false;
         if (component.activeShape !== null) {
           component.activeShape.attrs.fill = '#93DC85';
           component.activeShape = null;
         }
-        component.propertiesObject = undefined;
+        component.canvasProperties = undefined;
       }
     });
   }

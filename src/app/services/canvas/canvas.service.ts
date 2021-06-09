@@ -8,15 +8,15 @@ import { CaseDescription } from '../../interfaces/intefaces';
 })
 export class CanvasService {
 
-  canvasProperties = {
+  canvasProps = {
     case_name: 'Custom',
     foam_base: '33',
-    canvasUpperLength: 470,//470
-    canvasUpperWidth: 690,//690
-    canvasDepth: 100,
-    canvasLowerLength: 200,
-    canvasLowerWidth: 120,
-    canvasRadius: 0,
+    upperLength: 470,//470
+    upperWidth: 690,//690
+    depth: 100,
+    lowerLength: 200,
+    lowerWidth: 120,
+    radius: 0,
   };
   stage: Konva.Stage;
   layer: Konva.Layer;
@@ -47,8 +47,8 @@ export class CanvasService {
     if (this.stage == null) {
       this.stage = new Konva.Stage({
         container: 'konvaContainer',
-        width: this.canvasProperties.canvasUpperWidth,
-        height: this.canvasProperties.canvasUpperLength,
+        width: this.canvasProps.upperWidth,
+        height: this.canvasProps.upperLength,
       });
       this.layer = new Konva.Layer();
       this.fillKonvaContainerBorder();
@@ -62,18 +62,18 @@ export class CanvasService {
     var gridLayer = new Konva.Layer();
     var padding = blockSnapSize;
 
-    for (var i = 0; i < this.canvasProperties.canvasUpperWidth / padding; i++) {
+    for (var i = 0; i < this.canvasProps.upperWidth / padding; i++) {
       gridLayer.add(new Konva.Line({
-        points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProperties.canvasUpperLength],
+        points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProps.upperLength],
         stroke: 'lightblue',
         strokeWidth: 1.2,
       }));
     }
 
     gridLayer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
-    for (var j = 0; j < this.canvasProperties.canvasUpperLength / padding; j++) {
+    for (var j = 0; j < this.canvasProps.upperLength / padding; j++) {
       gridLayer.add(new Konva.Line({
-        points: [0, Math.round(j * padding), this.canvasProperties.canvasUpperWidth, Math.round(j * padding)],
+        points: [0, Math.round(j * padding), this.canvasProps.upperWidth, Math.round(j * padding)],
         stroke: 'lightblue',
         strokeWidth: 1.2,
       }));
@@ -91,7 +91,7 @@ export class CanvasService {
     var topRect = new Konva.Rect({
       x: 0,
       y: 0,
-      width: this.canvasProperties.canvasUpperWidth,
+      width: this.canvasProps.upperWidth,
       height: thickness,
       fill: fillColor,
       opacity: 0.5,
@@ -102,8 +102,8 @@ export class CanvasService {
     //bottom
     var bottomRect = new Konva.Rect({
       x: 0,
-      y: this.canvasProperties.canvasUpperLength - thickness,
-      width: this.canvasProperties.canvasUpperWidth,
+      y: this.canvasProps.upperLength - thickness,
+      width: this.canvasProps.upperWidth,
       height: thickness,
       fill: fillColor,
       opacity: 0.5,
@@ -116,7 +116,7 @@ export class CanvasService {
       x: 0,
       y: 0,
       width: thickness,
-      height: this.canvasProperties.canvasUpperLength,
+      height: this.canvasProps.upperLength,
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [borderSize, borderSize, 0, borderSize],
@@ -125,10 +125,10 @@ export class CanvasService {
 
     //right
     var rightRect = new Konva.Rect({
-      x: this.canvasProperties.canvasUpperWidth - thickness,
+      x: this.canvasProps.upperWidth - thickness,
       y: 0,
       width: thickness,
-      height: this.canvasProperties.canvasUpperLength,
+      height: this.canvasProps.upperLength,
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [borderSize, borderSize, borderSize, 0],
@@ -137,7 +137,7 @@ export class CanvasService {
   }
 
   getInitialConfigurations() {
-    return JSON.stringify(this.canvasProperties);
+    return JSON.stringify(this.canvasProps);
   }
 
   initializeGroup() {

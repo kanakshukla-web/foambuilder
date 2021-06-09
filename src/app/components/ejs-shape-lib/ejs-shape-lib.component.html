@@ -1,5 +1,5 @@
-<ejs-dialog *ngIf='isLibOpened' #ejLibDialog isModal='true' (close)='closeDialog()' header={{header}}
-  width={{typeDialogWidth}} height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
+<ejs-dialog *ngIf='isLibOpened' isModal='true' (close)='closeDialog()' header={{header}} width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon' #ejLibDialog>
 
   <ng-template #header>
     <div class="header_modal">
@@ -10,7 +10,8 @@
   <div id='shape-library-modal'>
     <div>
       <!-- <input type="search" class="form-control input-lg" placeholder="Search"> -->
-      <input type="text" class="form-control input-lg" name="searchitems" [(ngModel)]="searchitems" placeholder="Search">
+      <input type="text" class="form-control input-lg" name="searchitems" [(ngModel)]="searchitems"
+        placeholder="Search">
 
       <select class="form-select" id="categoty" required [(ngModel)]="model.category" name="categoty"
         #categoty="ngModel">

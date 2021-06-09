@@ -7,7 +7,8 @@ import Konva from 'konva';
 export class ShapeService {
   constructor() { }
 
-  circle(radius: number, xAxis: number, yAxis: number, fillColor: string, strokeColor: string, isDraggable: boolean) {
+  circle(circleObj) {
+    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleObj;
     return new Konva.Circle({
       x: xAxis,
       y: yAxis,
@@ -32,6 +33,7 @@ export class ShapeService {
 
   rectangle(rectProperties) {
     const { rectWidth, rectHeight, xAxis, yAxis, fillColor, strokeColor, isDraggable, cornerRadius } = rectProperties
+
     return new Konva.Rect({
       x: xAxis,
       y: yAxis,

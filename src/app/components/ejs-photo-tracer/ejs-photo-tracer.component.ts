@@ -7,9 +7,8 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '
   styleUrls: ['./ejs-photo-tracer.component.css']
 })
 export class EjsPhotoTracerComponent implements OnInit {
-  @ViewChild('ejTracerDialog') ejDialog: DialogComponent;
-  @ViewChild('drawCanvas', { static: false })
-  canvas: ElementRef<HTMLCanvasElement>;
+  //@ViewChild('ejTracerDialog') ejDialog: DialogComponent;
+  @ViewChild('tracerCanvas', { static: false }) canvas: ElementRef<HTMLCanvasElement>;
   public ctx: CanvasRenderingContext2D;
 
   isTracerOpened: boolean = false;
@@ -26,7 +25,7 @@ export class EjsPhotoTracerComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.initilizeCanvas();
+    //this.initilizeCanvas();
   }
 
   initilizeCanvas() {
@@ -39,7 +38,7 @@ export class EjsPhotoTracerComponent implements OnInit {
 
   closeTracerInstrctions() {
     this.isTracerOpened = false;
-    this.ejDialog.hide();
+    //this.ejDialog.hide();
   }
 
   loadFile() {
