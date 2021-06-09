@@ -29,6 +29,7 @@ export class CanvasService {
   Points = { x1: 0, y1: 0, x2: 0, y2: 0 };
   selectionRectangle = new Konva.Rect({ fill: 'rgba(0,0,255,0.5)' });
   tr: Konva.Transformer;
+  transformers: Konva.Transformer[] = [];
 
   erase: boolean = false;
   selectedButton: any = {
@@ -67,6 +68,7 @@ export class CanvasService {
         points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProps.upperLength],
         stroke: 'lightblue',
         strokeWidth: 1.2,
+        listening: false
       }));
     }
 
@@ -76,6 +78,7 @@ export class CanvasService {
         points: [0, Math.round(j * padding), this.canvasProps.upperWidth, Math.round(j * padding)],
         stroke: 'lightblue',
         strokeWidth: 1.2,
+        listening: false
       }));
     }
     this.stage.add(gridLayer);
@@ -96,6 +99,7 @@ export class CanvasService {
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [borderSize, borderSize, 0, 0],
+      listening: false
     })
     this.layer.add(topRect);
 
@@ -108,6 +112,7 @@ export class CanvasService {
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [0, 0, borderSize, borderSize],
+      listening: false
     })
     this.layer.add(bottomRect);
 
@@ -120,6 +125,7 @@ export class CanvasService {
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [borderSize, borderSize, 0, borderSize],
+      listening: false
     })
     this.layer.add(leftRect);
 
@@ -132,6 +138,7 @@ export class CanvasService {
       fill: fillColor,
       opacity: 0.5,
       cornerRadius: [borderSize, borderSize, borderSize, 0],
+      listening: false
     })
     this.layer.add(rightRect);
   }

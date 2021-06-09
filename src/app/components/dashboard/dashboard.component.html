@@ -14,13 +14,13 @@
     <app-ejs-chnage-case-menu (editEvent)="handleEdit()" (expandEvent)="expandDiv('case-info')"
       [canvasProperties]='canvasService.canvasProps'></app-ejs-chnage-case-menu>
 
-    <ul *ngIf="isShapeDragStarted" id="hidden-buttons">
+    <ul *ngIf="isDragging" id="hidden-buttons">
       X : {{xAxis}} Y : {{yAxis}}
     </ul>
 
     <!-- global-buttons menu -->
-    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="canvasService.clearSelection()" (setEvent)="canvasService.setSelection($event)"
-      (revertEvent)="undo()">
+    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="canvasService.clearSelection()"
+      (setEvent)="canvasService.setSelection($event)" (revertEvent)="undo()">
     </app-global-button-menu>
 
     <!-- tray-builder menu -->
@@ -46,7 +46,7 @@
     <!-- right side bar Properties Panel -->
     <mat-sidenav *ngIf='propsVisibility' opened mode="side" position="end">
       <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
-        [properties]=propertiesObject>
+        [properties]=canvasProperties>
       </app-properties>
     </mat-sidenav>
 

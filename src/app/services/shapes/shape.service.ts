@@ -7,9 +7,14 @@ import Konva from 'konva';
 export class ShapeService {
   constructor() { }
 
+  getUUID() {
+    return '_' + Math.random().toString(36).substr(2, 5);
+  };
+
   circle(circleObj) {
     const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleObj;
     return new Konva.Circle({
+      id: `circle${this.getUUID()}`,
       x: xAxis,
       y: yAxis,
       radius: radius,
@@ -35,6 +40,7 @@ export class ShapeService {
     const { rectWidth, rectHeight, xAxis, yAxis, fillColor, strokeColor, isDraggable, cornerRadius } = rectProperties
 
     return new Konva.Rect({
+      id: `rect${this.getUUID()}`,
       x: xAxis,
       y: yAxis,
       width: rectWidth,
@@ -50,6 +56,7 @@ export class ShapeService {
 
   image(imageUrl, imageObj, xAxis: number, yAxis: number) {
     var img = new Konva.Image({
+      id: `image${this.getUUID()}`,
       x: xAxis,
       y: yAxis,
       image: imageObj,
@@ -64,6 +71,7 @@ export class ShapeService {
   text(textProps) {
     const { textString, xLoc, yLoc } = textProps;
     return new Konva.Text({
+      id: `text${this.getUUID()}`,
       text: `${textString}mm`,
       x: xLoc,
       y: yLoc,
@@ -74,6 +82,7 @@ export class ShapeService {
       padding: 5,
       align: 'center',
       verticalAlign: 'middle',
+      listening: false
     });
   }
 }

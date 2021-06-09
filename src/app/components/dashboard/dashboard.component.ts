@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DialogComponent } from '@syncfusion/ej2-angular-popups';
-import { EmitType } from '@syncfusion/ej2-base';
 import Konva from 'konva';
-import { Properties } from '../../interfaces/intefaces';
 import { CanvasService } from './../../services/canvas/canvas.service';
 import { ShapeService } from './../../services/shapes/shape.service';
 import { SharedService } from './../../services/shared.service';
@@ -15,7 +12,7 @@ import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectang
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
- // @ViewChild('ejEditDialog') ejDialog: DialogComponent;
+  // @ViewChild('ejEditDialog') ejDialog: DialogComponent;
   public targetElement: HTMLElement;
   public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
@@ -31,12 +28,11 @@ export class DashboardComponent implements OnInit {
 
   xAxis: number;
   yAxis: number;
-  isShapeDragStarted: boolean = false;
+  isDragging: boolean = false;
   newBoundriesShape: any;
   shapes: any = [];
   activeShape: any;
 
-  transformers: Konva.Transformer[] = [];
   openTrayCount = 0;
 
   nodesArray = [];
@@ -49,7 +45,7 @@ export class DashboardComponent implements OnInit {
     private sharedService: SharedService
   ) { }
 
-  //<-------------------lifecycle methods--------------------------->
+  //<-------------------lifecycle methods------------------------------------->
 
   ngOnInit(): void {
     this.canvasService.canvasProps = JSON.parse(this.canvasService.getInitialConfigurations());
@@ -67,7 +63,7 @@ export class DashboardComponent implements OnInit {
     this.canvasService.initilaizeListnersOnStage();
   }
 
-  //<----------------------------------------------->
+  //<-------------------------------------------------------------------------->
 
   closeDialog() {
     this.hideBuilderTray();
@@ -81,10 +77,6 @@ export class DashboardComponent implements OnInit {
   handleTray() {
     this.trayChild.openTray();
   }
-
-  // public onOverlayClick: EmitType<object> = () => {
-  //   this.ejDialog.hide();
-  // };
 
   onSubmit(formInput) {
     this.canvasService.canvasProps.upperLength = formInput.elements['upperlength'].value;
@@ -230,7 +222,7 @@ export class DashboardComponent implements OnInit {
     this.addTransformerListeners();
 
     this.nodesArray.push(shape);
-    this.canvasService.tr.nodes(this.nodesArray);
+    //this.canvasService.tr.nodes(this.nodesArray);
     this.canvasService.layer.draw();
   }
 
@@ -360,14 +352,14 @@ export class DashboardComponent implements OnInit {
     });
 
     group.addEventListener('dragmove', (event) => {
-      this.isShapeDragStarted = true;
+      this.isDragging = true;
       this.xAxis = Math.round(group.children[0].absolutePosition().x);
       this.yAxis = Math.round(group.children[0].absolutePosition().y);
     });
 
     group.addEventListener('dragend', (event) => {
       this.setGroupProperties(group);
-      this.isShapeDragStarted = false;
+      this.isDragging = false;
     });
 
     group.children[0].addEventListener('transformstart', (event) => { });
@@ -506,7 +498,7 @@ export class DashboardComponent implements OnInit {
         angle: 90,
         image_Src: '/assets/cbimage.jpg',
       };
-      this.isShapeDragStarted = false;
+      this.isDragging = false;
     });
 
     image.on('mouseover', function () {
@@ -517,7 +509,7 @@ export class DashboardComponent implements OnInit {
     });
 
     image.addEventListener('dragmove', (event) => {
-      this.isShapeDragStarted = true;
+      this.isDragging = true;
       this.xAxis = Math.round(image.absolutePosition().x);
       this.yAxis = Math.round(image.absolutePosition().y);
     });
@@ -530,7 +522,7 @@ export class DashboardComponent implements OnInit {
     text.offsetX(text.width() / 2);
     text.offsetY(text.height() / 2)
     // this.shapes.push(text.textNode);
-    // this.transformers.push(text.tr);
+    // this.canvasService.transformers.push(text.tr);
     return text;
   }
 
@@ -544,7 +536,7 @@ export class DashboardComponent implements OnInit {
 
   undo() {
     const removedShape = this.shapes.pop();
-    this.transformers.forEach((t) => {
+    this.canvasService.transformers.forEach((t) => {
       t.detach();
     });
     if (removedShape) {
@@ -577,7 +569,11 @@ export class DashboardComponent implements OnInit {
           xLocation: event.xLoc + 25,
           yLocation: event.yLoc + 24,
           notcheType: event.fingerNotch,
-          cornerRadius: event.cornerRadius
+          cornerRadius: event.cornerRadius,
+          isDraggable: false,
+          fillColor: '#93DC85',
+          strokeColor: 'black',
+          type: 'rectangle'
         }
         this.drawRectangle(rectObj);
         break;
@@ -612,25 +608,28 @@ export class DashboardComponent implements OnInit {
       anchorFill: 'white',
       anchorStroke: 'blue',
       anchorStrokeWidth: 2,
-      enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+      enabledAnchors: [
+        'top-left', 'top-center', 'top-right',
+        'middle-left', 'middle-right', 'bottom-left',
+        'bottom-center', 'bottom-right'],
       // resizeEnabled: false,
     });
     this.canvasService.stage.on('click', function (e) {
       if (!this.clickStartShape) {
         return;
       }
-      component.transformers = [];
+      component.canvasService.transformers = [];
       if (e.target._id == this.clickStartShape._id) {
         //component.addDeleteListener(e.target);
         component.canvasService.layer.add(component.canvasService.tr);
         component.canvasService.tr.attachTo(e.target);
-        component.transformers.push(component.canvasService.tr);
+        component.canvasService.transformers.push(component.canvasService.tr);
         component.canvasService.layer.draw();
       } else {
         component.canvasService.tr.detach();
         component.canvasService.layer.draw();
         component.propsVisibility = false;
-        if (component.activeShape !== null) {
+        if (component.activeShape !== null && component.activeShape !== undefined) {
           component.activeShape.attrs.fill = '#93DC85';
           component.activeShape = null;
         }
@@ -646,7 +645,7 @@ export class DashboardComponent implements OnInit {
     window.addEventListener('keydown', function (e) {
       if (e.keyCode === 46) {
         shape.remove();
-        component.transformers.forEach((t) => {
+        component.canvasService.transformers.forEach((t) => {
           t.detach();
         });
         const selectedShape = component.shapes.find((s) => s._id == shape._id);
