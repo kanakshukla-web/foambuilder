@@ -51,8 +51,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.canvasService.canvasProps = JSON.parse(this.canvasService.getInitialConfigurations());
-    this.modifiedUpperLength= this.canvasService.canvasProps.upperLength
-this.modifiedUpperWidth=this.canvasService.canvasProps.upperWidth
+    this.modifiedUpperLength = this.canvasService.canvasProps.upperLength
+    this.modifiedUpperWidth = this.canvasService.canvasProps.upperWidth
   }
 
   ngAfterViewChecked() {
@@ -100,8 +100,8 @@ this.modifiedUpperWidth=this.canvasService.canvasProps.upperWidth
 
     this.canvasService.canvasProps.upperLength = Length;
     this.canvasService.canvasProps.upperWidth = Number((Width * 3.7).toFixed(0)); // 1 mm = 3.7px converting to px
-    this.modifiedUpperLength=Length;
-    this.modifiedUpperWidth=Number((Width * 3.7).toFixed(0));
+    this.modifiedUpperLength = Length;
+    this.modifiedUpperWidth = Number((Width * 3.7).toFixed(0));
     this.isCanvasUpdated = true;
 
     this.canvasService.stage = null;
@@ -556,45 +556,24 @@ this.modifiedUpperWidth=this.canvasService.canvasProps.upperWidth
 
   zoomCanvas(event) {
     let scaleBy = this.canvasService.canvasProps.zoomScaleValue;
-  
-    if(event=='ZoomIn'){
-    //   this.canvasService.canvasProps.upperLength += Number((this.canvasService.canvasProps.upperLength * scaleBy).toFixed(0));
-    // this.canvasService.canvasProps.upperWidth += Number((this.canvasService.canvasProps.upperWidth * scaleBy).toFixed(0));
-   
-    this.modifiedUpperLength += Number((  this.modifiedUpperLength * scaleBy).toFixed(0));
-    this.modifiedUpperWidth += Number((this.modifiedUpperWidth * scaleBy).toFixed(0));
-       this.canvasService.stage.height(this.modifiedUpperLength);
-       this.canvasService.stage.width(this.modifiedUpperWidth);
-    }
-    else  if(event=='ZoomOut'){
-    //   this.canvasService.canvasProps.upperLength -= Number((this.canvasService.canvasProps.upperLength * scaleBy).toFixed(0));
-    // this.canvasService.canvasProps.upperWidth -= Number((this.canvasService.canvasProps.upperWidth * scaleBy).toFixed(0));
-    
-    this.modifiedUpperLength -= Number((  this.modifiedUpperLength * scaleBy).toFixed(0));
-    this.modifiedUpperWidth -= Number((this.modifiedUpperWidth * scaleBy).toFixed(0));
+    let scale;
+    if (event === 'ZoomIn') {
+      this.modifiedUpperLength += Number((this.modifiedUpperLength * scaleBy).toFixed(0));
+      this.modifiedUpperWidth += Number((this.modifiedUpperWidth * scaleBy).toFixed(0));
       this.canvasService.stage.height(this.modifiedUpperLength);
-       this.canvasService.stage.width(this.modifiedUpperWidth);
+      this.canvasService.stage.width(this.modifiedUpperWidth);
+      scale = this.canvasService.stage.getAbsoluteScale().x + scaleBy
     }
-    this.updateShapeOnKonva(scaleBy,event);
+    else if (event === 'ZoomOut') {
+      this.modifiedUpperLength -= Number((this.modifiedUpperLength * scaleBy).toFixed(0));
+      this.modifiedUpperWidth -= Number((this.modifiedUpperWidth * scaleBy).toFixed(0));
+      this.canvasService.stage.height(this.modifiedUpperLength);
+      this.canvasService.stage.width(this.modifiedUpperWidth);
+      scale = this.canvasService.stage.getAbsoluteScale().x - scaleBy
+    }
+    this.canvasService.stage.scale({ x: scale, y: scale });
+    this.canvasService.stage.draw();
     this.isCanvasUpdated = true;
-  }
-
-  updateShapeOnKonva(scaleBy: number,type:string) {
-    if(type=='ZoomIn'){
-      var scaleX = this.canvasService.stage.getAbsoluteScale().x;
-      let scale = scaleX + scaleBy
-      this.canvasService.stage.scale({ x: scale, y: scale });
-      this.canvasService.stage.draw();
-    }
-    else  if(type=='ZoomOut'){
-      var scaleX = this.canvasService.stage.getAbsoluteScale().x;
-      let scale = scaleX - scaleBy
-      this.canvasService.stage.scale({ x: scale, y: scale });
-      this.canvasService.layer.draw();
-     // this.canvasService.stage.draw();
-    }
- // this.canvasService.fillKonvaContainerBorder();
- // this.canvasService.drawKonvaGrid();
   }
 
   //<--------------------------------SHAPE CLONING--------------------------------------------->
