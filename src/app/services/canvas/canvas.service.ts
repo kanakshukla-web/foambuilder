@@ -17,8 +17,8 @@ export class CanvasService {
     lowerLength: 200,
     lowerWidth: 120,
     radius: 0,
-    zoomScaleValue: 0.01
-  };
+    zoomScaleValue: 0.01,
+      };
   stage: Konva.Stage;
   layer: Konva.Layer;
   group = new Konva.Group({
@@ -53,7 +53,7 @@ export class CanvasService {
         height: this.canvasProps.upperLength,
       });
       this.layer = new Konva.Layer();
-      this.fillKonvaContainerBorder();
+     this.fillKonvaContainerBorder();
       this.stage.add(this.layer);
       this.drawKonvaGrid();
     }
@@ -61,11 +61,12 @@ export class CanvasService {
 
   drawKonvaGrid() {
     let blockSnapSize = 35;
-    var gridLayer = new Konva.Layer();
+   // var gridLayer=null;
+  //var gridLayer = new Konva.Layer();
     var padding = blockSnapSize;
 
     for (var i = 0; i < this.canvasProps.upperWidth / padding; i++) {
-      gridLayer.add(new Konva.Line({
+      this.layer.add(new Konva.Line({
         points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProps.upperLength],
         stroke: 'lightblue',
         strokeWidth: 1.2,
@@ -73,16 +74,16 @@ export class CanvasService {
       }));
     }
 
-    gridLayer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
+    this.layer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
     for (var j = 0; j < this.canvasProps.upperLength / padding; j++) {
-      gridLayer.add(new Konva.Line({
+      this.layer.add(new Konva.Line({
         points: [0, Math.round(j * padding), this.canvasProps.upperWidth, Math.round(j * padding)],
         stroke: 'lightblue',
         strokeWidth: 1.2,
         listening: false
       }));
     }
-    this.stage.add(gridLayer);
+    //this.stage.add(gridLayer);
     this.stage.add(this.layer);
   }
 

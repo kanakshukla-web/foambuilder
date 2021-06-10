@@ -16,8 +16,14 @@
   </li>
   <!-- <li><a href="#"><i class="fa fa-cube"></i><span>_3D</span></a></li> -->
   <li><a href="#">
+    <!-- <i class="fa fa-search-plus" (click)="handleZoom()"></i> -->
+    <mat-icon aria-hidden="false" (click)="handleZoom('ZoomIn')" aria-label="Example home icon">zoom_in</mat-icon>
+    <span>ZoomIn</span>
+  </a></li>
+  
+  <li><a href="#">
       <!-- <i class="fa fa-search-plus" (click)="handleZoom()"></i> -->
-      <mat-icon aria-hidden="false" (click)="handleZoom()" aria-label="Example home icon">zoom_in</mat-icon>
-      <span>Zoom</span>
+      <mat-icon aria-hidden="false" (click)="handleZoom('ZoomOut')" aria-label="Example home icon">zoom_out</mat-icon>
+      <span>ZoomOut</span>
     </a></li>
 </ul>

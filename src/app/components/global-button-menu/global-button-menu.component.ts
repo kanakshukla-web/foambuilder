@@ -27,8 +27,8 @@ export class GlobalButtonMenuComponent implements OnInit {
     this.setEvent.emit(id);
   }
 
-  handleZoom(){
-    this.zoomEvent.emit();
+  handleZoom(event){
+    this.zoomEvent.emit(event);
   }
 
   undo(){
