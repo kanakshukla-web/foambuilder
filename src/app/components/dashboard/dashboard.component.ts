@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit {
   activeShape: any;
 
   openTrayCount = 0;
+  isEditClicked: boolean = false;
 
   nodesArray = [];
   shapeDepth: number;
@@ -71,10 +72,12 @@ export class DashboardComponent implements OnInit {
 
   closeDialog() {
     this.hideBuilderTray();
+    this.isEditClicked = false;
   }
 
   handleEdit() {
-    this.changeCaseChild.openDialog();
+    //this.changeCaseChild.openDialog();
+    this.isEditClicked = true;
   }
 
   handleTray() {

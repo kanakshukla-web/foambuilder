@@ -1,4 +1,4 @@
-<ejs-dialog *ngIf="isEditClicked" isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+<ejs-dialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
   height={{typeDialogHeight}} id='dialog' header={{header}} [showCloseIcon]='showCloseIcon' #ejEditDialog>
 
   <ng-template #header>
@@ -21,13 +21,13 @@
           <div>
             <div class="outline">
               <label> Upper Length &nbsp;
-                <input type='number' name="upperlength" value={{canvasProperties.canvasUpperLength}}>
+                <input type='number' name="upperlength" value={{canvasProperties.upperLength}}>
               </label>
             </div>
 
             <div class="outline">
               <label> Upper Width &nbsp;
-                <input type='number' name="upperwidth" value={{canvasProperties.canvasUpperWidth}}>
+                <input type='number' name="upperwidth" value={{canvasProperties.upperWidth}}>
               </label>
             </div>
 

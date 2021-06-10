@@ -57,9 +57,11 @@
   </mat-sidenav-container>
 
   <!-- edit/resize foamcase -->
-  <app-ejs-change-case (updateCaseFormEvent)="updateCanvasFormArea($event)" (submitForm)="onSubmit($event)"
-    [canvasProperties]='canvasService.canvasProps' #changeCase>
-  </app-ejs-change-case>
+  <div *ngIf="isEditClicked">
+    <app-ejs-change-case (close)="closeDialog()" (updateCaseFormEvent)="updateCanvasFormArea($event)"
+      (submitForm)="onSubmit($event)" [canvasProperties]='canvasService.canvasProps' #changeCase>
+    </app-ejs-change-case>
+  </div>
 
   <!-- traybuilder area -->
   <app-ejs-tray-builder (toggleTray)="hideBuilderTray()" [canvasProperties]='canvasService.canvasProps' #trayChild>
