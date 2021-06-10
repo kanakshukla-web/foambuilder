@@ -19,7 +19,7 @@
     </ul>
 
     <!-- global-buttons menu -->
-    <app-global-button-menu (zoomEvent)="zoomCanvas()" (clearEvent)="canvasService.clearSelection()"
+    <app-global-button-menu (zoomEvent)="zoomCanvas($event)" (clearEvent)="canvasService.clearSelection()"
       (setEvent)="canvasService.setSelection($event)" (revertEvent)="undo()">
     </app-global-button-menu>
 
@@ -38,9 +38,12 @@
       <canvas id='myCanvas' class="myCanv" width={{canvasProperties.canvasUpperWidth}}
         height={{canvasProperties.canvasUpperLength}} #myCanvas></canvas>
     </div> -->
-
+<!-- 
     <div id="konvaContainer" class='konva' [style.width.px]="canvasService.canvasProps.upperWidth"
       [style.height.px]="canvasService.canvasProps.upperLength">
+    </div> -->
+    <div id="konvaContainer" class='konva' [style.width.px]="modifiedUpperWidth"
+      [style.height.px]="modifiedUpperLength">
     </div>
 
     <!-- right side bar Properties Panel -->
