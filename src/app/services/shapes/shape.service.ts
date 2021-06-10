@@ -12,7 +12,7 @@ export class ShapeService {
   };
 
   circle(circleObj) {
-    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable } = circleObj;
+    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable, isListening } = circleObj;
     return new Konva.Circle({
       id: `circle${this.getUUID()}`,
       x: xAxis,
@@ -22,6 +22,7 @@ export class ShapeService {
       stroke: strokeColor,
       strokeWidth: 2,
       draggable: isDraggable,
+      listening: isListening
     });
   }
 

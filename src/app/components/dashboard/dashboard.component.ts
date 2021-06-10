@@ -12,7 +12,7 @@ import { RectanglecustomnotchComponent } from './../rectanglecustomnotch/rectang
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  // @ViewChild('ejEditDialog') ejDialog: DialogComponent;
+
   public targetElement: HTMLElement;
   public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '95%';
@@ -67,7 +67,6 @@ export class DashboardComponent implements OnInit {
 
   closeDialog() {
     this.hideBuilderTray();
-    //this.ejDialog.hide();
   }
 
   handleEdit() {
@@ -161,7 +160,8 @@ export class DashboardComponent implements OnInit {
           yAxis: 150,
           fillColor: '#4BC433',
           strokeColor: 'black',
-          isDraggable: false,
+          isDraggable: true,
+          isListening: true,
           notcheType: event.fingerNotch,
           type: type
         }
@@ -272,7 +272,8 @@ export class DashboardComponent implements OnInit {
       fillColor: '#B36DD1',
       strokeColor: '#B36DD1',
       isDraggable: false,
-      type: 'circle'
+      type: 'circle',
+      isListening: false
     }
 
     let textProps = {
@@ -627,8 +628,9 @@ export class DashboardComponent implements OnInit {
       if (e.target._id == this.clickStartShape._id) {
         //component.addDeleteListener(e.target);
         component.canvasService.layer.add(component.canvasService.tr);
-        component.canvasService.tr.attachTo(e.target);
-        component.canvasService.transformers.push(component.canvasService.tr);
+        // component.canvasService.tr.attachTo(e.target);
+        // component.canvasService.transformers.push(component.canvasService.tr);
+        component.canvasService.tr.nodes([this.clickStartShape.parent]);
         component.canvasService.layer.draw();
       } else {
         component.canvasService.tr.detach();
