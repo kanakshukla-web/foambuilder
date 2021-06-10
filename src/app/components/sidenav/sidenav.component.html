@@ -15,17 +15,17 @@
     <p>Executive Director</p>
   </div>
 
-  <button (click)="openLib()" class="tablinks" id="defaultOpen">
+  <button (click)="handleNavClick('Library')" class="tablinks" id="defaultOpen">
     <i class="fas fa-puzzle-piece"></i> <span>Library</span></button>
-  <button (click)='openTracer()' class="tablinks">
+  <button (click)='handleNavClick("PhotoTracer")' class="tablinks">
     <i class="fas fa-photo-video"></i> <span>Photo Tracer </span></button>
-  <button (click)="openNav('Rect')" class="tablinks">
+  <button (click)="handleNavClick('Rect')" class="tablinks">
     <i class="far fa-square"></i> <span>Rect</span></button>
-  <button (click)="openNav('Circle')" class="tablinks">
+  <button (click)="handleNavClick('Circle')" class="tablinks">
     <i class="far fa-circle"></i> <span>Circle </span></button>
-  <button (click)="openDrawShape()" class="tablinks">
+  <button (click)="handleNavClick('Draw')" class="tablinks">
     <i class="fas fa-pencil-ruler"></i> <span>Draw </span></button>
-  <button (click)="openNav('Settings')" class="tablinks">
+  <button (click)="handleNavClick('Settings')" class="tablinks">
     <i class="fas fa-cogs"></i> <span>Settings</span>
   </button>
 </div>
@@ -43,7 +43,9 @@
 </div>
 
 <!-- shape Library -->
-<app-ejs-shape-lib (addShape)="drawShapeOnCanvas($event)" #shapeLibChild></app-ejs-shape-lib>
+<div *ngIf='isLibOpened'>
+  <app-ejs-shape-lib (close)="closeDialog()" (drawImage)="drawImageOnCanvas($event)" #shapeLibChild></app-ejs-shape-lib>
+</div>
 
 <!-- draw shape with grid-->
 <div *ngIf='isDrawOpened'>
@@ -51,7 +53,6 @@
 </div>
 
 <!-- Photo Tracer -->
-<app-ejs-photo-tracer #photoTracerChild></app-ejs-photo-tracer>
-
-
-
+<div *ngIf='isTracerOpened'>
+  <app-ejs-photo-tracer (close)="closeDialog()" #photoTracerChild></app-ejs-photo-tracer>
+</div>

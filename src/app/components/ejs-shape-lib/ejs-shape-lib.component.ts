@@ -8,14 +8,13 @@ import { ShapeLibraryService } from './../../services/shapeLibrary/shape-library
   styleUrls: ['./ejs-shape-lib.component.css'],
 })
 export class EjsShapeLibComponent implements OnInit {
-  //@ViewChild('ejLibDialog') ejDialog: DialogComponent;
+
   @Output() close = new EventEmitter<string>();
-  @Output() addShape = new EventEmitter<ShapeLib>();
+  @Output() drawImage = new EventEmitter<ShapeLib>();
 
   public typeDialogWidth: string = '98%';
   public typeDialogHeight: string = '98%';
   public showCloseIcon: boolean = true;
-  isLibOpened: boolean = false;
 
   ShapesList = [];
   totalResults = 0;
@@ -46,18 +45,12 @@ export class EjsShapeLibComponent implements OnInit {
     this.shapes = shapes;
   }
 
-  openDialog() {
-    this.isLibOpened = true;
-  }
-
   closeDialog() {
     this.close.emit('close');
-    this.isLibOpened = false;
-    //this.ejDialog.hide();
   }
 
   drawShapeOnCanvas() {
     this.closeDialog();
-    this.addShape.emit(this.model);
+    this.drawImage.emit(this.model);
   }
 }

@@ -1,7 +1,8 @@
 <div class="" style="width: 30%;">
   <mat-sidenav opened mode="side">
-    <app-sidenav (addShape)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
-      (drawRectangle)="addShape('rectangle',$event)"></app-sidenav>
+    <app-sidenav (drawImage)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
+      (drawRectangle)="addShape('rectangle',$event)">
+    </app-sidenav>
   </mat-sidenav>
 </div>
 
@@ -29,7 +30,7 @@
 
     <!-- left side bar -->
     <mat-sidenav opened mode="side">
-      <app-sidenav (addShape)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
+      <app-sidenav (drawImage)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
         (drawRectangle)="addShape('rectangle',$event)"></app-sidenav>
     </mat-sidenav>
 

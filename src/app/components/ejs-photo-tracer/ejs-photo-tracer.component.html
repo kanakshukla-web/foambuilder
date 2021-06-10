@@ -1,6 +1,6 @@
 <!-- Photo Tracer Instructions Dialog-->
-<ejs-dialog *ngIf='isTracerOpened' header={{header}} #ejTracerDialog isModal='true' (close)='closeTracerInstrctions()'
-  width={{typeDialogWidth}} height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
+<ejs-dialog header={{header}} #ejTracerDialog isModal='true' (close)='closeDialog()' width={{typeDialogWidth}}
+  height={{typeDialogHeight}} id='dialog' [showCloseIcon]='showCloseIcon'>
 
   <ng-template #header>
     <div class="header_modal">
@@ -27,7 +27,6 @@
     </div>
   </div>
 </ejs-dialog>
-
 
 
 <!-- Photo Tracer Implementation -->

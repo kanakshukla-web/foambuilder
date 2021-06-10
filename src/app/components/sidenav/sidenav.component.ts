@@ -1,15 +1,11 @@
-import { EjsPhotoTracerComponent } from './../ejs-photo-tracer/ejs-photo-tracer.component';
-import { EjsShapeLibComponent } from './../ejs-shape-lib/ejs-shape-lib.component';
-import { Rectangle } from './../../interfaces/intefaces';
 import {
   Component,
-  ElementRef,
   EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
+  Output
 } from '@angular/core';
-import { ShapeLib, Circle } from 'src/app/interfaces/intefaces';
+import { Circle, ShapeLib } from 'src/app/interfaces/intefaces';
+import { Rectangle } from './../../interfaces/intefaces';
 
 @Component({
   selector: 'app-sidenav',
@@ -18,50 +14,36 @@ import { ShapeLib, Circle } from 'src/app/interfaces/intefaces';
 })
 export class SidenavComponent implements OnInit {
 
-  @Output() addShape = new EventEmitter<ShapeLib>();
+  public typeDialogWidth: string = '98%';
+  public typeDialogHeight: string = '95%';
+  public showCloseIcon: boolean = true;
+
+  @Output() drawImage = new EventEmitter<ShapeLib>();
   @Output() drawRectangle = new EventEmitter<Rectangle>();
   @Output() drawCircle = new EventEmitter<Circle>();
-  //@Output() drawPoint = new EventEmitter<string>();
-  @ViewChild('shapeLibChild') shapeLibChild: EjsShapeLibComponent;
-  @ViewChild('photoTracerChild') photoTracerChild: EjsPhotoTracerComponent;
 
-  //isLibOpened: boolean = false;
+  isLibOpened: boolean = false;
   isTracerOpened: boolean = false;
   isDrawOpened: boolean = false;
 
   isRectClicked: boolean = false;
   isCircleClicked: boolean = false;
   isSettingsClicked: boolean = false;
-
-  public typeDialogWidth: string = '98%';
-  public typeDialogHeight: string = '95%';
-  public showCloseIcon: boolean = true;
-
   isFileSelected: boolean = false;
-
-  imgURL: any;
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  openLib() {
-    //this.isLibOpened = true;
-    this.shapeLibChild.openDialog();
-  }
-
-  openTracer() {
-    this.isFileSelected = false;
-    //this.isTracerOpened = true;
-    this.photoTracerChild.openTracerInstrctions();
-  }
-
-  openDrawShape() {
-    this.isDrawOpened = true;
-  }
-
-  openNav(id) {
+  handleNavClick(id: string) {
     switch (id) {
+      case "Library":
+        this.isLibOpened = true;
+        break;
+      case "PhotoTracer":
+        this.isFileSelected = false;
+        this.isTracerOpened = true;
+        break;
       case 'Rect':
         this.isRectClicked = true;
         this.isCircleClicked = false;
@@ -77,7 +59,8 @@ export class SidenavComponent implements OnInit {
         document.getElementById('myCirclePanel').style.width = '250px';
         document.getElementById('mySettingsPanel').style.width = '0';
         document.getElementById('myRectPanel').style.width = '0';
-
+        break;
+      case "Draw": this.isDrawOpened = true;
         break;
       case 'Settings':
         this.isSettingsClicked = true;
@@ -91,16 +74,14 @@ export class SidenavComponent implements OnInit {
   }
 
   closeDialog() {
-    //this.isLibOpened = false;
-    this.shapeLibChild.closeDialog();
-    //this.isTracerOpened = false;
-    this.photoTracerChild.closeTracerInstrctions();
+    this.isLibOpened = false;
+    this.isTracerOpened = false;
     this.isDrawOpened = false;
   }
 
-  drawShapeOnCanvas(model) {
+  drawImageOnCanvas(model) {
     this.closeDialog();
-    this.addShape.emit(model);
+    this.drawImage.emit(model);
   }
 
   drawRectOnCanvas(event: Rectangle) {
@@ -110,5 +91,4 @@ export class SidenavComponent implements OnInit {
   drawCircleOnCanvas(event: Circle) {
     this.drawCircle.emit(event);
   }
-
 }

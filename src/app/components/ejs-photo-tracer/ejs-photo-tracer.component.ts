@@ -7,11 +7,11 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '
   styleUrls: ['./ejs-photo-tracer.component.css']
 })
 export class EjsPhotoTracerComponent implements OnInit {
-  //@ViewChild('ejTracerDialog') ejDialog: DialogComponent;
+
+  @Output() close = new EventEmitter<string>();
   @ViewChild('tracerCanvas', { static: false }) canvas: ElementRef<HTMLCanvasElement>;
   public ctx: CanvasRenderingContext2D;
 
-  isTracerOpened: boolean = false;
   isFileSelected: boolean = false;
   tracer_Img: any;
 
@@ -32,13 +32,8 @@ export class EjsPhotoTracerComponent implements OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
-  openTracerInstrctions() {
-    this.isTracerOpened = true;;
-  }
-
-  closeTracerInstrctions() {
-    this.isTracerOpened = false;
-    //this.ejDialog.hide();
+  closeDialog() {
+    this.close.emit('close');
   }
 
   loadFile() {
@@ -50,7 +45,7 @@ export class EjsPhotoTracerComponent implements OnInit {
       const file = event.target.files[0];
       console.log(file);
       this.isFileSelected = true;
-      this.isTracerOpened = false;
+      //this.close.emit('close');
       this.addImageToCanvas();
     }
   }
