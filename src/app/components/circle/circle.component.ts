@@ -16,7 +16,7 @@ export class CircleComponent implements OnInit {
   widths = 50;
   depthsoval = 50;
 
-  options: boolean;
+  options: boolean = true;
   // msgshowhide = false;
   model = new Circle();
   modeloval = new Oval();

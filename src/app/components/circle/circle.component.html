@@ -7,13 +7,18 @@
   </div>
   <hr>
 
-  <label class="heading">
+  <!-- <label class="heading">
     Circle <input name="options" [(ngModel)]="options" type="radio" [value]="false" [checked]="options" />
-    Oval <input type="radio" name="options" [(ngModel)]="options" type="radio" [value]="true" [checked]="!options" />
-  </label>
+    Oval <input type="radio" name="options" [(ngModel)]="options" [value]="true" [checked]="!options" />
+  </label> -->
+
+  <mat-radio-group [(ngModel)]="options" class="heading" aria-label="Select an option">
+    <mat-radio-button class="radioStyle" [value]="true">Circle</mat-radio-button>
+    <mat-radio-button class="radioStyle" [value]="false">Oval</mat-radio-button>
+  </mat-radio-group>
 
   <!-- Oval form -->
-  <div *ngIf="options">
+  <div *ngIf="!options">
     <form (ngSubmit)="onSubmitOvalFormData(ovalForm)" #ovalForm="ngForm">
       <div class="form-group">
         <label class="form-label" for="diameter">Length (MM)</label>
@@ -29,7 +34,7 @@
       <div class="form-group">
         <label class="form-label" for="depth">Width (MM)</label>
         <input type="text" placeholder="0" class="form-control" name="width" required [(ngModel)]="modeloval.width"
-          #width="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && width.invalid }" >
+          #width="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && width.invalid }">
 
         <div class="invalid-feedback" *ngIf="ovalForm.submitted && width.invalid">
           <p *ngIf="width.errors.required">Width is required</p>
@@ -40,7 +45,7 @@
       <div class="form-group">
         <label class="form-label" for="depth">Depth (MM)</label>
         <input type="text" placeholder="0" class="form-control" name="depth" required [(ngModel)]="modeloval.depth"
-          #depth="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && depth.invalid }" >
+          #depth="ngModel" [ngClass]="{ 'is-invalid': ovalForm.submitted && depth.invalid }">
 
         <div class="invalid-feedback" *ngIf="ovalForm.submitted && depth.invalid">
           <p *ngIf="depth.errors.required">Depth is required</p>
@@ -69,7 +74,7 @@
   </div>
 
   <!-- Cicle FOrm below-->
-  <div *ngIf="!options">
+  <div *ngIf="options">
     <form (ngSubmit)="onSubmitCircleFormData(circleForm)" #circleForm="ngForm">
       <div class="form-group">
         <label class="form-label" for="diameter">Diameter (MM)</label>

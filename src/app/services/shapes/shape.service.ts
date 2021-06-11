@@ -12,9 +12,10 @@ export class ShapeService {
   };
 
   circle(circleObj) {
-    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable, isListening } = circleObj;
+    const { radius, xAxis, yAxis, fillColor, strokeColor, isDraggable, isListening, notcheType } = circleObj;
     return new Konva.Circle({
       id: `circle${this.getUUID()}`,
+      name: notcheType,//storing notchtype in the name property
       x: xAxis,
       y: yAxis,
       radius: radius,
@@ -38,10 +39,11 @@ export class ShapeService {
   }
 
   rectangle(rectProperties) {
-    const { rectWidth, rectHeight, xAxis, yAxis, fillColor, strokeColor, isDraggable, cornerRadius } = rectProperties
+    const { rectWidth, rectHeight, xAxis, yAxis, fillColor, strokeColor, isDraggable, cornerRadius, notcheType } = rectProperties
 
     return new Konva.Rect({
       id: `rect${this.getUUID()}`,
+      name: notcheType,//storing notchtype in the name property
       x: xAxis,
       y: yAxis,
       width: rectWidth,

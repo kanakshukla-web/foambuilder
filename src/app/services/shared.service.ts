@@ -13,7 +13,6 @@ export class SharedService {
 
   showConfirmationDialog() {
     const message = `Are you sure you want to delete this shape?`;
-
     const dialogData = new ConfirmDialogModel("Confirm Delete", message);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -22,5 +21,9 @@ export class SharedService {
     });
 
     return dialogRef;
+  }
+
+  getRandomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min);
   }
 }

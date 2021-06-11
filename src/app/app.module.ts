@@ -43,6 +43,7 @@ import { GlobalButtonMenuComponent } from './components/global-button-menu/globa
 import { EjsTrayBuilderMenuComponent } from './components/ejs-tray-builder-menu/ejs-tray-builder-menu.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
 import { RectanglecustomnotchComponent } from './components/rectanglecustomnotch/rectanglecustomnotch.component';
 
 @NgModule({
@@ -90,6 +91,7 @@ import { RectanglecustomnotchComponent } from './components/rectanglecustomnotch
     MatTooltipModule,
     MatTableModule,
     MatInputModule,
+    MatRadioModule,
     MatFormFieldModule,
     MatDialogModule
   ],

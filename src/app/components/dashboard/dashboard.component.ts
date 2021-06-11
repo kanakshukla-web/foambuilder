@@ -40,8 +40,9 @@ export class DashboardComponent implements OnInit {
   shapeDepth: number;
   activeGroup: any;
 
-  modifiedUpperLength
-  modifiedUpperWidth
+  modifiedUpperLength: number;
+  modifiedUpperWidth: number;
+
   constructor(
     private shapeService: ShapeService,
     public canvasService: CanvasService,
@@ -152,37 +153,34 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  randomNumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
   addShape(type: string, event) {
     this.canvasService.clearSelection();
     this.canvasService.setSelection(type);
-    this.shapeDepth = +event.depth;
 
     switch (type) {
       case 'circle':
+        this.shapeDepth = +event.diameter;
         const circleObj = {
           radius: +event.diameter,
-          xAxis: 150,
-          yAxis: 150,
+          xAxis: 150 + this.sharedService.getRandomNumber(10, 50),
+          yAxis: 150 + this.sharedService.getRandomNumber(10, 50),
           fillColor: '#4BC433',
           strokeColor: 'black',
-          isDraggable: true,
+          isDraggable: false,
           isListening: true,
           notcheType: event.fingerNotch,
           type: type
         }
-        this.selectCircleType(circleObj);
+        this.drawCircle(circleObj);
         break;
 
       case 'rectangle':
+        this.shapeDepth = +event.depth;
         const rectObj = {
           rectWidth: +event.length,
           rectHeight: +event.width,
-          xAxis: 90 + this.randomNumber(10, 50),
-          yAxis: 90 + this.randomNumber(10, 50),
+          xAxis: 90 + this.sharedService.getRandomNumber(10, 50),
+          yAxis: 90 + this.sharedService.getRandomNumber(10, 50),
           notcheType: event.fingerNotch,
           cornerRadius: event.cornerRadius,
           isDraggable: false,
@@ -237,8 +235,9 @@ export class DashboardComponent implements OnInit {
 
   //<--------------------------------CIRCLE--------------------------------------------->
 
-  selectCircleType(circleObj) {
-    let { xAxis, yAxis } = circleObj;
+  drawCircle(circleObj) {
+    let { radius, xAxis, yAxis } = circleObj;
+    this.canvasService.initializeGroup();
 
     let textProps = {
       textString: this.shapeDepth,
@@ -246,11 +245,47 @@ export class DashboardComponent implements OnInit {
       yLoc: yAxis
     }
 
+    let notchCircleObj = {
+      radius: 30,
+      xAxis: xAxis,
+      yAxis: yAxis - radius,
+      fillColor: '#B36DD1',
+      strokeColor: '#B36DD1',
+      isDraggable: false,
+      type: 'circle',
+      isListening: false
+    }
+    let groupProps = {}
+
     switch (circleObj.notcheType) {
       case 'Top and Bottom':
+        let top_notch = this.shapeService.circle(notchCircleObj); //top_notch
+        notchCircleObj.yAxis = yAxis + radius;
+        let bottom_notch = this.shapeService.circle(notchCircleObj);//bottom_notch
+        groupProps = {
+          rect: this.shapeService.circle(circleObj),
+          first_notch: top_notch,
+          second_notch: bottom_notch,
+          center_text: this.createText(textProps),
+          rootNode: 'circle'
+        }
+        this.updateGroup(groupProps);
         break;
 
       case 'Left and Right':
+        notchCircleObj.xAxis = xAxis - radius;
+        notchCircleObj.yAxis = yAxis;
+        let left_notch = this.shapeService.circle(notchCircleObj);//left_notch
+        notchCircleObj.xAxis = xAxis + radius;
+        let right_notch = this.shapeService.circle(notchCircleObj); //right_notch
+        groupProps = {
+          rect: this.shapeService.circle(circleObj),
+          first_notch: left_notch,
+          second_notch: right_notch,
+          center_text: this.createText(textProps),
+          rootNode: 'rect'
+        }
+        this.updateGroup(groupProps);
         break;
 
       case 'None':
@@ -263,6 +298,9 @@ export class DashboardComponent implements OnInit {
         break;
 
       default:
+        this.canvasService.group.add(this.shapeService.circle(circleObj), this.createText(textProps));
+        this.initializeListnerOnGroup(this.canvasService.group, 'circle');
+        this.addShapeToKonvaLayer(this.canvasService.group);
         break;
     }
   }
@@ -582,15 +620,17 @@ export class DashboardComponent implements OnInit {
   //<--------------------------------SHAPE CLONING--------------------------------------------->
 
   startCloning(event) {
+    let fingerNotch = this.activeGroup !== undefined ? this.activeGroup.children[0].attrs.name : 'None';
+    this.canvasService.tr.detach();
 
     switch (event.id) {
       case 1:
         const rectObj = {
           rectWidth: +event.length,
           rectHeight: +event.width,
-          xLocation: event.xLoc + 25,
-          yLocation: event.yLoc + 24,
-          notcheType: event.fingerNotch,
+          xAxis: event.xLoc + this.sharedService.getRandomNumber(10, 50),
+          yAxis: event.yLoc + this.sharedService.getRandomNumber(10, 50),
+          notcheType: fingerNotch,
           cornerRadius: event.cornerRadius,
           isDraggable: false,
           fillColor: '#93DC85',
@@ -602,13 +642,15 @@ export class DashboardComponent implements OnInit {
       case 2:
         let circleObj = {
           radius: event.width,
-          xAxis: event.xLoc + 25,
-          yAxis: event.yLoc + 24,
+          xAxis: event.xLoc + this.sharedService.getRandomNumber(10, 50),
+          yAxis: event.yLoc + this.sharedService.getRandomNumber(10, 50),
+          notcheType: fingerNotch,
           fillColor: 'rgb(75,196,51)',
           strokeColor: 'black',
-          isDraggable: true
+          isDraggable: false,
+          isListening: true,
         }
-        this.shapeService.circle(circleObj);
+        this.drawCircle(circleObj);
         break;
       case 3:
         this.drawImage(event.image_Src, event.xLoc + 25, event.yLoc + 24);
@@ -636,6 +678,7 @@ export class DashboardComponent implements OnInit {
         'bottom-center', 'bottom-right'],
       // resizeEnabled: false,
     });
+
     this.canvasService.stage.on('click', function (e) {
       if (!this.clickStartShape) {
         return;
