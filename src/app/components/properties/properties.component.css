@@ -1,13 +1,10 @@
 .right_tab {
-  float: right;
   border: 1px solid rgb(255, 255, 255);
   background-color: #ffffff;
   /* width: 320px; */
-  height: 100vh;
-  margin-top: -15px;
   box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
-  background-color: rgb(253, 253, 253);
   padding: 10px;
+  font-size: 12px;
 }
 
 .right_tab h3 {
@@ -15,10 +12,9 @@
 }
 
 #shape_namem, .right_tab input {
-  padding: 8px;
-  border-radius: 5px;
   border: 1px solid lightgrey;
-  margin-bottom: 10px;
+  width: 100%;
+  border-radius: 10px;
 }
 
 ul {
@@ -30,14 +26,15 @@ ul {
 
 li {
   float: left;
-  margin-left: 5px;
+  margin-left: 5px 0px;
   background-color: rgb(255, 255, 255);
   border: 1px solid #ccc;
   padding: 0px;
   display: block;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   cursor: pointer;
   text-align: center;
+  /* display: flex; */
 }
 
 li a {
@@ -59,9 +56,9 @@ li a:hover {
 p.right_side_segments_title {
   margin: 0px;
   padding: 0px 5px 5px;
-  font-size: 15px;
-  padding: 5px 5px;
-  font-weight: 500;
+  font-size: 13px;
+  padding: 0px 0px 2px 5px;
+  font-weight: 400;
 }
 
 .top_segments {
@@ -95,8 +92,60 @@ hr {
   border-radius: 0px;
 }
 
-.list_items li:hover {
-  background-color: #001227;
-  cursor: pointer;
-  color: #FFF;
+mat-sidenav.mat-drawer.mat-sidenav.ng-tns-c132-1.ng-trigger.ng-trigger-transform.mat-drawer-end.mat-drawer-side.mat-drawer-opened.ng-star-inserted {
+  position: absolute;
+  top: 165px;
+  right: 28px;
+}
+
+.tray_layer {
+  padding: 2px;
+}
+
+.tray_layer p {
+  padding-bottom: 10px;
+  color: #001227;
+}
+
+.try_wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+}
+
+.copy_to {
+  text-align: center;
+}
+
+.move_to {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  padding: 5px;
+  font-size: 10px;
+  color: rgb(168, 168, 168);
+}
+
+table, th, td {
+  border: 1px solid rgb(223, 221, 221);
+  border-collapse: collapse;
+  font-weight: 400;
+  color: rgb(168, 168, 168);
+}
+
+p.headings {
+  font-size: 12px;
+  /* color: red; */
+  color: #001227;
+}
+
+input {
+  color: rgb(168, 168, 168);
+  font-size: 12px;
+}
+
+.groups_section ul li {
+  border: 1px solid red;
 }

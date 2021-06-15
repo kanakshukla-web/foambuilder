@@ -1,7 +1,10 @@
 .trace_a_photo {
-  background-color: #001227;
-  color: #FFF;
+  background-color: #d5d5d5;
+  color: #1b242e;
   text-transform: uppercase;
+  border-radius: 25px;
+  padding: 2px 30px;
+  margin: 0px 0px 15px 0px;
 }
 
 .trace__photo {
@@ -10,10 +13,9 @@
 
 .instruction_grid {
   display: grid;
-  grid-template-columns: 35% 65%;
+  grid-template-columns: 100%;
   grid-gap: 1rem;
-  margin-top: 30px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .mat-drawer-inner-container {
@@ -30,27 +32,57 @@
   background-color: #e7eaea;
   margin-bottom: 10px;
 }
-
+.instructions_photo_list{
+  text-align: center;
+}
 .instructions_photo {
-  background-color: #e5e5e5;
+  background-color: #ffffff;
   padding: 15px;
-  margin-top: 20px;
+  margin-top: -25px;
+  padding-bottom: 20px;
   display: inline-block;
   border-radius: 5px;
+  text-align: center;
+  border-radius: 0;
+  border-bottom: 2px solid #ccc;
+
 }
 
+.e-dialog .e-dlg-header {
+  display: block;
+  font-size: 18px;
+  font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 97%;
+  text-align: center;
+  color: #252442;
+}
+.e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
+  background-color: #1b242e;
+  color: #FFF;
+}
 .instructions_ul {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-}
+  list-style-type: none;
 
+}
+.e-icon-dlg-close {
+  color: #fff   !important;
+}
 .instructions_ul li {
   font-size: 15px;
-  list-style-type: decimal;
+  list-style-type: none;
   margin-left: 10px;
   line-height: 30px;
-  color: #111;
+  color: #8f8f8f;
   text-transform: inherit;
   font-weight: 500;
 }
@@ -170,4 +202,5 @@ a {
   padding-left: 15px;
   padding-right: 15px;
 }
+
 

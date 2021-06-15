@@ -41,19 +41,6 @@
   border-radius: 2px;
 }
 
-.radioStyle {
-  -webkit-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
-  display: inline-block;
-  order: 0;
-  line-height: inherit;
-  padding-left: 8px;
-  padding-right: 8px;
-  vertical-align: middle;
-}
-
 .form-btn {
   margin-left: 5px;
   margin-top: 20px;
@@ -98,4 +85,19 @@ li {
 
 input {
   margin-top: 5px;
+}
+
+.form-btn {
+  margin-left: 5px;
+  margin-top: 20px;
+  width: 95%;
+  background-color: #238909;
+  color: #FFF;
+  text-transform: uppercase;
+}
+
+.mat-raised-button.mat-button-disabled:not([class*=mat-elevation-z]) {
+  box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 20%), 0px 0px 0px 0px rgb(0 0 0 / 14%), 0px 0px 0px 0px rgb(0 0 0 / 12%);
+  border: 1px solid #FFF;
+  color: #FFF;
 }

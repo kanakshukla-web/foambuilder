@@ -1,10 +1,9 @@
 <div class="left_tab">
-  <a class="center-logo" href="http://mycasebuilder.eu">
-    <!-- <img src="https://i.ibb.co/LksKDZJ/MCB-Logo-RGB.png" style="height: 58px; width: auto;"> -->
+  <a class="center-logo" href="https://www.trifibre.co.uk/">
     <img src="assets/logo_new.png">
   </a>
 
-  <div class="sidebar-user text-center">
+  <!-- <div class="sidebar-user text-center">
     <div class="profile_img">
       <img
         src="https://images.unsplash.com/photo-1616529735204-6799853ed36f?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDM2fHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
@@ -13,21 +12,33 @@
     </div>
     <h6 class="">Tom</h6>
     <p>Executive Director</p>
-  </div>
+  </div> -->
 
-  <button (click)="handleNavClick('Library')" class="tablinks" id="defaultOpen">
-    <i class="fas fa-puzzle-piece"></i> <span>Library</span></button>
-  <button (click)='handleNavClick("PhotoTracer")' class="tablinks">
-    <i class="fas fa-photo-video"></i> <span>Photo Tracer </span></button>
-  <button (click)="handleNavClick('Rect')" class="tablinks">
-    <i class="far fa-square"></i> <span>Rect</span></button>
-  <button (click)="handleNavClick('Circle')" class="tablinks">
-    <i class="far fa-circle"></i> <span>Circle </span></button>
-  <button (click)="handleNavClick('Draw')" class="tablinks">
-    <i class="fas fa-pencil-ruler"></i> <span>Draw </span></button>
-  <button (click)="handleNavClick('Settings')" class="tablinks">
-    <i class="fas fa-cogs"></i> <span>Settings</span>
-  </button>
+  <div class="nav_inks">
+    <button (click)="handleNavClick('Library')" class="tablinks" id="defaultOpen">
+      <i class="fas fa-puzzle-piece"></i> <span>Library</span></button>
+  </div>
+  <div class="nav_inks">
+    <button (click)='handleNavClick("PhotoTracer")' class="tablinks">
+      <i class="fas fa-photo-video"></i> <span>Photo Tracer </span></button>
+  </div>
+  <div class="nav_inks">
+    <button (click)="handleNavClick('Rect')" class="tablinks">
+      <i class="far fa-square"></i> <span>Rect</span></button>
+  </div>
+  <div class="nav_inks">
+    <button (click)="handleNavClick('Circle')" class="tablinks">
+      <i class="far fa-circle"></i> <span>Circle </span></button>
+  </div>
+  <div class="nav_inks">
+    <button (click)="handleNavClick('Draw')" class="tablinks">
+      <i class="fas fa-pencil-ruler"></i> <span>Draw </span></button>
+  </div>
+  <div class="nav_inks">
+    <button (click)="handleNavClick('Settings')" class="tablinks">
+      <i class="fas fa-cogs"></i> <span>Settings</span>
+    </button>
+  </div>
 </div>
 
 <div id="myRectPanel" class="sidepanel">

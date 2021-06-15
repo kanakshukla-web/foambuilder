@@ -41,14 +41,7 @@
   border-radius: 2px;
 }
 
-.form-btn {
-  margin-left: 5px;
-  margin-top: 20px;
-  width: 95%;
-  background-color: #202e3e;
-  color: #FFF;
-  text-transform: uppercase;
-}
+
 
 .hiddenPanel a {
   padding: 8px 8px 8px 32px;
@@ -101,4 +94,13 @@ input {
   font-size: 12px;
   color: red;
   margin-top: 2px;
+}
+
+.form-btn {
+  margin-left: 5px;
+  margin-top: 20px;
+  width: 95%;
+  background-color: #238909;
+  color: #FFF;
+  text-transform: uppercase;
 }

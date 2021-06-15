@@ -11,7 +11,7 @@
   padding: 10px;
 }
 .btn.btn-default.Zoom {
- 
+
   border: 1px solid;
 }
 
@@ -37,7 +37,7 @@
 .header_modal h1{
   color: #202e3e;
   text-transform: uppercase;
-   
+
 }
 .btn-default{
   margin-right: 10px;
@@ -378,9 +378,9 @@ canvas {
 }
 .modal-footer {
   padding: 15px;
-   
+
   border-top: 1px solid #e5e5e5;
-  
+
 }
 .zoomable .btn {
   margin-right: 5px;
@@ -405,4 +405,24 @@ canvas {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
+}
+
+.e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
+  background-color: #1b242e;
+}
+.draw-info  {
+  font-size: 15px;
+  padding: 5px 0px;
+  margin-left: -15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+  text-align: center;
+  padding: 10px 0px;
 }

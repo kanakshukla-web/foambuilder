@@ -31,6 +31,7 @@ export class CanvasService {
   selectionRectangle = new Konva.Rect({ fill: 'rgba(0,0,255,0.5)' });
   tr: Konva.Transformer;
   transformers: Konva.Transformer[] = [];
+  blockSnapSize = 35;
 
   erase: boolean = false;
   selectedButton: any = {
@@ -60,13 +61,13 @@ export class CanvasService {
   }
 
   drawKonvaGrid() {
-    let blockSnapSize = 35;
-    // var gridLayer=null;
-    //var gridLayer = new Konva.Layer();
-    var padding = blockSnapSize;
 
-    for (var i = 0; i < this.canvasProps.upperWidth / padding; i++) {
-      this.layer.add(new Konva.Line({
+    // var gridLayer=null;
+    let gridLayer = new Konva.Layer();
+    let padding = this.blockSnapSize;
+
+    for (let i = 0; i < this.canvasProps.upperWidth / padding; i++) {
+      gridLayer.add(new Konva.Line({
         points: [Math.round(i * padding) + 0.5, 0, Math.round(i * padding) + 0.5, this.canvasProps.upperLength],
         stroke: 'lightblue',
         strokeWidth: 1.2,
@@ -74,17 +75,17 @@ export class CanvasService {
       }));
     }
 
-    this.layer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
-    for (var j = 0; j < this.canvasProps.upperLength / padding; j++) {
-      this.layer.add(new Konva.Line({
+    gridLayer.add(new Konva.Line({ points: [0, 0, 10, 10] }));
+    for (let j = 0; j < this.canvasProps.upperLength / padding; j++) {
+      gridLayer.add(new Konva.Line({
         points: [0, Math.round(j * padding), this.canvasProps.upperWidth, Math.round(j * padding)],
         stroke: 'lightblue',
         strokeWidth: 1.2,
         listening: false
       }));
     }
-    //this.stage.add(gridLayer);
-    this.stage.add(this.layer);
+    this.stage.add(gridLayer);
+    //this.stage.add(this.layer);
   }
 
   fillKonvaContainerBorder() {

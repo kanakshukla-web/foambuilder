@@ -10,20 +10,25 @@
 
   <div class="instruction_grid">
     <div class="instructions_photo">
+      <div class="trace__photo">
+        <button (click)="loadFile()" mat-raised-button class="trace_a_photo">Trace a Photo
+          <input type='file' accept="image/*" id="getFile" (change)="handleInput($event)" style="display:none">
+        </button>
+      </div>
       <ul class="instructions_ul">
         <li>Please choose a photo trace</li>
         <li>A PNG with a transparent background will trace automatically.</li>
         <li>A JPG can be manually traced point to point</li>
       </ul>
 
-      <div class="trace__photo">
+      <!-- <div class="trace__photo">
         <button (click)="loadFile()" mat-raised-button class="trace_a_photo">Trace a Photo
           <input type='file' accept="image/*" id="getFile" (change)="handleInput($event)" style="display:none">
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="instructions_photo_list">
-      <img src="assets/photo_instructions.png" width="100%" alt="instructions.png" />
+      <img src="assets/photo_instructions.png" alt="instructions.png" />
     </div>
   </div>
 </ejs-dialog>

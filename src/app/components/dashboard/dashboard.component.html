@@ -1,15 +1,22 @@
-<div class="" style="width: 30%;">
+<!-- <div class="" style="width: 30%;">
   <mat-sidenav opened mode="side">
     <app-sidenav (drawImage)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
       (drawRectangle)="addShape('rectangle',$event)">
     </app-sidenav>
   </mat-sidenav>
-</div>
+</div> -->
 
 <div>
-  <mat-sidenav-container class="example-container">
+  <!-- left side bar -->
+  <mat-sidenav opened mode="side">
+    <app-sidenav (drawImage)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
+      (drawRectangle)="addShape('rectangle',$event)">
+    </app-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-container class="example-container" style="margin-top: -25px;">
     <!-- navbar header -->
-    <app-navbar></app-navbar>
+    <!-- <app-navbar></app-navbar> -->
 
     <!-- caseInfo menu -->
     <app-ejs-chnage-case-menu (editEvent)="handleEdit()" (expandEvent)="expandDiv('case-info')"
@@ -29,10 +36,10 @@
       [canvasProperties]="canvasService.canvasProps"></app-ejs-tray-builder-menu>
 
     <!-- left side bar -->
-    <mat-sidenav opened mode="side">
+    <!-- <mat-sidenav opened mode="side">
       <app-sidenav (drawImage)="addShape('image',$event)" (drawCircle)="addShape('circle',$event)"
         (drawRectangle)="addShape('rectangle',$event)"></app-sidenav>
-    </mat-sidenav>
+    </mat-sidenav> -->
 
     <!-- center canvas area -->
     <!-- <div>
@@ -43,18 +50,20 @@
     <div id="konvaContainer" class='konva' [style.width.px]="canvasService.canvasProps.upperWidth"
       [style.height.px]="canvasService.canvasProps.upperLength">
     </div> -->
-    <div id="konvaContainer" class='konva' [style.width.px]="modifiedUpperWidth"
-      [style.height.px]="modifiedUpperLength">
+
+    <div class="canva_area">
+      <div id="konvaContainer" class='konva' [style.width.px]="modifiedUpperWidth"
+        [style.height.px]="modifiedUpperLength">
+      </div>
     </div>
-
-    <!-- right side bar Properties Panel -->
-    <mat-sidenav *ngIf='propsVisibility' opened mode="side" position="end">
-      <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
-        [properties]=canvasProperties>
-      </app-properties>
-    </mat-sidenav>
-
   </mat-sidenav-container>
+
+  <!-- right side bar Properties Panel -->
+  <mat-sidenav *ngIf='propsVisibility' opened mode="side" position="end">
+    <app-properties (makeClone)="startCloning($event)" (deleteShape)="confirmDialog($event)"
+      [properties]=canvasProperties>
+    </app-properties>
+  </mat-sidenav>
 
   <!-- edit/resize foamcase -->
   <div *ngIf="isEditClicked">
